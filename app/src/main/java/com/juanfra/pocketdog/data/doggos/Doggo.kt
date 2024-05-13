@@ -3,14 +3,14 @@ package com.juanfra.pocketdog.data.doggos
 import com.juanfra.pocketdog.data.models.breeds.Height
 import com.juanfra.pocketdog.data.models.breeds.Weight
 import es.estech.myapplication.data.models.catphoto.ImagenPerroDetalle
-import kotlinx.coroutines.newFixedThreadPoolContext
 
-class Doggo(public val refdog: ImagenPerroDetalle) {
+open class Doggo(public val refdog: ImagenPerroDetalle) {
     //las stats iniciales del perro
     val basehealth: Int = parseHealth(refdog.breeds[0].height, refdog.breeds[0].weight)
     val baseattack: Int = parseAttack(refdog.breeds[0].height)
     val basedefense: Int = parseDefense(refdog.breeds[0].weight)
     var alive : Boolean = true
+    var rarity = "Común"
 
     //estas stats son las que luego se utilizan en el combate
     var maxhealth = basehealth
@@ -27,7 +27,7 @@ class Doggo(public val refdog: ImagenPerroDetalle) {
 
     //una función para convertir el daño bruto de un ataque en daño total aplicandole la reducción de defensa
     //https://leagueoflegends.fandom.com/wiki/Armor
-    private fun getDamage(damage: Int) : Int  {
+    fun getDamage(damage: Int) : Int  {
         val defenseDouble : Double = defense.toDouble()
         val damagereduction = damage / (1 + defenseDouble / 100)
         val neatdamage : Int = damagereduction.toInt()
@@ -40,7 +40,7 @@ class Doggo(public val refdog: ImagenPerroDetalle) {
         return neatdamage
     }
 
-    private fun death() {
+    fun death() {
         alive = false
     }
 
