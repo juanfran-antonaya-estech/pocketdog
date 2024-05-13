@@ -6,6 +6,10 @@ import com.juanfra.pocketdog.data.doggos.doggointerface.SpecialAttack
 import es.estech.myapplication.data.models.catphoto.ImagenPerroDetalle
 
 class Husky(val reference: ImagenPerroDetalle) : Doggo(reference),SpecialAttack,BuffMove {
+    override var rarity: String
+        get() = "Raro"
+        set(value) {}
+
     override var buffMovName: String
         get() = "Robar calor"
         set(value) {}
