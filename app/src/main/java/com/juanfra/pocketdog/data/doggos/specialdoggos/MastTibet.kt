@@ -2,7 +2,7 @@ package com.juanfra.pocketdog.data.doggos.specialdoggos
 
 import com.juanfra.pocketdog.data.doggos.Doggo
 import com.juanfra.pocketdog.data.doggos.doggointerface.SpecialAttack
-import es.estech.myapplication.data.models.catphoto.ImagenPerroDetalle
+import com.juanfra.pocketdog.data.models.catphoto.ImagenPerroDetalle
 
 class MastTibet(reference: ImagenPerroDetalle) : Doggo(reference),SpecialAttack {
     override var specialAttName: String

@@ -2,7 +2,7 @@ package com.juanfra.pocketdog.data.doggos.specialdoggos
 
 import com.juanfra.pocketdog.data.doggos.Doggo
 import com.juanfra.pocketdog.data.doggos.doggointerface.SpecialAttack
-import es.estech.myapplication.data.models.catphoto.ImagenPerroDetalle
+import com.juanfra.pocketdog.data.models.catphoto.ImagenPerroDetalle
 import kotlin.random.Random
 
 class Shiba (val reference: ImagenPerroDetalle): Doggo(reference), SpecialAttack {

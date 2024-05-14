@@ -1,4 +1,4 @@
-package es.estech.myapplication.data.models.catphoto
+package com.juanfra.pocketdog.data.models.catphoto
 
 
 import com.google.gson.annotations.SerializedName

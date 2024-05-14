@@ -3,7 +3,7 @@ package com.juanfra.pocketdog.data.doggos.specialdoggos
 import com.juanfra.pocketdog.data.doggos.Doggo
 import com.juanfra.pocketdog.data.doggos.doggointerface.SpecialAttack
 import com.juanfra.pocketdog.data.doggos.doggointerface.TurnEndListener
-import es.estech.myapplication.data.models.catphoto.ImagenPerroDetalle
+import com.juanfra.pocketdog.data.models.catphoto.ImagenPerroDetalle
 
 class Pug(val reference : ImagenPerroDetalle) : Doggo(reference),TurnEndListener,SpecialAttack {
 

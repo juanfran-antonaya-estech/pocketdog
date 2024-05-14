@@ -2,10 +2,9 @@ package com.juanfra.pocketdog.data.doggos
 
 import com.juanfra.pocketdog.data.doggos.doggointerface.BuffMove
 import com.juanfra.pocketdog.data.doggos.doggointerface.SpecialAttack
-import com.juanfra.pocketdog.data.doggos.doggointerface.TurnEndListener
 import com.juanfra.pocketdog.data.models.breeds.Height
 import com.juanfra.pocketdog.data.models.breeds.Weight
-import es.estech.myapplication.data.models.catphoto.ImagenPerroDetalle
+import com.juanfra.pocketdog.data.models.catphoto.ImagenPerroDetalle
 import kotlin.random.Random
 
 open class Doggo(public val refdog: ImagenPerroDetalle) {
@@ -65,7 +64,22 @@ open class Doggo(public val refdog: ImagenPerroDetalle) {
 
         return neatdamage
     }
+    //Esta funcion es para no curarse por encima de lo permitido y curarse siempre un valor absoluto
+    open fun getHealing(heal: Int) : Int {
+        if (actualhealth >= maxhealth){
+            return 0
+        } else if (actualhealth < maxhealth && actualhealth + heal > maxhealth){
+            val diferencia = maxhealth - actualhealth
+            actualhealth = maxhealth
+            return diferencia
 
+        } else {
+            actualhealth += heal
+            return heal
+        }
+    }
+
+    //esto es por si se muere, algunos perros podrían usarla
     fun death() {
         alive = false
     }

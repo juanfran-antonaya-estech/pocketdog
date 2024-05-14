@@ -2,7 +2,7 @@ package com.juanfra.pocketdog.data.retrofit
 
 import com.juanfra.pocketdog.data.models.breeds.Breed
 import es.estech.myapplication.data.models.catphoto.ImagenPerro
-import es.estech.myapplication.data.models.catphoto.ImagenPerroDetalle
+import com.juanfra.pocketdog.data.models.catphoto.ImagenPerroDetalle
 import es.estech.myapplication.data.models.votes.VoteDeleteResponse
 import es.estech.myapplication.data.models.votes.VoteResponse
 import es.estech.myapplication.data.models.votes.VoteSend

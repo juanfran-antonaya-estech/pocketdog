@@ -1,7 +1,7 @@
 package com.juanfra.pocketdog.data.doggos.specialdoggos
 
 import com.juanfra.pocketdog.data.doggos.Doggo
-import es.estech.myapplication.data.models.catphoto.ImagenPerroDetalle
+import com.juanfra.pocketdog.data.models.catphoto.ImagenPerroDetalle
 
 class PerroSanchez(val reference : ImagenPerroDetalle) : Doggo(reference) {
     override var rarity: String
