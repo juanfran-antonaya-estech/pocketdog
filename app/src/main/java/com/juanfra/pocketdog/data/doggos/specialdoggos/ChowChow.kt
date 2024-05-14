@@ -33,7 +33,7 @@ class ChowChow(val reference: ImagenPerroDetalle) : Doggo(reference), BuffMove {
         set(value) {}
 
     override fun doBuffMov(otherdoggo: Doggo) {
-        chews * 2
+        chews *= 2
         updatemoves()
     }
 
