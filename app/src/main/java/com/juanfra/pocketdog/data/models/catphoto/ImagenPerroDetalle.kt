@@ -1,7 +1,8 @@
-package es.estech.myapplication.data.models.catphoto
+package com.juanfra.pocketdog.data.models.catphoto
 
 
 import com.google.gson.annotations.SerializedName
+import com.juanfra.pocketdog.data.models.breeds.Breed
 
 data class ImagenPerroDetalle(
     @SerializedName("id") var id: String = "", // 0XYvRd7oD
