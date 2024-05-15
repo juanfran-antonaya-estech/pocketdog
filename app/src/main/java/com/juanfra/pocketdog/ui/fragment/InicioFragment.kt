@@ -23,5 +23,5 @@ class InicioFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_inicio, container, false)
     }
 
-    
+
 }
