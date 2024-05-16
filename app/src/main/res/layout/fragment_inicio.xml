@@ -2,11 +2,20 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pattern"
     tools:context=".ui.fragment.InicioFragment">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/pattern"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/bienvenida"
@@ -14,7 +23,7 @@
         android:layout_height="59dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Hola, entrenadogg!"
+        android:text="Hola, entrenadog!"
         android:textColor="#B90000"
         android:textSize="34sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Tienes 312 pts."
+        android:text="Tienes 312 ptas."
         android:textColor="#3EE800"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bienvenida" />
@@ -33,60 +42,79 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/barra_inventario"
         android:layout_width="0dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/shape_pocketdogs"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:clipToPadding="false"
+        android:padding="3dp"
         app:cardBackgroundColor="#00FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/barra_tienda"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/marcador_puntos">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="match_parent"
             android:background="@drawable/shape_pocketdogs">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <include
+                layout="@layout/plantilla_tresperros"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/barra_tienda"
         android:layout_width="0dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         app:cardBackgroundColor="#00FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/barra_batalla"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barra_inventario"
-        app:layout_constraintVertical_bias="0.5" >
+        app:layout_constraintTop_toBottomOf="@+id/barra_inventario">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="match_parent"
             android:background="@drawable/shape_tienda">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <include
+                layout="@layout/plantilla_tresperros"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/barra_batalla"
-        android:layout_width="409dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="28dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         app:cardBackgroundColor="#00FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barra_tienda"
-        app:layout_constraintVertical_bias="0.5">
+        app:layout_constraintTop_toBottomOf="@+id/barra_tienda">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/shape_pelea">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <include
+                layout="@layout/plantilla_tresperros"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
     </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
