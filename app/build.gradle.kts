@@ -52,17 +52,17 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation("androidx.navigation:navigation-fragment-ktx:2.4.2")
-    implementation("androidx.navigation:navigation-ui-ktx:2.4.2")
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.4.2")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.4.2")
 
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
 
     // Palette
-    implementation("androidx.palette:palette-ktx:1.0.0")
+    implementation ("androidx.palette:palette-ktx:1.0.0")
     // Picasso for loading image
-    implementation("com.squareup.picasso:picasso:2.8")
+    implementation ("com.squareup.picasso:picasso:2.8")
     // Picasso filters
     implementation("jp.wasabeef:picasso-transformations:2.4.0")
 
