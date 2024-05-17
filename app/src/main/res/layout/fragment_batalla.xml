@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.BatallaFragment" >
+    tools:context=".ui.fragment.BatallaFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView3"
@@ -34,7 +34,7 @@
                 android:layout_marginEnd="8dp"
                 android:max="100"
                 android:progress="50"
-                android:progressTint="#00FF19"
+                android:progressTint="@color/healthbar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView5"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -139,7 +139,7 @@
                 android:layout_marginEnd="8dp"
                 android:max="100"
                 android:progress="50"
-                android:progressTint="#00FF19"
+                android:progressTint="@color/healthbar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView6"
                 app:layout_constraintTop_toTopOf="parent" />
