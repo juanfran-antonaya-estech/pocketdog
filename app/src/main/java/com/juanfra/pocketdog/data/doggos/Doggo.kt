@@ -28,7 +28,7 @@ open class Doggo(public val refdog: ImagenPerroDetalle) {
         otroperro.getDamage(attack)
     }
 
-    private fun enemyturn(playerDoggo: Doggo) {
+    fun enemyturn(playerDoggo: Doggo) {
         if (this is SpecialAttack && this is BuffMove){
             val rand = Random.nextDouble(1.0)
             if (rand > 0.5){
