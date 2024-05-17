@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/accelerator"
+        android:icon="@drawable/ic_launcher_background"
+        android:contentDescription="hola"
+        app:showAsAction="ifRoom"
+        android:title="Acelerdos" />
+
+    <item
+        android:id="@+id/rotation"
+        android:icon="@mipmap/ic_launcher"
+        android:title="Rotation"
+        android:contentDescription="hola2"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/dashboard"
+        android:icon="@mipmap/ic_launcher"
+        android:title="hola3"
+        android:contentDescription="dashboard"
+        app:showAsAction="ifRoom"/>
+
+</menu>
