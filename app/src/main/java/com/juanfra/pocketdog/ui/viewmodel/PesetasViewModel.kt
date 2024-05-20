@@ -1,5 +1,6 @@
 package com.juanfra.pocketdog.ui.viewmodel
 
-class PesetasViewModel {
+import androidx.lifecycle.ViewModel
 
+class PesetasViewModel() : ViewModel() {
 }
