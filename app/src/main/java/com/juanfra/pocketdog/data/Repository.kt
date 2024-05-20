@@ -1,9 +1,11 @@
 package com.juanfra.pocketdog.data
 
+import android.content.Context
 import es.estech.myapplication.data.models.votes.VoteSend
 import es.estech.myapplication.data.retrofit.RetrofitHelper
 
-class Repository {
+class Repository(val context: Context) {
+
     private val retroperros = RetrofitHelper.myService
 
     suspend fun dameRazas() =  retroperros.allRaces()

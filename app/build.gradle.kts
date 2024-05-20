@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("kotlin-kapt")
 }
 
 android {
@@ -67,4 +68,9 @@ dependencies {
     implementation("jp.wasabeef:picasso-transformations:2.4.0")
 
     implementation("jp.co.cyberagent.android:gpuimage:2.1.0")
+
+    val roomVersion = "2.6.1" //define una variable con una versión
+    implementation("androidx.room:room-runtime:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
 }
