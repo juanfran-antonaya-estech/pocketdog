@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/shape_boton"
+                app:background="@drawable/shape_boton"
                 android:text="33 ptas."
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />

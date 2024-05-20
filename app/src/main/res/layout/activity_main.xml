@@ -9,7 +9,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
-        android:name="com.juanfra.pocketdog.ui.fragment.InicioFragment"
+        android:name="com.juanfra.pocketdog.ui.fragment.TiendaFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomAppBar2"
