@@ -32,6 +32,8 @@ class PesetasViewModel(val context: Context) : ViewModel() {
 
     var pesetas = MutableLiveData<Pesetas>(Pesetas(1500))
     val yourtrio = MutableLiveData<DogTrio>(DogTrio(ArrayList()))
+    val enemytrio = MutableLiveData<DogTrio>(DogTrio(ArrayList()))
+    val win = MutableLiveData<String>("en combate")
 
     /**
      * Obtiene los perros de tus votos.
@@ -42,6 +44,40 @@ class PesetasViewModel(val context: Context) : ViewModel() {
      *
      * @see Doggo
      */
+
+    fun battleTrio(enemies: DogTrio) {
+        enemytrio.value = enemies
+    }
+
+    fun nextAlly(): Doggo? {
+        if (yourtrio.value?.perros?.isEmpty()!!) {
+            win.postValue("perdiste")
+        } else {
+            val auxlist = yourtrio.value?.perros?.let { ArrayList(it) }
+            val doggo = auxlist?.get(0)
+            yourtrio.value = auxlist?.let { DogTrio(it) }
+            return doggo
+
+        }
+        return null
+    }
+
+    fun nextEnemy(enemy: Doggo): Doggo? {
+        if (enemytrio.value?.perros?.isEmpty()!!) {
+            win.postValue("ganaste")
+        } else {
+            val auxlist = enemytrio.value?.perros?.let { ArrayList(it) }
+            val doggo = auxlist?.random()
+            if (auxlist != null) {
+                auxlist.remove(enemy)
+            }
+            enemytrio.value = auxlist?.let { DogTrio(it) }
+            return doggo
+
+        }
+        return null
+    }
+
     fun loadDoggos() {
         viewModelScope.launch {
             val response = repo.dameVotos()
@@ -72,7 +108,7 @@ class PesetasViewModel(val context: Context) : ViewModel() {
      * @param dificultades Una lista de strings con los niveles de dificultad.
      * @return Una lista de objetos DogTrio.
      */
-    fun getDogTrios(dificultades: ArrayList<String>): ArrayList<DogTrio> {
+    suspend fun getDogTrios(dificultades: ArrayList<String>): ArrayList<DogTrio> {
         val trios = ArrayList<DogTrio>()
         for (dificultad in dificultades) {
             when (dificultad) {
@@ -205,7 +241,7 @@ class PesetasViewModel(val context: Context) : ViewModel() {
     }
 
     //obtiene un perro aleatorio dependiendo de su rareza
-    fun getRandomDoggo(rareza: String): Doggo {
+    suspend fun getRandomDoggo(rareza: String): Doggo {
         val asyncRazas = viewModelScope.async {
             var response = repo.dameRazas()
             if (response.isSuccessful) {
@@ -214,6 +250,7 @@ class PesetasViewModel(val context: Context) : ViewModel() {
                 return@async null
             }
         }
+        asyncRazas.join()
         val razas = asyncRazas.getCompleted()
         val asyncFoto = viewModelScope.async {
             var response = repo.dameFotoRaza(razas?.random()?.id.toString())
@@ -223,6 +260,7 @@ class PesetasViewModel(val context: Context) : ViewModel() {
                 return@async null
             }
         }
+        asyncFoto.join()
         val foto = asyncFoto.getCompleted()
         val detalleAsync = viewModelScope.async {
             var response = repo.dameDetalles(foto?.get(0)?.id ?: "")
@@ -232,6 +270,7 @@ class PesetasViewModel(val context: Context) : ViewModel() {
                 return@async null
             }
         }
+        detalleAsync.join()
         val detalle = detalleAsync.getCompleted()
         val doggo = getDoggo(detalle!!)
 
@@ -244,7 +283,7 @@ class PesetasViewModel(val context: Context) : ViewModel() {
 
     //convierte el detalle de una foto en un objeto Doggo (usar para conversiones)
     fun getDoggo(detalle: ImagenPerroDetalle): Doggo {
-        val doggo: Doggo = when (detalle.breeds[0].name.lowercase()) {
+        var doggo: Doggo = when (detalle.breeds[0].name.lowercase()) {
             "border collie" -> BorderCollie(detalle)
             "borzoi" -> Borzoi(detalle)
             "chihuahua" -> Chihuahua(detalle)
@@ -259,7 +298,7 @@ class PesetasViewModel(val context: Context) : ViewModel() {
             "bernard" -> StBernard(detalle)
             else -> Doggo(detalle)
         }
-
+        doggo = Doggo(detalle)
         return doggo
 
     }

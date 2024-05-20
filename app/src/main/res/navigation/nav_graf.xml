@@ -9,7 +9,11 @@
         android:id="@+id/inicioFragment"
         android:name="com.juanfra.pocketdog.ui.fragment.InicioFragment"
         android:label="fragment_inicio"
-        tools:layout="@layout/fragment_inicio" />
+        tools:layout="@layout/fragment_inicio" >
+        <action
+            android:id="@+id/action_inicioFragment_to_buscarBatallaFragment"
+            app:destination="@id/buscarBatallaFragment" />
+    </fragment>
     <fragment
         android:id="@+id/buscarBatallaFragment"
         android:name="com.juanfra.pocketdog.ui.fragment.BuscarBatallaFragment"

@@ -13,7 +13,7 @@ open class Doggo(public val refdog: ImagenPerroDetalle) {
     val baseattack: Int = parseAttack(refdog.breeds[0].height)
     val basedefense: Int = parseDefense(refdog.breeds[0].weight)
     var alive : Boolean = true
-    open var rarity = "Común"
+    open var rarity = "Comun"
 
     //estas stats son las que luego se utilizan en el combate
     var maxhealth = basehealth
