@@ -5,10 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.juanfra.pocketdog.R
+import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
 
 
 class InicioFragment : Fragment() {
+
+    val viewModels by activityViewModels<PesetasViewModel> {
+        PesetasViewModel.PesetasViewModelFactory(requireContext())
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

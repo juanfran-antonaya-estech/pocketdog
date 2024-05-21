@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("kotlin-kapt")
 }
 
 android {
@@ -33,8 +34,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        viewBinding = true
+
+    viewBinding {
+        enable = true
     }
 }
 
@@ -50,9 +52,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation ("androidx.compose.material3:material3:1.2.1")
-    implementation ("androidx.compose.material3:material3-window-size-class:1.2.1")
-    implementation ("androidx.compose.material3:material3-adaptive-navigation-suite:1.3.0-beta01")
+
     implementation ("androidx.navigation:navigation-fragment-ktx:2.4.2")
     implementation ("androidx.navigation:navigation-ui-ktx:2.4.2")
 
@@ -68,4 +68,9 @@ dependencies {
     implementation("jp.wasabeef:picasso-transformations:2.4.0")
 
     implementation("jp.co.cyberagent.android:gpuimage:2.1.0")
+
+    val roomVersion = "2.6.1" //define una variable con una versión
+    implementation("androidx.room:room-runtime:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
 }

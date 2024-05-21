@@ -4,4 +4,5 @@ data class DogTrio(
     val perros : List<Doggo>
 ) {
     var packLevel: String = ""
+    var packName: String = ""
 }
