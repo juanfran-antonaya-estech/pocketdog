@@ -1,4 +1,5 @@
 import android.content.res.Resources
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -49,26 +50,20 @@ class BuscarBatallaAdapter(var listado: ArrayList<DogTrio>, val listener: OnButt
             .load(dogtrio.perros.get(2).refdog.url)
             .into(holder.binding.ivPerro3Holder)
 
+        val packLevelColors = mapOf(
+            "Muy Fácil" to R.color.veryeasy,
+            "Fácil" to R.color.easy,
+            "Normal" to R.color.medium,
+            "Difícil" to R.color.hard,
+            "Muy Difícil" to R.color.veryhard
+        )
+
         when (dogtrio.packLevel) {
-            "Muy Fácil" -> {
-                holder.binding.root.setStrokeColor(Resources.getSystem().getColor(R.color.veryeasy))
-                holder.binding.tvPackLevelHolder.setTextColor(Resources.getSystem().getColor(R.color.veryeasy))
-            }
-            "Fácil" -> {
-                holder.binding.root.setStrokeColor(Resources.getSystem().getColor(R.color.easy))
-                holder.binding.tvPackLevelHolder.setTextColor(Resources.getSystem().getColor(R.color.easy))
-            }
-            "Normal" -> {
-                holder.binding.root.setStrokeColor(Resources.getSystem().getColor(R.color.medium))
-                holder.binding.tvPackLevelHolder.setTextColor(Resources.getSystem().getColor(R.color.medium))
-            }
-            "Difícil" -> {
-                holder.binding.root.setStrokeColor(Resources.getSystem().getColor(R.color.hard))
-                holder.binding.tvPackLevelHolder.setTextColor(Resources.getSystem().getColor(R.color.hard))
-            }
-            "Muy Difícil" -> {
-                holder.binding.root.setStrokeColor(Resources.getSystem().getColor(R.color.veryhard))
-                holder.binding.tvPackLevelHolder.setTextColor(Resources.getSystem().getColor(R.color.veryhard))
+            in packLevelColors -> {
+                val color = Integer.toHexString(holder.itemView.context.getColor(packLevelColors[dogtrio.packLevel]!!))
+
+                holder.binding.root.setStrokeColor(Color.parseColor("#$color"))
+                holder.binding.tvPackLevelHolder.setTextColor(Color.parseColor("#$color"))
             }
         }
     }

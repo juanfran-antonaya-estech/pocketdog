@@ -38,7 +38,7 @@ class BuscarBatallaFragment : Fragment() {
         //llamar a una corrutina para actualizar la lista
         var grupos : MutableLiveData<List<DogTrio>> = MutableLiveData()
         CoroutineScope(Dispatchers.IO).launch {
-            grupos.postValue(viewModel.getDogTrios(arrayListOf("muy facil", "muy facil")))
+            grupos.postValue(viewModel.getDogTrios(arrayListOf("muy facil", "muy facil", "muy facil")))
         }
         grupos.observe(viewLifecycleOwner) {
             adapter.actualizarLista(ArrayList(it))

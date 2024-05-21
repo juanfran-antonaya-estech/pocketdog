@@ -120,7 +120,7 @@ class PesetasViewModel(val context: Context) : ViewModel() {
                             getRandomDoggo("comun")
                         )
                     )
-                    trio.packLevel = "Muy fácil"
+                    trio.packLevel = "Muy Fácil"
                     trio.packName = "Perretes muy facilones"
                     trios.add(
                         trio
@@ -283,7 +283,7 @@ class PesetasViewModel(val context: Context) : ViewModel() {
 
     //convierte el detalle de una foto en un objeto Doggo (usar para conversiones)
     fun getDoggo(detalle: ImagenPerroDetalle): Doggo {
-        var doggo: Doggo = when (detalle.breeds[0].name.lowercase()) {
+        val doggo: Doggo = when (detalle.breeds[0].name.lowercase()) {
             "border collie" -> BorderCollie(detalle)
             "borzoi" -> Borzoi(detalle)
             "chihuahua" -> Chihuahua(detalle)
@@ -298,7 +298,6 @@ class PesetasViewModel(val context: Context) : ViewModel() {
             "bernard" -> StBernard(detalle)
             else -> Doggo(detalle)
         }
-        doggo = Doggo(detalle)
         return doggo
 
     }
