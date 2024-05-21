@@ -54,4 +54,8 @@ class TiendaFragment : Fragment() {
         binding.rvTienda.layoutManager = LinearLayoutManager(requireContext())
     }
 
+    companion object {
+        lateinit var viewModel: PesetasViewModel
+    }
+
 }
