@@ -6,15 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModelProvider
-import com.juanfra.pocketdog.R
 import com.juanfra.pocketdog.databinding.FragmentTiendaBinding
-import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
+import com.juanfra.pocketdog.ui.viewmodel.OLDPesetasViewModel
 
 class TiendaFragment : Fragment() {
     private lateinit var binding: FragmentTiendaBinding
-    private lateinit var ptasViewModel: PesetasViewModel
+    private lateinit var ptasViewModel: OLDPesetasViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +29,7 @@ class TiendaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ptasViewModel = ViewModelProvider(this).get(PesetasViewModel::class.java)
+        ptasViewModel = ViewModelProvider(this).get(OLDPesetasViewModel::class.java)
         if (ptasViewModel.getPesetas() == null) {
             ptasViewModel.setPesetas()
         }
@@ -47,6 +45,7 @@ class TiendaFragment : Fragment() {
             ptasViewModel.minusPesetas(1)
             binding.ptasActuales.text = ptasViewModel.getPesetas().toString()+ " ptas."
             Toast.makeText(requireContext(), ptasViewModel.getPesetas().toString(), Toast.LENGTH_SHORT).show()
+            ptasViewModel.savePesetas(ptasViewModel.getPesetas())
         }
 
     }

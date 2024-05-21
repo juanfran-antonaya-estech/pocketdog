@@ -2,9 +2,8 @@ package com.juanfra.pocketdog.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.juanfra.pocketdog.data.pesetas.Pesetas
 
-open class PesetasViewModel() : ViewModel() {
+open class OLDPesetasViewModel() : ViewModel() {
     var liveData: MutableLiveData<Int> = MutableLiveData()
 
     fun setPesetas() {
@@ -21,6 +20,10 @@ open class PesetasViewModel() : ViewModel() {
 
     fun minusPesetas(min: Int) {
         liveData.value = liveData.value?.minus(min)
+    }
+
+    fun savePesetas(pesetas: Int?) {
+        liveData = pesetas as MutableLiveData<Int>
     }
 
 }
