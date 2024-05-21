@@ -6,13 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.juanfra.pocketdog.data.doggos.Doggo
 import com.juanfra.pocketdog.databinding.FragmentTiendaBinding
-import com.juanfra.pocketdog.ui.viewmodel.OLDPesetasViewModel
+import com.juanfra.pocketdog.ui.adapter.TiendaAdapter
+import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class TiendaFragment : Fragment() {
     private lateinit var binding: FragmentTiendaBinding
-    private lateinit var ptasViewModel: OLDPesetasViewModel
+    private lateinit var adapter: TiendaAdapter
+    private lateinit var viewModel: PesetasViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,24 +37,21 @@ class TiendaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ptasViewModel = ViewModelProvider(this).get(OLDPesetasViewModel::class.java)
-        if (ptasViewModel.getPesetas() == null) {
-            ptasViewModel.setPesetas()
+        setupAdapter()
+        var doggos : MutableLiveData<List<Doggo>> = MutableLiveData()
+        CoroutineScope(Dispatchers.IO).launch {
+            doggos.postValue(listOf(viewModel.getRandomDoggo(arrayListOf("comun", "comun", "comun").toString())))
         }
-
-
-
-        Toast.makeText(requireContext(), ptasViewModel.getPesetas().toString(), Toast.LENGTH_SHORT).show()
-
-
-        binding.ptasActuales.text = ptasViewModel.getPesetas().toString()+ " ptas."
-
-        binding.testRestar.setOnClickListener {
-            ptasViewModel.minusPesetas(1)
-            binding.ptasActuales.text = ptasViewModel.getPesetas().toString()+ " ptas."
-            Toast.makeText(requireContext(), ptasViewModel.getPesetas().toString(), Toast.LENGTH_SHORT).show()
-            ptasViewModel.savePesetas(ptasViewModel.getPesetas())
+        doggos.observe(viewLifecycleOwner) {
+            adapter.updateList(ArrayList(it))
         }
 
     }
+
+    fun setupAdapter() {
+        adapter = TiendaAdapter(ArrayList())
+        binding.rvTienda.adapter = adapter
+        binding.rvTienda.layoutManager = LinearLayoutManager(requireContext())
+    }
+
 }
