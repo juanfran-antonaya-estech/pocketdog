@@ -4,6 +4,17 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
+    <style name="Other.Theme.PocketDog" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+    </style>
+    <style name="Huevo.Theme.PocketDog" parent="Base.Theme.PocketDog">
+
+    </style>
+    <style name="GradientButton" parent="Widget.Material3.Button">
+    <item name="background">@drawable/shape_boton</item>
+</style>
 
     <style name="Theme.PocketDog" parent="Base.Theme.PocketDog" />
 </resources>
