@@ -28,26 +28,37 @@ open class Doggo(public val refdog: ImagenPerroDetalle) {
         otroperro.getDamage(attack)
     }
 
-    fun enemyturn(playerDoggo: Doggo) {
+    fun enemyturn(playerDoggo: Doggo, log: Log) {
         if (this is SpecialAttack && this is BuffMove){
             val rand = Random.nextDouble(1.0)
             if (rand > 0.5){
                 (this as SpecialAttack).doSpecialAtt(playerDoggo)
+                log.action("${this.refdog.breeds[0].name} ha usado ${this.specialAttName}: ${this.specialAttDesc}")
             } else {
                 (this as BuffMove).doBuffMov(playerDoggo)
+                log.action("${this.refdog.breeds[0].name} ha usado ${this.buffMovName}: ${this.buffMovDesc}")
             }
         } else if (this is SpecialAttack){
             (this as SpecialAttack).doSpecialAtt(playerDoggo)
+            log.action("${this.refdog.breeds[0].name} ha usado ${this.specialAttName}: ${this.specialAttDesc}")
         } else if (this is BuffMove) {
             val rand = Random.nextDouble(1.0)
             if (rand > 0.5){
                 this.doBaseAttack(playerDoggo)
+                log.action("${this.refdog.breeds[0].name} ha usado ${this.baseAttackName}: ${this.baseAttackDesc}")
             } else {
                 (this as BuffMove).doBuffMov(playerDoggo)
+                log.action("${this.refdog.breeds[0].name} ha usado ${this.buffMovName}: ${this.buffMovDesc}")
             }
         } else {
             this.doBaseAttack(playerDoggo)
+            log.action("${this.refdog.breeds[0].name} ha usado ${this.baseAttackName}: ${this.baseAttackDesc}")
         }
+    }
+
+    //Esta interfaz habilita que se añadan cosas al log
+    interface Log {
+        fun action(text : String)
     }
 
     //una función para convertir el daño bruto de un ataque en daño total aplicandole la reducción de defensa

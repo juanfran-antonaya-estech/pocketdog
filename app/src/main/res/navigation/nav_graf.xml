@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_inicioFragment_to_buscarBatallaFragment"
             app:destination="@id/buscarBatallaFragment" />
+        <action
+            android:id="@+id/action_inicioFragment_to_batallaFragment"
+            app:destination="@id/batallaFragment" />
     </fragment>
     <fragment
         android:id="@+id/buscarBatallaFragment"

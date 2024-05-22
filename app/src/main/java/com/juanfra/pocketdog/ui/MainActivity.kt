@@ -6,7 +6,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.juanfra.pocketdog.R
 import com.juanfra.pocketdog.databinding.ActivityMainBinding
 import com.juanfra.pocketdog.databinding.FragmentInicioBinding
@@ -21,9 +25,11 @@ class MainActivity : AppCompatActivity() {
     val viewModel by viewModels<PesetasViewModel > {
         PesetasViewModel.PesetasViewModelFactory(this)
     }
+    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel.loadDoggos()
@@ -37,14 +43,13 @@ class MainActivity : AppCompatActivity() {
 
         */
 
-
-
         setSupportActionBar(binding.toolbar)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.fcv) as NavHostFragment
+        navController = navHostFragment.navController
+        appBarConfiguration = AppBarConfiguration(navController.graph)
+        setupActionBarWithNavController(navController, appBarConfiguration)
+
         binding.bottomAppBar2.setNavigationOnClickListener {
             // Handle navigation icon press
         }
@@ -68,8 +73,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.fabToBattle.setOnClickListener {
-            BuscarBatallaFragment.viewModel = viewModel
-            binding.fcv.findNavController().navigate(R.id.action_inicioFragment_to_buscarBatallaFragment)
+            if(navController.currentDestination?.id == R.id.inicioFragment){
+                BuscarBatallaFragment.viewModel = viewModel
+                binding.fcv.findNavController().navigate(R.id.action_inicioFragment_to_buscarBatallaFragment)
+            }
+            if(navController.currentDestination?.id == R.id.batallaFragment){
+                binding.fcv.findNavController().navigateUp()
+            }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp()
     }
 }
