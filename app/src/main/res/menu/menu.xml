@@ -3,24 +3,61 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/accelerator"
-        android:icon="@drawable/ic_launcher_background"
-        android:contentDescription="hola"
-        app:showAsAction="ifRoom"
-        android:title="Acelerdos" />
+        android:id="@+id/menuInicio"
+        android:contentDescription="inicio"
+        android:icon="@drawable/botoninicio"
+        android:title="Inicio"
+        app:showAsAction="always"
+        android:orderInCategory="1" />
 
     <item
-        android:id="@+id/rotation"
-        android:icon="@mipmap/ic_launcher"
-        android:title="Rotation"
-        android:contentDescription="hola2"
-        app:showAsAction="ifRoom"/>
+        android:id="@+id/menuInventario"
+        android:contentDescription="inventario"
+        android:icon="@drawable/botoninventario"
+        android:title="Inventario"
+        app:showAsAction="always"
+        android:orderInCategory="2" />
 
     <item
-        android:id="@+id/dashboard"
-        android:icon="@mipmap/ic_launcher"
-        android:title="hola3"
-        android:contentDescription="dashboard"
-        app:showAsAction="ifRoom"/>
+        android:id="@+id/menuSpacer1"
+        android:enabled="false"
+        android:icon="@android:color/transparent"
+        android:title=""
+        app:showAsAction="always"
+        android:orderInCategory="3" />
+
+    <item
+        android:id="@+id/menuSpacer2"
+        android:enabled="false"
+        android:icon="@android:color/transparent"
+        android:title=""
+        app:showAsAction="always"
+        android:orderInCategory="4" />
+
+    <item
+        android:id="@+id/menuSpacer3"
+        android:enabled="false"
+        android:icon="@android:color/transparent"
+        android:title=""
+        app:showAsAction="always"
+        android:orderInCategory="5" />
+
+    <item
+        android:id="@+id/menuTienda"
+        android:contentDescription="tienda"
+        android:icon="@drawable/botontienda"
+        android:orderInCategory="6"
+        android:title="Tienda"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menuLog"
+        android:icon="@drawable/botonlog"
+        android:title="Log"
+        app:showAsAction="always"
+        android:orderInCategory="7" />
+
+    <!-- Add a space to create a gap before the FloatingActionButton -->
+
 
 </menu>

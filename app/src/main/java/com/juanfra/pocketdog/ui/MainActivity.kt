@@ -9,12 +9,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.findNavController
 import com.juanfra.pocketdog.R
 import com.juanfra.pocketdog.databinding.ActivityMainBinding
-import com.juanfra.pocketdog.databinding.FragmentInicioBinding
 import com.juanfra.pocketdog.ui.fragment.BuscarBatallaFragment
 import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
@@ -51,15 +47,19 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomAppBar2.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.accelerator -> {
+                R.id.menuInicio -> {
                     // Handle accelerator icon press
                     true
                 }
-                R.id.rotation -> {
+                R.id.menuInventario -> {
                     // Handle rotation icon press
                     true
                 }
-                R.id.dashboard -> {
+                R.id.menuTienda -> {
+                    // Handle dashboard icon press
+                    true
+                }
+                R.id.menuLog -> {
                     // Handle dashboard icon press
                     true
                 }
