@@ -2,9 +2,12 @@ package com.juanfra.pocketdog.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.juanfra.pocketdog.data.doggos.Doggo
 import com.juanfra.pocketdog.databinding.HolderTiendaBinding
+import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
 import com.squareup.picasso.Picasso
 
 class TiendaAdapter(var listado: ArrayList<Doggo>) :
@@ -29,6 +32,13 @@ class TiendaAdapter(var listado: ArrayList<Doggo>) :
 
         with(holder){
             binding.nameDoggo.text = doggo.refdog.breeds[0].name
+            binding.rareDoggo.text = doggo.rarity
+
+            binding.btPaid.setOnClickListener {
+                Toast.makeText(holder.itemView.context, "PROCESANDO PAGO", Toast.LENGTH_SHORT).show()
+                Toast.makeText(holder.itemView.context, "¡Error! No se pudo procesar el pago", Toast.LENGTH_SHORT).show()
+            }
+
         }
 
         Picasso.get()

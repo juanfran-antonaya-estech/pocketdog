@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +21,7 @@ import kotlinx.coroutines.launch
 class TiendaFragment : Fragment() {
     private lateinit var binding: FragmentTiendaBinding
     private lateinit var adapter: TiendaAdapter
-    private lateinit var viewModel : PesetasViewModel
+    private val viewModel by activityViewModels<PesetasViewModel>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +43,8 @@ class TiendaFragment : Fragment() {
 
         var doggos : MutableLiveData<List<Doggo>> = MutableLiveData()
         CoroutineScope(Dispatchers.IO).launch {
-            doggos.postValue(listOf(viewModel.getRandomDoggo("comun")))
+            doggos.postValue(arrayListOf(viewModel.getRandomDoggo("comun"), (viewModel.getRandomDoggo("raro")), (viewModel.getRandomDoggo("epico")), (viewModel.getRandomDoggo("legendario"))))
+
         }
         doggos.observe(viewLifecycleOwner) {
             adapter.updateList(ArrayList(it))
