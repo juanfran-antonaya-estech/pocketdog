@@ -46,21 +46,23 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.bottomAppBar2.setOnMenuItemClickListener { menuItem ->
+            val navController = findNavController(R.id.fcv)
             when (menuItem.itemId) {
+
                 R.id.menuInicio -> {
-                    // Handle accelerator icon press
+                    navController.navigate(R.id.inicioFragment)
                     true
                 }
                 R.id.menuInventario -> {
-                    // Handle rotation icon press
+                    navController.navigate(R.id.inicioFragment)
                     true
                 }
                 R.id.menuTienda -> {
-                    // Handle dashboard icon press
+                    navController.navigate(R.id.tiendaFragment)
                     true
                 }
                 R.id.menuLog -> {
-                    // Handle dashboard icon press
+                    navController.navigate(R.id.inicioFragment)
                     true
                 }
                 else -> false
