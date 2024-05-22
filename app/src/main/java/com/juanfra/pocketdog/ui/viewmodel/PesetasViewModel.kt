@@ -35,6 +35,9 @@ class PesetasViewModel(val context: Context) : ViewModel() {
     val enemytrio = MutableLiveData<DogTrio>(DogTrio(ArrayList()))
     val win = MutableLiveData<String>("en combate")
 
+    val actualdoggo = MutableLiveData<Doggo>()
+    val actualenemy = MutableLiveData<Doggo>()
+
     /**
      * Obtiene los perros de tus votos.
      *
@@ -45,37 +48,48 @@ class PesetasViewModel(val context: Context) : ViewModel() {
      * @see Doggo
      */
 
+    fun showcaseenemies() : MutableLiveData<DogTrio>{
+        val auxtrio = MutableLiveData<DogTrio>()
+        viewModelScope.launch {
+            val trio = getDogTrios(arrayListOf("normal"))
+            auxtrio.postValue(trio[0])
+
+        }
+        return auxtrio
+    }
+
     fun battleTrio(enemies: DogTrio) {
         enemytrio.value = enemies
     }
 
-    fun nextAlly(): Doggo? {
+    fun nextAlly() {
         if (yourtrio.value?.perros?.isEmpty()!!) {
             win.postValue("perdiste")
         } else {
             val auxlist = yourtrio.value?.perros?.let { ArrayList(it) }
-            val doggo = auxlist?.get(0)
+            val doggo = auxlist?.random()
             yourtrio.value = auxlist?.let { DogTrio(it) }
-            return doggo
-
+            actualdoggo.value = doggo!!
         }
-        return null
     }
 
-    fun nextEnemy(enemy: Doggo): Doggo? {
+    fun nextEnemy() {
         if (enemytrio.value?.perros?.isEmpty()!!) {
             win.postValue("ganaste")
         } else {
             val auxlist = enemytrio.value?.perros?.let { ArrayList(it) }
             val doggo = auxlist?.random()
-            if (auxlist != null) {
-                auxlist.remove(enemy)
-            }
-            enemytrio.value = auxlist?.let { DogTrio(it) }
-            return doggo
+            actualenemy.value = doggo!!
 
         }
-        return null
+    }
+
+    fun enemyDeath(enemy: Doggo) {
+        val auxlist = enemytrio.value?.perros?.let { ArrayList(it) }
+        if (auxlist != null) {
+            auxlist.remove(enemy)
+        }
+        enemytrio.value = auxlist?.let { DogTrio(it) }
     }
 
     fun loadDoggos() {
@@ -84,19 +98,16 @@ class PesetasViewModel(val context: Context) : ViewModel() {
             if (response.code() == 200) {
                 val perros = response.body()
                 val auxlist = ArrayList<Doggo>()
-                for (perro in perros!!) {
-                    val detalleAsync = viewModelScope.async {
-                        var response = repo.dameDetalles(perro.id.toString())
+
+                if (perros != null) {
+                    for (perro in perros) {
+                        val response = repo.dameDetalles(perro.image.id)
                         if (response.isSuccessful) {
-                            return@async response.body()
-                        } else {
-                            return@async null
+                            auxlist.add(getDoggo(response.body()!!))
                         }
                     }
-                    val detalle = detalleAsync.await()
-                    val doggo = getDoggo(detalle!!)
-                    auxlist.add(doggo)
                 }
+
                 yourtrio.postValue(DogTrio(auxlist.sortedBy { it.actualhealth }))
             }
         }
@@ -214,7 +225,7 @@ class PesetasViewModel(val context: Context) : ViewModel() {
 
     fun buyDoggo(id: String, ptas: Int) {
         viewModelScope.launch {
-            if (ptas <= pesetas.value?.pesetas!!) {
+            if (ptas <= pesetas.value?.pesetas!! && yourtrio.value?.perros?.size!! < 3) {
                 repo.votaRaza(VoteSend(imageId = id, value = 1))
                 pesetas.postValue(Pesetas(pesetas.value?.pesetas!! - ptas))
                 Thread.sleep(1000)
@@ -232,12 +243,23 @@ class PesetasViewModel(val context: Context) : ViewModel() {
 
     //elimina un perro de tus votos
     fun doggoDeath(doggo: Doggo) {
+
+
         viewModelScope.launch {
-            repo.eliminaRaza(doggo.refdog.id.toInt())
+            val response = repo.dameVotos()
+            if (response.code() == 200) {
+                val votos = response.body()
+                for (voto in votos!!) {
+                    if (voto.image.id == doggo.refdog.id)
+                        repo.eliminaRaza(voto.id)
+
+                }
+            }
         }
         val auxlist = ArrayList(yourtrio.value?.perros)
         auxlist.remove(doggo)
         yourtrio.value = DogTrio(auxlist)
+        nextAlly()
     }
 
     //obtiene un perro aleatorio dependiendo de su rareza
@@ -274,29 +296,32 @@ class PesetasViewModel(val context: Context) : ViewModel() {
         val detalle = detalleAsync.getCompleted()
         val doggo = getDoggo(detalle!!)
 
-        return if (doggo.rarity.lowercase() == rareza) {
-            doggo
-        } else {
-            getRandomDoggo(rareza)
-        }
+        return doggo
+        //return if (doggo.rarity.lowercase() == rareza) {
+        //    doggo
+        //} else {
+        //    getRandomDoggo(rareza)
+        //}
     }
 
     //convierte el detalle de una foto en un objeto Doggo (usar para conversiones)
     fun getDoggo(detalle: ImagenPerroDetalle): Doggo {
-        val doggo: Doggo = when (detalle.breeds[0].name.lowercase()) {
-            "border collie" -> BorderCollie(detalle)
-            "borzoi" -> Borzoi(detalle)
-            "chihuahua" -> Chihuahua(detalle)
-            "chow" -> ChowChow(detalle)
-            "dane" -> GreatDane(detalle)
-            "husky" -> Husky(detalle)
-            "tibet" -> MastTibet(detalle)
-            "sanchez" -> PerroSanchez(detalle)
-            "pug" -> Pug(detalle)
-            "shar" -> SharPei(detalle)
-            "shiba" -> Shiba(detalle)
-            "bernard" -> StBernard(detalle)
-            else -> Doggo(detalle)
+        val doggo: Doggo = with(detalle.breeds[0].name.lowercase()) {
+            when {
+                contains("border collie") -> BorderCollie(detalle)
+                contains("borzoi") -> Borzoi(detalle)
+                contains("chihuahua") -> Chihuahua(detalle)
+                contains("chow") -> ChowChow(detalle)
+                contains("dane") -> GreatDane(detalle)
+                contains("husky") -> Husky(detalle)
+                contains("tibetan") -> MastTibet(detalle)
+                contains("sanchez") -> PerroSanchez(detalle)
+                contains("pug") -> Pug(detalle)
+                contains("shar") -> SharPei(detalle)
+                contains("shiba") -> Shiba(detalle)
+                contains("bernard") -> StBernard(detalle)
+                else -> Doggo(detalle)
+            }
         }
         return doggo
 
