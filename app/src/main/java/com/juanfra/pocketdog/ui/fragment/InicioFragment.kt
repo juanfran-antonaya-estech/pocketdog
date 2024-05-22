@@ -17,18 +17,19 @@ import jp.wasabeef.picasso.transformations.gpu.ToonFilterTransformation
 
 
 class InicioFragment : Fragment() {
+    private var _binding: FragmentInicioBinding? = null
+    private val binding get() = _binding!!
 
     val viewModels by activityViewModels<PesetasViewModel> {
         PesetasViewModel.PesetasViewModelFactory(requireContext())
     }
-    private lateinit var binding: FragmentInicioBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentInicioBinding.inflate(inflater, container, false)
+        _binding = FragmentInicioBinding.inflate(inflater, container, false)
         return binding.root
     }
 

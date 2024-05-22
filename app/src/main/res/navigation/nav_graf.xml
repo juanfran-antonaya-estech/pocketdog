@@ -11,11 +11,17 @@
         android:label="fragment_inicio"
         tools:layout="@layout/fragment_inicio" >
         <action
+            android:id="@+id/action_inicioFragment_to_registroBatallasFragment"
+            app:destination="@id/registroBatallasFragment" />
+        <action
+            android:id="@+id/action_inicioFragment_to_tiendaFragment"
+            app:destination="@id/tiendaFragment" />
+        <action
             android:id="@+id/action_inicioFragment_to_buscarBatallaFragment"
             app:destination="@id/buscarBatallaFragment" />
         <action
-            android:id="@+id/action_inicioFragment_to_batallaFragment"
-            app:destination="@id/batallaFragment" />
+            android:id="@+id/action_inicioFragment_to_misPerrosFragment"
+            app:destination="@id/misPerrosFragment" />
     </fragment>
     <fragment
         android:id="@+id/buscarBatallaFragment"
