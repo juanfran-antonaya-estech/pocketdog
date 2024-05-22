@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_inicioFragment_to_misPerrosFragment"
             app:destination="@id/misPerrosFragment" />
+        <action
+            android:id="@+id/action_inicioFragment_to_batallaFragment"
+            app:destination="@id/batallaFragment" />
     </fragment>
     <fragment
         android:id="@+id/buscarBatallaFragment"
