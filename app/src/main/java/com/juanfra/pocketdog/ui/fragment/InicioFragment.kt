@@ -6,11 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.juanfra.pocketdog.R
+import com.juanfra.pocketdog.databinding.FragmentInicioBinding
 import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
 
 
 class InicioFragment : Fragment() {
+    private lateinit var binding: FragmentInicioBinding
 
     val viewModels by activityViewModels<PesetasViewModel> {
         PesetasViewModel.PesetasViewModelFactory(requireContext())
@@ -26,12 +29,13 @@ class InicioFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_inicio, container, false)
+        binding = FragmentInicioBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
     }
 
 

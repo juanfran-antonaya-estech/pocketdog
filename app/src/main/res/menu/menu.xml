@@ -10,11 +10,11 @@
         android:title="Acelerdos" />
 
     <item
-        android:id="@+id/rotation"
+        android:id="@+id/shop"
+        android:contentDescription="tienda"
         android:icon="@mipmap/ic_launcher"
-        android:title="Rotation"
-        android:contentDescription="hola2"
-        app:showAsAction="ifRoom"/>
+        android:title="Tienda"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/dashboard"

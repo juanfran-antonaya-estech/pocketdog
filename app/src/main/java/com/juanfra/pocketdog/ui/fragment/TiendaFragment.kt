@@ -20,7 +20,8 @@ import kotlinx.coroutines.launch
 class TiendaFragment : Fragment() {
     private lateinit var binding: FragmentTiendaBinding
     private lateinit var adapter: TiendaAdapter
-    private lateinit var viewModel: PesetasViewModel
+    private lateinit var viewModel : PesetasViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,9 +39,10 @@ class TiendaFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupAdapter()
+
         var doggos : MutableLiveData<List<Doggo>> = MutableLiveData()
         CoroutineScope(Dispatchers.IO).launch {
-            doggos.postValue(listOf(viewModel.getRandomDoggo(arrayListOf("comun", "comun", "comun").toString())))
+            doggos.postValue(listOf(viewModel.getRandomDoggo("comun")))
         }
         doggos.observe(viewLifecycleOwner) {
             adapter.updateList(ArrayList(it))
@@ -52,10 +54,6 @@ class TiendaFragment : Fragment() {
         adapter = TiendaAdapter(ArrayList())
         binding.rvTienda.adapter = adapter
         binding.rvTienda.layoutManager = LinearLayoutManager(requireContext())
-    }
-
-    companion object {
-        lateinit var viewModel: PesetasViewModel
     }
 
 }

@@ -6,11 +6,14 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.juanfra.pocketdog.R
 import com.juanfra.pocketdog.databinding.ActivityMainBinding
 import com.juanfra.pocketdog.databinding.FragmentInicioBinding
 import com.juanfra.pocketdog.ui.fragment.BuscarBatallaFragment
+import com.juanfra.pocketdog.ui.fragment.InicioFragment
+import com.juanfra.pocketdog.ui.fragment.TiendaFragment
 import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -30,6 +33,10 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        var inicio = InicioFragment()
+        var tienda = TiendaFragment()
+
         binding.bottomAppBar2.setNavigationOnClickListener {
             // Handle navigation icon press
         }
@@ -38,10 +45,11 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.accelerator -> {
                     // Handle accelerator icon press
+                    setCurrentFragment(inicio)
                     true
                 }
-                R.id.rotation -> {
-                    // Handle rotation icon press
+                R.id.shop -> {
+                    setCurrentFragment(tienda)
                     true
                 }
                 R.id.dashboard -> {
@@ -57,4 +65,12 @@ class MainActivity : AppCompatActivity() {
             binding.fcv.findNavController().navigate(R.id.action_inicioFragment_to_buscarBatallaFragment)
         }
     }
+
+    private fun setCurrentFragment(fragment: Fragment){
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.fcv,fragment)
+            commit()
+        }
+    }
+
 }
