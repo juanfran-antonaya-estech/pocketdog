@@ -195,7 +195,7 @@ class PesetasViewModel(val context: Context) : ViewModel() {
                         )
                     )
 
-                    trio.packLevel = "Muy difícil"
+                    trio.packLevel = "Muy Difícil"
                     trio.packName = "Perretes muy dificilones"
                     trios.add(
                         trio
