@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.juanfra.pocketdog.R
 import com.juanfra.pocketdog.data.doggos.Doggo
 import com.juanfra.pocketdog.data.doggos.doggointerface.BuffMove
 import com.juanfra.pocketdog.data.doggos.doggointerface.SpecialAttack
@@ -37,7 +38,8 @@ class BatallaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val mediaPlayer = MediaPlayer.create(context, R.raw.pdtienda3)
+        mediaPlayer.start()
 
         var lastdogId = ""
         var lastenemyId = ""

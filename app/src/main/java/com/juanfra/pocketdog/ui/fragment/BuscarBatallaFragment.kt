@@ -1,6 +1,7 @@
 package com.juanfra.pocketdog.ui.fragment
 
 import BuscarBatallaAdapter
+import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -35,6 +36,8 @@ class BuscarBatallaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupAdapter()
+        val mediaPlayer = MediaPlayer.create(context, R.raw.pdtienda3)
+        mediaPlayer.start()
         //llamar a una corrutina para actualizar la lista
         var grupos : MutableLiveData<List<DogTrio>> = MutableLiveData()
         CoroutineScope(Dispatchers.IO).launch {
