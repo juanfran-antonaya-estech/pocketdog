@@ -113,11 +113,17 @@ class BatallaFragment : Fragment() {
 
     fun prepareAllyDog(ally: Doggo) {
         viewModel.actualenemy.observe(viewLifecycleOwner) { enemy ->
+            val log = object : Doggo.Log{
+                override fun action(text: String) {
+                    addLog(text)
+                }
+
+            }
             binding.btNormalAtt.setOnClickListener {
                 if (enemy != null) {
                     ally.doBaseAttack(enemy)
                     addLog("Has golpeado al ${enemy.refdog.breeds[0].name} con ${ally.baseAttackName}")
-                    enemy.enemyturn(ally)
+                    enemy.enemyturn(ally, log)
                     if (ally is TurnEndListener) {
                         ally.onTurnEnd(enemy)
                     }
@@ -145,7 +151,7 @@ class BatallaFragment : Fragment() {
                     if (enemy != null) {
                         addLog("Has usado ${ally.specialAttName}: ${ally.specialAttDesc}")
                         ally.doSpecialAtt(enemy)
-                        enemy.enemyturn(ally)
+                        enemy.enemyturn(ally, log)
                         if (ally is TurnEndListener) {
                             ally.onTurnEnd(enemy)
                         }
@@ -176,7 +182,7 @@ class BatallaFragment : Fragment() {
                     if (enemy != null) {
                         addLog("Has usado ${ally.buffMovName}: ${ally.buffMovDesc}")
                         ally.doBuffMov(enemy)
-                        enemy.enemyturn(ally)
+                        enemy.enemyturn(ally, log)
                         if (ally is TurnEndListener) {
                             ally.onTurnEnd(enemy)
                         }
@@ -216,6 +222,8 @@ class BatallaFragment : Fragment() {
         binding.tvAllyLife.text = "${ally.actualhealth}/${ally.maxhealth}"
         binding.pbAllyLife.max = ally.maxhealth
         binding.pbAllyLife.progress = ally.actualhealth
+        binding.tvAtt.text = "Ataque: ${ally.attack}"
+        binding.tvDef.text = "Defensa: ${ally.defense}"
 
         binding.btNormalAtt.text = ally.baseAttackName
     }
@@ -243,7 +251,15 @@ class BatallaFragment : Fragment() {
     }
 
     fun addLog(text: String) {
-        binding.tvLog.text = binding.tvLog.text.toString() + "\n$text"
+        val texto = binding.tvLog.text.toString()
+        var lineas = ArrayList<String>()
+        if (texto.isNotEmpty()) {
+            lineas.addAll(texto.split("\n"))
+        }
+        while (lineas.size > 15){
+            lineas.removeAt(0)
+        }
+        binding.tvLog.text = lineas.joinToString("\n") + "\n$text"
     }
 
 }

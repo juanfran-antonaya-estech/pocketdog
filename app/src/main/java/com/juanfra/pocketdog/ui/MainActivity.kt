@@ -1,77 +1,75 @@
 package com.juanfra.pocketdog.ui
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import com.juanfra.pocketdog.R
 import com.juanfra.pocketdog.databinding.ActivityMainBinding
 import com.juanfra.pocketdog.ui.fragment.BuscarBatallaFragment
 import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityMainBinding
-    val viewModel by viewModels<PesetasViewModel > {
+    private lateinit var binding: ActivityMainBinding
+    private val viewModel by viewModels<PesetasViewModel> {
         PesetasViewModel.PesetasViewModelFactory(this)
     }
+    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel.loadDoggos()
-        /*
-        CoroutineScope(Dispatchers.IO).launch {
-        viewModel.buyDoggo(viewModel.getRandomDoggo("comun").refdog.id,0)
-        viewModel.buyDoggo(viewModel.getRandomDoggo("comun").refdog.id,0)
-        viewModel.buyDoggo(viewModel.getRandomDoggo("comun").refdog.id,0)
-        viewModel.buyDoggo(viewModel.getRandomDoggo("comun").refdog.id,0)
-        }
-
-        */
-
-
-
+        menuNavegacion()
         setSupportActionBar(binding.toolbar)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-        binding.bottomAppBar2.setNavigationOnClickListener {
-            // Handle navigation icon press
-        }
 
-        binding.bottomAppBar2.setOnMenuItemClickListener { menuItem ->
-            val navController = findNavController(R.id.fcv)
-            when (menuItem.itemId) {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcv) as NavHostFragment
+        navController = navHostFragment.navController
+        appBarConfiguration = AppBarConfiguration(navController.graph)
 
-                R.id.menuInicio -> {
-                    navController.navigate(R.id.inicioFragment)
-                    true
+        binding.fabToBattle.setOnClickListener {
+            when (navController.currentDestination?.id) {
+                R.id.inicioFragment -> {
+                    BuscarBatallaFragment.viewModel = viewModel
+                    navController.navigate(R.id.action_inicioFragment_to_buscarBatallaFragment)
                 }
-                R.id.menuInventario -> {
-                    navController.navigate(R.id.inicioFragment)
-                    true
+
+                R.id.tiendaFragment -> {
+                    BuscarBatallaFragment.viewModel = viewModel
+                    navController.navigate(R.id.action_tiendaFragment_to_buscarBatallaFragment)
                 }
-                R.id.menuTienda -> {
-                    navController.navigate(R.id.tiendaFragment)
-                    true
+
+                R.id.batallaFragment -> {
+                    binding.fcv.findNavController().navigateUp()
                 }
-                R.id.menuLog -> {
-                    navController.navigate(R.id.inicioFragment)
-                    true
+
+                R.id.buscarBatallaFragment -> {
+                    binding.fcv.findNavController().navigateUp()
                 }
-                else -> false
             }
         }
 
-        binding.fabToBattle.setOnClickListener {
-            BuscarBatallaFragment.viewModel = viewModel
-            binding.fcv.findNavController().navigate(R.id.action_inicioFragment_to_buscarBatallaFragment)
-        }
+
+
+
+    }
+
+    private fun menuNavegacion() {
+        val bottomNavigationView = binding.bottomNavigationView
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcv) as NavHostFragment
+        NavigationUI.setupWithNavController(
+            bottomNavigationView,
+            navHostFragment.navController
+        )
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp()
     }
 }

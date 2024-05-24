@@ -48,6 +48,16 @@ class PesetasViewModel(val context: Context) : ViewModel() {
      * @see Doggo
      */
 
+    fun showcaseenemies() : MutableLiveData<DogTrio>{
+        val auxtrio = MutableLiveData<DogTrio>()
+        viewModelScope.launch {
+            val trio = getDogTrios(arrayListOf("normal"))
+            auxtrio.postValue(trio[0])
+
+        }
+        return auxtrio
+    }
+
     fun battleTrio(enemies: DogTrio) {
         enemytrio.value = enemies
     }
