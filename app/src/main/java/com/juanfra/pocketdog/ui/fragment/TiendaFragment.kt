@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.juanfra.pocketdog.data.doggos.Doggo
+import com.juanfra.pocketdog.data.pesetas.Pesetas
 import com.juanfra.pocketdog.databinding.FragmentTiendaBinding
 import com.juanfra.pocketdog.ui.adapter.TiendaAdapter
 import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
@@ -42,6 +43,7 @@ class TiendaFragment : Fragment() {
         setupAdapter()
 
         var doggos : MutableLiveData<List<Doggo>> = MutableLiveData()
+
         CoroutineScope(Dispatchers.IO).launch {
             doggos.postValue(arrayListOf(viewModel.getRandomDoggo("comun"), (viewModel.getRandomDoggo("raro")), (viewModel.getRandomDoggo("epico")), (viewModel.getRandomDoggo("legendario"))))
 
@@ -50,10 +52,20 @@ class TiendaFragment : Fragment() {
             adapter.updateList(ArrayList(it))
         }
 
+        viewModel.pesetas.observe(viewLifecycleOwner) {
+            binding.ptasActuales.text = it.pesetas.toString() + " ptas."
+        }
+
+
+
     }
 
     fun setupAdapter() {
-        adapter = TiendaAdapter(ArrayList())
+        adapter = TiendaAdapter(ArrayList(), object : TiendaAdapter.MyClickListener {
+            override fun onClick(doggo: Doggo) {
+                viewModel.buyDoggo(doggo.refdog.id, adapter.price)
+            }
+        })
         binding.rvTienda.adapter = adapter
         binding.rvTienda.layoutManager = LinearLayoutManager(requireContext())
     }
