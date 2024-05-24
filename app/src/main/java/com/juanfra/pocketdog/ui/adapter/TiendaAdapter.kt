@@ -34,49 +34,6 @@ class TiendaAdapter(var listado: ArrayList<Doggo>, val listener: MyClickListener
         return listado.size
     }
 
-    override fun onBindViewHolder(holder: MiCelda, position: Int) {
-        val doggo = listado[position]
-
-
-        with(holder){
-            binding.nameDoggo.text = doggo.refdog.breeds[0].name
-            binding.rareDoggo.text = doggo.rarity
-
-            if (doggo.rarity == "Comun" && doggo.rarity == "Común"){
-                price = 200
-                binding.btPaid.text = "$price ptas."
-                holder.binding.bkTienda.setBackgroundColor(R.drawable.shape_tienda_normalito)
-                holder.binding.rareDoggo.setTextColor(Color.parseColor("#1AFF00"))
-            } else if (doggo.rarity == "Raro"){
-                price = 400
-                binding.btPaid.text = "$price ptas."
-                holder.binding.bkTienda.setBackgroundColor(R.drawable.shape_tienda_raro)
-                holder.binding.rareDoggo.setTextColor(Color.parseColor("#0048FF"))
-            } else if (doggo.rarity == "Epico" && doggo.rarity == "Épico") {
-                price = 800
-                binding.btPaid.text = "$price ptas."
-                holder.binding.bkTienda.setBackgroundColor(R.drawable.shape_tienda_epico)
-                holder.binding.rareDoggo.setTextColor(Color.parseColor("#A600FF"))
-            } else {
-                price = 1600
-                binding.btPaid.text = "$price ptas."
-                holder.binding.bkTienda.setBackgroundColor(R.drawable.shape_tienda_legendario)
-                holder.binding.rareDoggo.setTextColor(Color.parseColor("#FFF200"))
-            }
-
-            binding.btPaid.setOnClickListener {
-                listener.onClick(doggo)
-                binding.btPaid.isEnabled = false
-            }
-
-        }
-
-        Picasso.get()
-            .load(doggo.refdog.url)
-            .into(holder.binding.imageDoggo)
-
-    }
-
     fun price(doggo: Doggo){
         if (doggo.rarity == "Comun" || doggo.rarity == "Común"){
             price = 200
@@ -88,6 +45,46 @@ class TiendaAdapter(var listado: ArrayList<Doggo>, val listener: MyClickListener
             price = 1600
         }
     }
+
+    override fun onBindViewHolder(holder: MiCelda, position: Int) {
+        val doggo = listado[position]
+
+
+        with(holder){
+            binding.nameDoggo.text = doggo.refdog.breeds[0].name
+            binding.rareDoggo.text = doggo.rarity
+            binding.btPaid.setOnClickListener {
+                listener.onClick(doggo)
+                binding.btPaid.isEnabled = false
+            }
+
+            if (doggo.rarity == "Comun" || doggo.rarity == "Común"){
+                price(doggo)
+                binding.btPaid.text = "$price ptas."
+            }
+            if (doggo.rarity == "Raro"){
+                price(doggo)
+                binding.btPaid.text = "$price ptas."
+            }
+            if (doggo.rarity == "Epico" && doggo.rarity == "Épico") {
+                price(doggo)
+                binding.btPaid.text = "$price ptas."
+            }
+            if (doggo.rarity == "Legendario" || doggo.rarity == "Legendary") {
+                price(doggo)
+                binding.btPaid.text = "$price ptas."
+            }
+
+        }
+
+
+        Picasso.get()
+            .load(doggo.refdog.url)
+            .into(holder.binding.imageDoggo)
+
+    }
+
+
 
     fun updateList(newList: ArrayList<Doggo>){
         listado = newList
