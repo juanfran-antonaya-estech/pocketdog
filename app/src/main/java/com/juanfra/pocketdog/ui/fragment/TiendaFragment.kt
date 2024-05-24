@@ -51,7 +51,6 @@ class TiendaFragment : Fragment() {
         doggos.observe(viewLifecycleOwner) {
             adapter.updateList(ArrayList(it))
         }
-
         viewModel.pesetas.observe(viewLifecycleOwner) {
             binding.ptasActuales.text = it.pesetas.toString() + " ptas."
         }
@@ -63,6 +62,7 @@ class TiendaFragment : Fragment() {
     fun setupAdapter() {
         adapter = TiendaAdapter(ArrayList(), object : TiendaAdapter.MyClickListener {
             override fun onClick(doggo: Doggo) {
+                Toast.makeText(requireContext(), adapter.price.toString(), Toast.LENGTH_SHORT).show()
                 viewModel.buyDoggo(doggo.refdog.id, adapter.price)
             }
         })
