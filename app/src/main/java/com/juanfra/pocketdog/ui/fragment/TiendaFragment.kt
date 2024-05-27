@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.juanfra.pocketdog.data.doggos.Doggo
 import com.juanfra.pocketdog.databinding.FragmentTiendaBinding
-import com.juanfra.pocketdog.ui.adapter.TiendaAdapter
+
 import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,10 +20,10 @@ import kotlinx.coroutines.launch
 
 class TiendaFragment : Fragment() {
     private lateinit var binding: FragmentTiendaBinding
-    private lateinit var adapter: TiendaAdapter
+
     private val viewModel by activityViewModels<PesetasViewModel>()
 
-
+/*
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -57,5 +57,5 @@ class TiendaFragment : Fragment() {
         binding.rvTienda.adapter = adapter
         binding.rvTienda.layoutManager = LinearLayoutManager(requireContext())
     }
-
+*/
 }
