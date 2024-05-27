@@ -62,8 +62,7 @@ class TiendaFragment : Fragment() {
     fun setupAdapter() {
         adapter = TiendaAdapter(ArrayList(), object : TiendaAdapter.MyClickListener {
             override fun onClick(doggo: Doggo) {
-                Toast.makeText(requireContext(), adapter.price.toString(), Toast.LENGTH_SHORT).show()
-                viewModel.buyDoggo(doggo.refdog.id, adapter.price)
+                adapter.price[doggo.rarity]?.let { viewModel.buyDoggo(doggo.refdog.id, it) }
             }
         })
         binding.rvTienda.adapter = adapter

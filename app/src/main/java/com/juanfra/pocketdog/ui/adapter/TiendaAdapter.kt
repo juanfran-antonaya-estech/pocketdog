@@ -22,7 +22,7 @@ class TiendaAdapter(var listado: ArrayList<Doggo>, val listener: MyClickListener
         fun onClick(doggo: Doggo)
     }
 
-    var price = 0
+    var price = mapOf("Comun" to 200, "Raro" to 400, "Épico" to 600, "Legendario" to 1600)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MiCelda {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -34,17 +34,7 @@ class TiendaAdapter(var listado: ArrayList<Doggo>, val listener: MyClickListener
         return listado.size
     }
 
-    fun price(doggo: Doggo){
-        if (doggo.rarity == "Comun" || doggo.rarity == "Común"){
-            price = 200
-        } else if (doggo.rarity == "Raro"){
-            price = 400
-        } else if (doggo.rarity == "Epico" && doggo.rarity == "Épico") {
-            price = 800
-        } else {
-            price = 1600
-        }
-    }
+
 
     override fun onBindViewHolder(holder: MiCelda, position: Int) {
         val doggo = listado[position]
@@ -58,22 +48,26 @@ class TiendaAdapter(var listado: ArrayList<Doggo>, val listener: MyClickListener
                 binding.btPaid.isEnabled = false
             }
 
-            if (doggo.rarity == "Comun" || doggo.rarity == "Común"){
-                price(doggo)
-                binding.btPaid.text = "$price ptas."
-            }
-            if (doggo.rarity == "Raro"){
-                price(doggo)
-                binding.btPaid.text = "$price ptas."
-            }
-            if (doggo.rarity == "Epico" && doggo.rarity == "Épico") {
-                price(doggo)
-                binding.btPaid.text = "$price ptas."
-            }
-            if (doggo.rarity == "Legendario" || doggo.rarity == "Legendary") {
-                price(doggo)
-                binding.btPaid.text = "$price ptas."
-            }
+            binding.btPaid.text = price[doggo.rarity]!!.toString() + " ptas."
+
+            val colorCard = mapOf(
+                "Comun" to R.drawable.shape_tienda_normalito,
+                "Raro" to R.drawable.shape_tienda_raro,
+                "Épico" to R.drawable.shape_tienda_epico,
+                "Legendario" to R.drawable.shape_tienda_legendario
+            )
+            val colorText = mapOf(
+                "Comun" to Color.GREEN,
+                "Raro" to Color.BLUE,
+                "Épico" to Color.MAGENTA,
+                "Legendario" to Color.YELLOW
+            )
+
+            binding.bkTienda.setBackgroundResource(colorCard[doggo.rarity]!!)
+            binding.rareDoggo.setTextColor(colorText[doggo.rarity]!!)
+
+
+
 
         }
 
