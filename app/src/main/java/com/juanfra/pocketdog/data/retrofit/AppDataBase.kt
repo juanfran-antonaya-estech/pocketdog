@@ -11,7 +11,7 @@ import es.estech.myapplication.data.models.catphoto.ImagenPerro
 
 @Database(entities = [Pesetas::class, Resultado::class], version=1)
 abstract class AppDataBase: RoomDatabase() {
-    abstract fun Dao(): Dao
+    abstract fun dao(): Dao
 
     companion object {
         const val DBNAME = "PoketDoggDataBase"

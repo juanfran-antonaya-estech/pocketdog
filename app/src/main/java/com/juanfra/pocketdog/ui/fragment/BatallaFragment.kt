@@ -14,6 +14,7 @@ import com.juanfra.pocketdog.data.doggos.Doggo
 import com.juanfra.pocketdog.data.doggos.doggointerface.BuffMove
 import com.juanfra.pocketdog.data.doggos.doggointerface.SpecialAttack
 import com.juanfra.pocketdog.data.doggos.doggointerface.TurnEndListener
+import com.juanfra.pocketdog.data.models.combate.Resultado
 import com.juanfra.pocketdog.databinding.FragmentBatallaBinding
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.GrayscaleTransformation
@@ -247,6 +248,8 @@ class BatallaFragment : Fragment() {
 
 
     fun addLog(text: String) {
+        val resultadobatalla = Resultado(actualenemy.refdog.url.toString(),actualenemy.refdog.url.toString(),true)
+        viewModel.logBatalla(resultadobatalla)
         binding.tvLog.text = binding.tvLog.text.toString() + "\n$text"
 
     }
