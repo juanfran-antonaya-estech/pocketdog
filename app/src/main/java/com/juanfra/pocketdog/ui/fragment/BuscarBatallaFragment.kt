@@ -34,6 +34,7 @@ class BuscarBatallaFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.resetBattle()
         setupAdapter()
         //llamar a una corrutina para actualizar la lista
         var grupos : MutableLiveData<List<DogTrio>> = MutableLiveData()

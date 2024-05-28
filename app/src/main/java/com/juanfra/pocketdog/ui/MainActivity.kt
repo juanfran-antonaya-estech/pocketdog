@@ -33,15 +33,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel.loadDoggos()
-       ///*
-        CoroutineScope(Dispatchers.IO).launch {
-        viewModel.buyDoggo(viewModel.getRandomDoggo("comun").refdog.id,0)
-        viewModel.buyDoggo(viewModel.getRandomDoggo("comun").refdog.id,0)
-        viewModel.buyDoggo(viewModel.getRandomDoggo("comun").refdog.id,0)
-        viewModel.buyDoggo(viewModel.getRandomDoggo("comun").refdog.id,0)
-        }
-
-       //*/
+        viewModel.resetBattle()
 
         setSupportActionBar(binding.toolbar)
         val navHostFragment = supportFragmentManager

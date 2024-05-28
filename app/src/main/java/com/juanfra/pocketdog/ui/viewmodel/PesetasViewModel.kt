@@ -58,6 +58,10 @@ class PesetasViewModel(val context: Context) : ViewModel() {
         return auxtrio
     }
 
+    fun resetBattle(){
+        win.value = "en combate"
+    }
+
     fun battleTrio(enemies: DogTrio) {
         enemytrio.value = enemies
     }

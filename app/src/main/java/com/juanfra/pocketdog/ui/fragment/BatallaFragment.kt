@@ -7,7 +7,9 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.juanfra.pocketdog.data.doggos.Doggo
 import com.juanfra.pocketdog.data.doggos.doggointerface.BuffMove
 import com.juanfra.pocketdog.data.doggos.doggointerface.SpecialAttack
@@ -67,8 +69,14 @@ class BatallaFragment : Fragment() {
 
         viewModel.win.observe(viewLifecycleOwner) {
             when (it) {
-                "ganaste" -> binding.tvLog.text = binding.tvLog.text.toString() + "\nGanaste"
-                "pertiste" -> binding.tvLog.text = binding.tvLog.text.toString() + "\nPerdiste"
+                "ganaste" -> {
+                    Toast.makeText(requireContext(), "Ganaste", Toast.LENGTH_SHORT).show()
+                    findNavController().navigateUp()
+                }
+                "perdiste" -> {
+                    Toast.makeText(requireContext(), "Perdiste", Toast.LENGTH_SHORT).show()
+                    findNavController().navigateUp()
+                }
             }
         }
 

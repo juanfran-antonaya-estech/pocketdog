@@ -66,6 +66,7 @@ class InicioFragment : Fragment() {
 
         bbinding.btAccionPlantilla.setOnClickListener {
             viewModels.battleTrio(dogtrio)
+            viewModels.resetBattle()
             BuscarBatallaFragment.viewModel = viewModels
             findNavController().navigate(R.id.action_inicioFragment_to_batallaFragment)
         }
