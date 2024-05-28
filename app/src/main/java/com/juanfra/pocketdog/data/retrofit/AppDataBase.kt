@@ -4,16 +4,17 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.juanfra.pocketdog.data.models.combate.Resultado
 import com.juanfra.pocketdog.data.pesetas.Pesetas
 import es.estech.myapplication.data.models.catphoto.ImagenPerro
 
 
-@Database(entities = [Pesetas::class, ImagenPerro::class], version=1)
+@Database(entities = [Pesetas::class, Resultado::class], version=1)
 abstract class AppDataBase: RoomDatabase() {
     abstract fun Dao(): Dao
 
     companion object {
-        const val DBNAME = "pesetas"
+        const val DBNAME = "PoketDoggDataBase"
 
         @Volatile
         private var INSTANCE: AppDataBase? = null

@@ -1,5 +1,6 @@
 package com.juanfra.pocketdog.ui.fragment
 
+import android.annotation.SuppressLint
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
@@ -244,8 +245,10 @@ class BatallaFragment : Fragment() {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics)
     }
 
+
     fun addLog(text: String) {
         binding.tvLog.text = binding.tvLog.text.toString() + "\n$text"
+
     }
 
 }
