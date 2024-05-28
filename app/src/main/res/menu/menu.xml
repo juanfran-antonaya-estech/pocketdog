@@ -12,7 +12,7 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/menuInventario"
+        android:id="@+id/misPerrosFragment"
         android:contentDescription="inventario"
         android:icon="@drawable/botoninventario"
         android:iconTint="@color/menu_selector_color"
@@ -38,7 +38,7 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/menuLog"
+        android:id="@+id/registroBatallasFragment"
         android:icon="@drawable/botonlog"
         android:iconTint="@color/menu_selector_color"
         android:title="Log"

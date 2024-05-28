@@ -40,6 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:background="#EF0000"
+        app:itemIconTint="@color/menu_selector_color"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.loadDoggos()
         menuNavegacion()
         setSupportActionBar(binding.toolbar)
+        binding.bottomNavigationView.itemActiveIndicatorColor = null
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcv) as NavHostFragment
         navController = navHostFragment.navController
@@ -43,6 +44,16 @@ class MainActivity : AppCompatActivity() {
                 R.id.tiendaFragment -> {
                     BuscarBatallaFragment.viewModel = viewModel
                     navController.navigate(R.id.action_tiendaFragment_to_buscarBatallaFragment)
+                }
+
+                R.id.misPerrosFragment -> {
+                    BuscarBatallaFragment.viewModel = viewModel
+                    navController.navigate(R.id.action_misPerrosFragment_to_buscarBatallaFragment)
+                }
+
+                R.id.registroBatallasFragment -> {
+                    BuscarBatallaFragment.viewModel = viewModel
+                    navController.navigate(R.id.action_registroBatallasFragment_to_buscarBatallaFragment)
                 }
 
                 R.id.batallaFragment -> {
