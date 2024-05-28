@@ -13,7 +13,7 @@ open class Doggo(public val refdog: ImagenPerroDetalle) {
     val baseattack: Int = parseAttack(refdog.breeds[0].height)
     val basedefense: Int = parseDefense(refdog.breeds[0].weight)
     var alive : Boolean = true
-    open var rarity = "Común"
+    open var rarity = "Comun"
 
     //estas stats son las que luego se utilizan en el combate
     var maxhealth = basehealth
@@ -28,7 +28,7 @@ open class Doggo(public val refdog: ImagenPerroDetalle) {
         otroperro.getDamage(attack)
     }
 
-    private fun enemyturn(playerDoggo: Doggo) {
+    fun enemyturn(playerDoggo: Doggo) {
         if (this is SpecialAttack && this is BuffMove){
             val rand = Random.nextDouble(1.0)
             if (rand > 0.5){

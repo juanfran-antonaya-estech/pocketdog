@@ -13,6 +13,10 @@ class BorderCollie (reference: ImagenPerroDetalle) : Doggo(reference), TurnEndLi
     val sheepatt = 120
     val sheepdef = 45
 
+    override var rarity: String
+        get() = "Raro"
+        set(value) {}
+
     override var specialAttName: String
         get() = "Estampida de rebaño (${(sheeps / 2) * sheepatt})"
         set(value) {}

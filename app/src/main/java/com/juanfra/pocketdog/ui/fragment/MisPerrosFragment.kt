@@ -17,7 +17,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [MisPerrosFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MisPerrosFragment : Fragment() {
+class MisPerrosFragment(val root: View) : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -35,7 +35,7 @@ class MisPerrosFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mis_perros, container, false)
+        return inflater.inflate(R.layout.holder_mis_perros, container, false)
     }
 
     companion object {
