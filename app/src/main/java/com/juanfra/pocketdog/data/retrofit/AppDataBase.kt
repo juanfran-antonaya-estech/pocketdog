@@ -5,27 +5,28 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.juanfra.pocketdog.data.pesetas.Pesetas
+import es.estech.myapplication.data.models.catphoto.ImagenPerro
 
 
-@Database(entities = [Pesetas::class], version=1)
-abstract class AppDataBasePesetas: RoomDatabase() {
-    abstract fun pesetasDao(): PesetasDao
+@Database(entities = [Pesetas::class, ImagenPerro::class], version=1)
+abstract class AppDataBase: RoomDatabase() {
+    abstract fun Dao(): Dao
 
     companion object {
         const val DBNAME = "pesetas"
 
         @Volatile
-        private var INSTANCE: AppDataBasePesetas? = null
+        private var INSTANCE: AppDataBase? = null
 
-        fun getDatabase(context: Context): AppDataBasePesetas {
+        fun getDatabase(context: Context): AppDataBase {
             val temporalInstance = INSTANCE
             if (temporalInstance != null)
                 return temporalInstance
 
-            synchronized(AppDataBasePesetas::class.java) {
+            synchronized(AppDataBase::class.java) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    AppDataBasePesetas::class.java,
+                    AppDataBase::class.java,
                     DBNAME
                 ).build()
 
