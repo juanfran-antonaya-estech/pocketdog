@@ -19,9 +19,11 @@ class TiendaAdapter(var listado: ArrayList<Doggo>, val listener: MyClickListener
         RecyclerView.ViewHolder(binding.root)
 
     interface MyClickListener {
-        fun onClick(doggo: Doggo)
+        fun onClick(doggo: Doggo) // Pasamos el doggo a la llamada del botón
     }
 
+
+    // Se crea un mapOf para asignar el precio de cada rareza a un valor entero
     var price = mapOf("Comun" to 200, "Raro" to 400, "Épico" to 600, "Legendario" to 1600)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MiCelda {
@@ -40,22 +42,25 @@ class TiendaAdapter(var listado: ArrayList<Doggo>, val listener: MyClickListener
         val doggo = listado[position]
 
 
+        // Se accede a los elementos del holder para asignar los valores básicos del Doggo a comprar
         with(holder){
             binding.nameDoggo.text = doggo.refdog.breeds[0].name
             binding.rareDoggo.text = doggo.rarity
             binding.btPaid.setOnClickListener {
                 listener.onClick(doggo)
-                binding.btPaid.isEnabled = false
+                binding.btPaid.isEnabled = false // Una vez echo click, se deshabilita el botón (dando igual si tienes o no dinero o si ya tienes completo tu inventario 3/3)
             }
 
             binding.btPaid.text = price[doggo.rarity]!!.toString() + " ptas."
 
+            // Igual como el precio, se cambia el color del card por la rareza
             val colorCard = mapOf(
                 "Comun" to R.drawable.shape_tienda_normalito,
                 "Raro" to R.drawable.shape_tienda_raro,
                 "Épico" to R.drawable.shape_tienda_epico,
                 "Legendario" to R.drawable.shape_tienda_legendario
             )
+            // Se cambia el color del texto por la rareza
             val colorText = mapOf(
                 "Comun" to Color.GREEN,
                 "Raro" to Color.BLUE,
@@ -65,10 +70,6 @@ class TiendaAdapter(var listado: ArrayList<Doggo>, val listener: MyClickListener
 
             binding.bkTienda.setBackgroundResource(colorCard[doggo.rarity]!!)
             binding.rareDoggo.setTextColor(colorText[doggo.rarity]!!)
-
-
-
-
         }
 
 

@@ -40,17 +40,19 @@ class TiendaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupAdapter()
+        setupAdapter() // Llamo a la función para configurar el adaptador
 
-        var doggos : MutableLiveData<List<Doggo>> = MutableLiveData()
+        var doggos : MutableLiveData<List<Doggo>> = MutableLiveData() // Creo una variable mutable para almacenar los doggos
 
+        // Creo un corrutina para obtener los doggos de la API y actualizo la lista en el adaptador mediante su raza
         CoroutineScope(Dispatchers.IO).launch {
             doggos.postValue(arrayListOf(viewModel.getRandomDoggo("comun"), (viewModel.getRandomDoggo("raro")), (viewModel.getRandomDoggo("epico")), (viewModel.getRandomDoggo("legendario"))))
-
         }
+        // Observo los doggos y actualizo la lista en el adaptador
         doggos.observe(viewLifecycleOwner) {
             adapter.updateList(ArrayList(it))
         }
+        // Observo las pesetas que tenemos y las actualizo en la vista
         viewModel.pesetas.observe(viewLifecycleOwner) {
             binding.ptasActuales.text = it.pesetas.toString() + " ptas."
         }
@@ -62,7 +64,7 @@ class TiendaFragment : Fragment() {
     fun setupAdapter() {
         adapter = TiendaAdapter(ArrayList(), object : TiendaAdapter.MyClickListener {
             override fun onClick(doggo: Doggo) {
-                adapter.price[doggo.rarity]?.let { viewModel.buyDoggo(doggo.refdog.id, it) }
+                adapter.price[doggo.rarity]?.let { viewModel.buyDoggo(doggo.refdog.id, it) } // Por rareza, le añado el precio al doggo
             }
         })
         binding.rvTienda.adapter = adapter
