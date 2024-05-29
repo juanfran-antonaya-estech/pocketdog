@@ -35,27 +35,6 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        binding.bottomAppBar2.setNavigationOnClickListener {
-            // Handle navigation icon press
-        }
-
-        binding.bottomAppBar2.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.accelerator -> {
-                    // Handle accelerator icon press
-                    true
-                }
-                R.id.rotation -> {
-                    // Handle rotation icon press
-                    true
-                }
-                R.id.dashboard -> {
-                    // Handle dashboard icon press
-                    true
-                }
-                else -> false
-            }
-        }
 
         binding.fabToBattle.setOnClickListener {
             when (navController.currentDestination?.id) {
