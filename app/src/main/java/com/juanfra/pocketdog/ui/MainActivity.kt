@@ -30,6 +30,8 @@ class MainActivity : AppCompatActivity() {
         viewModel.resetBattle()
 
         setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setBackgroundDrawable(resources.getDrawable(R.drawable.design_toolbar))
         binding.bottomNavigationView.itemActiveIndicatorColor = null
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcv) as NavHostFragment
@@ -82,6 +84,12 @@ class MainActivity : AppCompatActivity() {
         while (navController.currentDestination?.id != R.id.inicioFragment) {
             navController.popBackStack()
         }
+    }
+
+    // Funcion para cambiar el titulo en cada fragment
+
+    fun setToolbarTitle(title: String) {
+        binding.toolbarTitle.text = title
     }
 
     private fun menuNavegacion() {

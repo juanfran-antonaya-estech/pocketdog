@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.juanfra.pocketdog.R
 import com.juanfra.pocketdog.data.doggos.DogTrio
 import com.juanfra.pocketdog.databinding.FragmentBuscarBatallaBinding
+import com.juanfra.pocketdog.ui.MainActivity
 import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -56,6 +57,12 @@ class BuscarBatallaFragment : Fragment() {
         val layoutManager = LinearLayoutManager(requireContext())
         binding.rvBB.adapter = adapter
         binding.rvBB.layoutManager = layoutManager
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Cambiar el título de la Toolbar
+        (activity as? MainActivity)?.setToolbarTitle("Elegir Batalla")
     }
 
     companion object {

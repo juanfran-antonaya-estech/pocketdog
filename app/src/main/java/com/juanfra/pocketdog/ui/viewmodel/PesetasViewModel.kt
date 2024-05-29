@@ -22,7 +22,10 @@ import com.juanfra.pocketdog.data.doggos.specialdoggos.SharPei
 import com.juanfra.pocketdog.data.doggos.specialdoggos.Shiba
 import com.juanfra.pocketdog.data.doggos.specialdoggos.StBernard
 import com.juanfra.pocketdog.data.models.catphoto.ImagenPerroDetalle
+<<<<<<<<< Temporary merge branch 1
+=========
 import com.juanfra.pocketdog.data.models.combate.Resultado
+>>>>>>>>> Temporary merge branch 2
 import com.juanfra.pocketdog.data.pesetas.Pesetas
 import es.estech.myapplication.data.models.votes.VoteSend
 import kotlinx.coroutines.async
