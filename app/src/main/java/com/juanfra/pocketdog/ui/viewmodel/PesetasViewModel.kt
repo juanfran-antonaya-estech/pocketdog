@@ -49,14 +49,17 @@ class PesetasViewModel(val context: Context) : ViewModel() {
         return auxtrio
     }
     fun logBatalla(resultado: Resultado){
-        repo.poketDao.insertResultado(resultado)
+        viewModelScope.launch {
+            repo.poketDao.insertResultado(resultado)
+        }
+
     }
     fun insertarPesetas(pesetas: Pesetas){
         viewModelScope.launch {
             repo.insertarPesetas(pesetas)
         }
     }
-    fun obtenerPesetas(){
+    fun obtenerPesetas() : {
         viewModelScope.launch {
             repo.getPesetas()
         }

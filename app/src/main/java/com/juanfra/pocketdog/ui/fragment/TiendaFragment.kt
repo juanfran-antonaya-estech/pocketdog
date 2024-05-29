@@ -68,7 +68,7 @@ class TiendaFragment : Fragment() {
             adapter.updateList(ArrayList(it))
         }
         // Observo las pesetas que tenemos y las actualizo en la vista
-        viewModel.pesetas.observe(viewLifecycleOwner) {
+        viewModel.obtenerPesetas().observe(viewLifecycleOwner) {
             binding.ptasActuales.text = it.pesetas.toString() + " ptas."
         }
 
