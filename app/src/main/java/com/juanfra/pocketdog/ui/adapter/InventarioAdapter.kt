@@ -14,66 +14,62 @@ import com.juanfra.pocketdog.data.doggos.DogTrio
 import com.juanfra.pocketdog.databinding.HolderMisPerrosBinding
 import com.juanfra.pocketdog.databinding.HolderTresperrosBinding
 import com.juanfra.pocketdog.ui.fragment.MisPerrosFragment
+import com.squareup.picasso.Picasso
 
-class InventarioAdapter(var listado: ArrayList<DogTrio>, val listener: AdapterView.OnItemClickListener) :
+class InventarioAdapter(var listado: ArrayList<DogTrio>, val listener: MyClick) :
     RecyclerView.Adapter<InventarioAdapter.MyHolder>() {
-    open var rarity = "Comun"
 
-    interface OnItemClickListener {
-        fun itemClick(url: String)
+    inner class MyHolder(val binding: HolderMisPerrosBinding) : RecyclerView.ViewHolder(binding.root)
+
+
+    interface MyClick {
+        fun onClick(dogTrio: DogTrio)
+
     }
-
-    inner class MyHolder(val binding: HolderMisPerrosBinding ) : RecyclerView.ViewHolder(binding.root)
-
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = HolderMisPerrosBinding.inflate(layoutInflater, parent, false)
-
         return MyHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
+        val dogtrio = listado[position]
 
-            val dogtrio = listado[position]
-
-            holder.binding.nombreUno.text = dogtrio.packName
-
-            Glide.with(holder.itemView).load(dogtrio.perros).into(holder.binding.perroUno)
-
-            with(holder) {
-                binding.nombreUno.text = dogtrio.packName
-                binding.rarezaUno.text= dogtrio.packLevel
-            }
+        holder.binding.nombreUno.text = dogtrio.perros[position].refdog.breeds[0].name
 
 
-            val packLevelColors = mapOf(
-                "Muy Fácil" to R.color.veryeasy,
-                "Fácil" to R.color.easy,
-                "Normal" to R.color.medium,
-                "Difícil" to R.color.hard,
-                "Muy Difícil" to R.color.veryhard
-            )
 
-            when (dogtrio.packLevel) {
-                in packLevelColors -> {
-                    val color = Integer.toHexString(holder.itemView.context.getColor(packLevelColors[dogtrio.packLevel]!!))
-                }
-            }
+        val packLevelColors = mapOf(
+            "Muy Fácil" to R.color.veryeasy,
+            "Fácil" to R.color.easy,
+            "Normal" to R.color.medium,
+            "Difícil" to R.color.hard,
+            "Muy Difícil" to R.color.veryhard
+        )
 
+        packLevelColors[dogtrio.packLevel]?.let { colorResId ->
+            val color = holder.itemView.context.getColor(colorResId)
+            holder.binding.rarezaUno.setTextColor(color)
+        }
+        Picasso.get()
+            .load(dogtrio.perros[position].refdog.url)
+            .into(holder.binding.perroUno)
     }
 
-
-
-
     override fun getItemCount(): Int {
-        return listado.size    }
+        return listado.size
+    }
 
     fun actualizarLista(list: ArrayList<DogTrio>) {
         listado = list
         notifyDataSetChanged()
     }
 }
+
+
+
+
+
 
 
