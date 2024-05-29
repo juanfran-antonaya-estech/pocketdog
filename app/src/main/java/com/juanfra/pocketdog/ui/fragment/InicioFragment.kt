@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.juanfra.pocketdog.R
+import com.juanfra.pocketdog.ui.MainActivity
 import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
 
 
@@ -29,6 +30,12 @@ class InicioFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val mediaPlayer = MediaPlayer.create(context, R.raw.pdtienda3)
         mediaPlayer.start()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Cambiar el título de la Toolbar
+        (activity as? MainActivity)?.setToolbarTitle("Inicio")
     }
 
 

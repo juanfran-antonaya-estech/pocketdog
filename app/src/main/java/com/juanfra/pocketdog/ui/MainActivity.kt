@@ -28,7 +28,10 @@ class MainActivity : AppCompatActivity() {
         viewModel.loadDoggos()
         menuNavegacion()
         setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setBackgroundDrawable(resources.getDrawable(R.drawable.design_toolbar))
         binding.bottomNavigationView.itemActiveIndicatorColor = null
+
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcv) as NavHostFragment
         navController = navHostFragment.navController
@@ -69,6 +72,12 @@ class MainActivity : AppCompatActivity() {
 
 
 
+    }
+
+    // Funcion para cambiar el titulo en cada fragment
+
+    fun setToolbarTitle(title: String) {
+        binding.toolbarTitle.text = title
     }
 
     private fun menuNavegacion() {

@@ -17,6 +17,7 @@ import com.juanfra.pocketdog.data.doggos.doggointerface.SpecialAttack
 import com.juanfra.pocketdog.data.doggos.doggointerface.TurnEndListener
 import com.juanfra.pocketdog.data.models.combate.Resultado
 import com.juanfra.pocketdog.databinding.FragmentBatallaBinding
+import com.juanfra.pocketdog.ui.MainActivity
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.GrayscaleTransformation
 import kotlinx.coroutines.CoroutineScope
@@ -84,6 +85,12 @@ class BatallaFragment : Fragment() {
         }
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Cambiar el título de la Toolbar
+        (activity as? MainActivity)?.setToolbarTitle("Combate")
     }
 
     fun hideAllyDog() {

@@ -1,3 +1,4 @@
+package com.juanfra.pocketdog.ui.fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,11 +9,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.juanfra.pocketdog.data.doggos.Doggo
 import com.juanfra.pocketdog.databinding.FragmentTiendaBinding
+import com.juanfra.pocketdog.ui.MainActivity
 import com.juanfra.pocketdog.ui.adapter.TiendaAdapter
 import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
 
 class TiendaFragment : Fragment() {
     private lateinit var binding: FragmentTiendaBinding
@@ -22,6 +25,12 @@ class TiendaFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Cambiar el título de la Toolbar
+        (activity as? MainActivity)?.setToolbarTitle("Tienda")
     }
 
     override fun onCreateView(
@@ -62,6 +71,7 @@ class TiendaFragment : Fragment() {
 
 
     }
+
 
     fun setupAdapter() {
         adapter = TiendaAdapter(ArrayList(), object : TiendaAdapter.MyClickListener {
