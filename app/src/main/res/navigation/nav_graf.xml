@@ -6,15 +6,10 @@
     app:startDestination="@id/inicioFragment">
 
     <fragment
-        android:id="@+id/batallaFragment"
-        android:name="com.juanfra.pocketdog.ui.fragment.BatallaFragment"
-        android:label="fragment_batalla"
-        tools:layout="@layout/fragment_batalla" />
-    <fragment
         android:id="@+id/inicioFragment"
         android:name="com.juanfra.pocketdog.ui.fragment.InicioFragment"
         android:label="fragment_inicio"
-        tools:layout="@layout/fragment_inicio" />
+        tools:layout="@layout/fragment_inicio" >
         <action
             android:id="@+id/action_inicioFragment_to_registroBatallasFragment"
             app:destination="@id/registroBatallasFragment" />
@@ -27,50 +22,49 @@
         <action
             android:id="@+id/action_inicioFragment_to_misPerrosFragment"
             app:destination="@id/misPerrosFragment" />
-
-            android:id="@+id/action_inicioFragment_to_buscarBatallaFragment"
-            app:destination="@id/buscarBatallaFragment" />
->>>>>>> origin/rama-juanfran
+        <action
+            android:id="@+id/action_inicioFragment_to_batallaFragment"
+            app:destination="@id/batallaFragment" />
     </fragment>
     <fragment
         android:id="@+id/buscarBatallaFragment"
         android:name="com.juanfra.pocketdog.ui.fragment.BuscarBatallaFragment"
         android:label="fragment_buscar_batalla"
-        tools:layout="@layout/fragment_buscar_batalla" />
+        tools:layout="@layout/fragment_buscar_batalla" >
         <action
             android:id="@+id/action_buscarBatallaFragment_to_batallaFragment"
             app:destination="@id/batallaFragment" />
     </fragment>
     <fragment
-
         android:id="@+id/batallaFragment"
         android:name="com.juanfra.pocketdog.ui.fragment.BatallaFragment"
         android:label="fragment_batalla"
         tools:layout="@layout/fragment_batalla" />
     <fragment
->>>>>>> origin/rama-juanfran
         android:id="@+id/registroBatallasFragment"
         android:name="com.juanfra.pocketdog.ui.fragment.RegistroBatallasFragment"
         android:label="fragment_registro_batallas"
-        tools:layout="@layout/fragment_registro_batallas" />
+        tools:layout="@layout/fragment_registro_batallas" >
+        <action
+            android:id="@+id/action_registroBatallasFragment_to_buscarBatallaFragment"
+            app:destination="@id/buscarBatallaFragment" />
+    </fragment>
     <fragment
-
-        android:id="@+id/misPerrosFragment"
-        android:name="com.juanfra.pocketdog.ui.fragment.MisPerrosFragment"
-        android:label="fragment_mis_perros"
-        tools:layout="@layout/fragment_mis_perros" />
-    <fragment
->>>>>>> origin/rama-juanfran
         android:id="@+id/tiendaFragment"
         android:name="com.juanfra.pocketdog.ui.fragment.TiendaFragment"
         android:label="fragment_tienda"
-        tools:layout="@layout/fragment_tienda" />
-
-=======
+        tools:layout="@layout/fragment_tienda" >
+        <action
+            android:id="@+id/action_tiendaFragment_to_buscarBatallaFragment"
+            app:destination="@id/buscarBatallaFragment" />
+    </fragment>
     <fragment
         android:id="@+id/misPerrosFragment"
         android:name="com.juanfra.pocketdog.ui.fragment.MisPerrosFragment"
         android:label="fragment_mis_perros"
-        tools:layout="@layout/fragment_mis_perros" />
->>>>>>> origin/rama-juanfran
+        tools:layout="@layout/fragment_mis_perros" >
+        <action
+            android:id="@+id/action_misPerrosFragment_to_buscarBatallaFragment"
+            app:destination="@id/buscarBatallaFragment" />
+    </fragment>
 </navigation>

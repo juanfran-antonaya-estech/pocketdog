@@ -7,11 +7,15 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
+import androidx.navigation.fragment.findNavController
 import com.juanfra.pocketdog.data.doggos.Doggo
 import com.juanfra.pocketdog.data.doggos.doggointerface.BuffMove
 import com.juanfra.pocketdog.data.doggos.doggointerface.SpecialAttack
 import com.juanfra.pocketdog.data.doggos.doggointerface.TurnEndListener
+import com.juanfra.pocketdog.data.models.combate.Resultado
 import com.juanfra.pocketdog.databinding.FragmentBatallaBinding
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.GrayscaleTransformation
@@ -26,6 +30,7 @@ class BatallaFragment : Fragment() {
     val viewModel = BuscarBatallaFragment.viewModel
 
     private lateinit var actualenemy: Doggo
+    private lateinit var actualdoggo: Doggo
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,8 +72,14 @@ class BatallaFragment : Fragment() {
 
         viewModel.win.observe(viewLifecycleOwner) {
             when (it) {
-                "ganaste" -> binding.tvLog.text = binding.tvLog.text.toString() + "\nGanaste"
-                "pertiste" -> binding.tvLog.text = binding.tvLog.text.toString() + "\nPerdiste"
+                "ganaste" -> {
+                    Toast.makeText(requireContext(), "Ganaste", Toast.LENGTH_SHORT).show()
+                    findNavController().navigateUp()
+                }
+                "perdiste" -> {
+                    Toast.makeText(requireContext(), "Perdiste", Toast.LENGTH_SHORT).show()
+                    findNavController().navigateUp()
+                }
             }
         }
 
@@ -113,11 +124,17 @@ class BatallaFragment : Fragment() {
 
     fun prepareAllyDog(ally: Doggo) {
         viewModel.actualenemy.observe(viewLifecycleOwner) { enemy ->
+            val log = object : Doggo.Log{
+                override fun action(text: String) {
+                    addLog(text)
+                }
+
+            }
             binding.btNormalAtt.setOnClickListener {
                 if (enemy != null) {
                     ally.doBaseAttack(enemy)
                     addLog("Has golpeado al ${enemy.refdog.breeds[0].name} con ${ally.baseAttackName}")
-                    enemy.enemyturn(ally)
+                    enemy.enemyturn(ally, log)
                     if (ally is TurnEndListener) {
                         ally.onTurnEnd(enemy)
                     }
@@ -145,7 +162,7 @@ class BatallaFragment : Fragment() {
                     if (enemy != null) {
                         addLog("Has usado ${ally.specialAttName}: ${ally.specialAttDesc}")
                         ally.doSpecialAtt(enemy)
-                        enemy.enemyturn(ally)
+                        enemy.enemyturn(ally, log)
                         if (ally is TurnEndListener) {
                             ally.onTurnEnd(enemy)
                         }
@@ -176,7 +193,7 @@ class BatallaFragment : Fragment() {
                     if (enemy != null) {
                         addLog("Has usado ${ally.buffMovName}: ${ally.buffMovDesc}")
                         ally.doBuffMov(enemy)
-                        enemy.enemyturn(ally)
+                        enemy.enemyturn(ally, log)
                         if (ally is TurnEndListener) {
                             ally.onTurnEnd(enemy)
                         }
@@ -216,6 +233,8 @@ class BatallaFragment : Fragment() {
         binding.tvAllyLife.text = "${ally.actualhealth}/${ally.maxhealth}"
         binding.pbAllyLife.max = ally.maxhealth
         binding.pbAllyLife.progress = ally.actualhealth
+        binding.tvAtt.text = "Ataque: ${ally.attack}"
+        binding.tvDef.text = "Defensa: ${ally.defense}"
 
         binding.btNormalAtt.text = ally.baseAttackName
     }
@@ -243,7 +262,20 @@ class BatallaFragment : Fragment() {
     }
 
     fun addLog(text: String) {
-        binding.tvLog.text = binding.tvLog.text.toString() + "\n$text"
+
+        val texto = binding.tvLog.text.toString()
+        var lineas = ArrayList<String>()
+        if (texto.isNotEmpty()) {
+            lineas.addAll(texto.split("\n"))
+        }
+        while (lineas.size > 15){
+            lineas.removeAt(0)
+        }
+        binding.tvLog.text = lineas.joinToString("\n") + "\n$text"
+    }
+    fun resultado(){
+        val resultadobatalla = Resultado(actualenemy.refdog.url.toString(),actualdoggo.refdog.url.toString(),true)
+        viewModel.logBatalla(resultadobatalla)
     }
 
 }

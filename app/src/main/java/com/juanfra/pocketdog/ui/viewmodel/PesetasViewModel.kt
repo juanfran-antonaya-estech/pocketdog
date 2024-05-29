@@ -22,6 +22,7 @@ import com.juanfra.pocketdog.data.doggos.specialdoggos.SharPei
 import com.juanfra.pocketdog.data.doggos.specialdoggos.Shiba
 import com.juanfra.pocketdog.data.doggos.specialdoggos.StBernard
 import com.juanfra.pocketdog.data.models.catphoto.ImagenPerroDetalle
+import com.juanfra.pocketdog.data.models.combate.Resultado
 import com.juanfra.pocketdog.data.pesetas.Pesetas
 import es.estech.myapplication.data.models.votes.VoteSend
 import kotlinx.coroutines.async
@@ -47,6 +48,23 @@ class PesetasViewModel(val context: Context) : ViewModel() {
      *
      * @see Doggo
      */
+    fun logBatalla(resultado: Resultado){
+        repo.poketDao.insertResultado(resultado)
+    }
+
+    fun showcaseenemies() : MutableLiveData<DogTrio>{
+        val auxtrio = MutableLiveData<DogTrio>()
+        viewModelScope.launch {
+            val trio = getDogTrios(arrayListOf("normal"))
+            auxtrio.postValue(trio[0])
+
+        }
+        return auxtrio
+    }
+
+    fun resetBattle(){
+        win.value = "en combate"
+    }
 
     fun battleTrio(enemies: DogTrio) {
         enemytrio.value = enemies
@@ -185,7 +203,7 @@ class PesetasViewModel(val context: Context) : ViewModel() {
                         )
                     )
 
-                    trio.packLevel = "Muy difícil"
+                    trio.packLevel = "Muy Difícil"
                     trio.packName = "Perretes muy dificilones"
                     trios.add(
                         trio

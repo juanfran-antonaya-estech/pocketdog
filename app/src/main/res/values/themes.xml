@@ -14,7 +14,10 @@
     </style>
     <style name="GradientButton" parent="Widget.Material3.Button">
     <item name="background">@drawable/shape_boton</item>
-</style>
+    </style>
 
     <style name="Theme.PocketDog" parent="Base.Theme.PocketDog" />
+
+
+
 </resources>

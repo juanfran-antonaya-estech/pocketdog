@@ -1,103 +1,86 @@
 package com.juanfra.pocketdog.ui
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-<<<<<<< HEAD
 import androidx.navigation.NavController
-import androidx.navigation.NavHost
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-=======
-import androidx.navigation.findNavController
->>>>>>> origin/rama-juanfran
+import androidx.navigation.ui.NavigationUI
 import com.juanfra.pocketdog.R
 import com.juanfra.pocketdog.databinding.ActivityMainBinding
-import com.juanfra.pocketdog.databinding.FragmentInicioBinding
 import com.juanfra.pocketdog.ui.fragment.BuscarBatallaFragment
 import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityMainBinding
-<<<<<<< HEAD
-    private lateinit var navController: NavController
-    private lateinit var appBarConfiguration: AppBarConfiguration
-=======
-    val viewModel by viewModels<PesetasViewModel > {
+    private lateinit var binding: ActivityMainBinding
+    private val viewModel by viewModels<PesetasViewModel> {
         PesetasViewModel.PesetasViewModelFactory(this)
     }
->>>>>>> origin/rama-juanfran
+    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel.loadDoggos()
-        /*
-        CoroutineScope(Dispatchers.IO).launch {
-        viewModel.buyDoggo(viewModel.getRandomDoggo("comun").refdog.id,0)
-        viewModel.buyDoggo(viewModel.getRandomDoggo("comun").refdog.id,0)
-        viewModel.buyDoggo(viewModel.getRandomDoggo("comun").refdog.id,0)
-        viewModel.buyDoggo(viewModel.getRandomDoggo("comun").refdog.id,0)
-        }
-
-        */
-
-
-
+        menuNavegacion()
         setSupportActionBar(binding.toolbar)
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHost
+        binding.bottomNavigationView.itemActiveIndicatorColor = null
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcv) as NavHostFragment
         navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-        binding.bottomAppBar2.setNavigationOnClickListener {
-            // Handle navigation icon press
-        }
+        binding.fabToBattle.setOnClickListener {
+            when (navController.currentDestination?.id) {
+                R.id.inicioFragment -> {
+                    BuscarBatallaFragment.viewModel = viewModel
+                    navController.navigate(R.id.action_inicioFragment_to_buscarBatallaFragment)
+                }
 
-        binding.bottomAppBar2.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.accelerator -> {
-                    // Handle accelerator icon press
-                    true
+                R.id.tiendaFragment -> {
+                    BuscarBatallaFragment.viewModel = viewModel
+                    navController.navigate(R.id.action_tiendaFragment_to_buscarBatallaFragment)
                 }
-                R.id.rotation -> {
-                    // Handle rotation icon press
-                    true
+
+                R.id.misPerrosFragment -> {
+                    BuscarBatallaFragment.viewModel = viewModel
+                    navController.navigate(R.id.action_misPerrosFragment_to_buscarBatallaFragment)
                 }
-                R.id.dashboard -> {
-                    // Handle dashboard icon press
-                    true
+
+                R.id.registroBatallasFragment -> {
+                    BuscarBatallaFragment.viewModel = viewModel
+                    navController.navigate(R.id.action_registroBatallasFragment_to_buscarBatallaFragment)
                 }
-                else -> false
+
+                R.id.batallaFragment -> {
+                    binding.fcv.findNavController().navigateUp()
+                }
+
+                R.id.buscarBatallaFragment -> {
+                    binding.fcv.findNavController().navigateUp()
+                }
             }
         }
 
-<<<<<<< HEAD
-=======
-        binding.fabToBattle.setOnClickListener {
-            BuscarBatallaFragment.viewModel = viewModel
-            binding.fcv.findNavController().navigate(R.id.action_inicioFragment_to_buscarBatallaFragment)
-        }
->>>>>>> origin/rama-juanfran
+
+
+
+    }
+
+    private fun menuNavegacion() {
+        val bottomNavigationView = binding.bottomNavigationView
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcv) as NavHostFragment
+        NavigationUI.setupWithNavController(
+            bottomNavigationView,
+            navHostFragment.navController
+        )
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp()
     }
-
 }
