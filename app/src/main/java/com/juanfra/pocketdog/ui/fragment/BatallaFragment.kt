@@ -279,7 +279,7 @@ class BatallaFragment : Fragment() {
         }
         binding.tvLog.text = lineas.joinToString("\n") + "\n$text"
     }
-    fun resultado(){
+    suspend fun resultado(){
         val resultadobatalla = Resultado(actualenemy.refdog.url.toString(),actualdoggo.refdog.url.toString(),true)
         viewModel.logBatalla(resultadobatalla)
     }

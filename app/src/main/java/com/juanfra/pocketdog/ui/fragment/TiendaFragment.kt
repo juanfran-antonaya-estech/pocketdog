@@ -72,10 +72,12 @@ class TiendaFragment : Fragment() {
             binding.ptasActuales.text = it.pesetas.toString() + " ptas."
         }
 
+        // Indicarle la cantidad del inventario
+        //binding.inventarioCantidad.text = repository.dameVotos().toString().
+
 
 
     }
-
 
     fun setupAdapter() {
         adapter = TiendaAdapter(ArrayList(), object : TiendaAdapter.MyClickListener {
