@@ -117,7 +117,29 @@
                 android:text="TextView"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/tvAllyLife"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tvDef"
+                app:layout_constraintTop_toBottomOf="@+id/tvAllyLife" />
+
+            <TextView
+                android:id="@+id/tvAtt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                app:layout_constraintEnd_toStartOf="@+id/tvDef"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/ivAllyDog"
                 app:layout_constraintStart_toStartOf="@+id/tvAllyLife"
+                app:layout_constraintTop_toBottomOf="@+id/tvAllyLife" />
+
+            <TextView
+                android:id="@+id/tvDef"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                app:layout_constraintEnd_toStartOf="@+id/tvAllyName"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tvAtt"
                 app:layout_constraintTop_toBottomOf="@+id/tvAllyLife" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

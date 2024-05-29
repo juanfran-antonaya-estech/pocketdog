@@ -17,7 +17,7 @@ interface Dao {
     @Query("SELECT pesetas FROM pesetas")
     fun getPesetas(): Int
     @Insert
-    suspend fun insertResultado(vararg resultado: Resultado)
+    fun insertResultado(vararg resultado: Resultado)
     @Query("SELECT * FROM resultado")
     fun getresultado(): Resultado
 

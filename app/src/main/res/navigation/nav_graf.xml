@@ -11,8 +11,20 @@
         android:label="fragment_inicio"
         tools:layout="@layout/fragment_inicio" >
         <action
+            android:id="@+id/action_inicioFragment_to_registroBatallasFragment"
+            app:destination="@id/registroBatallasFragment" />
+        <action
+            android:id="@+id/action_inicioFragment_to_tiendaFragment"
+            app:destination="@id/tiendaFragment" />
+        <action
             android:id="@+id/action_inicioFragment_to_buscarBatallaFragment"
             app:destination="@id/buscarBatallaFragment" />
+        <action
+            android:id="@+id/action_inicioFragment_to_misPerrosFragment"
+            app:destination="@id/misPerrosFragment" />
+        <action
+            android:id="@+id/action_inicioFragment_to_batallaFragment"
+            app:destination="@id/batallaFragment" />
     </fragment>
     <fragment
         android:id="@+id/buscarBatallaFragment"
@@ -32,15 +44,27 @@
         android:id="@+id/registroBatallasFragment"
         android:name="com.juanfra.pocketdog.ui.fragment.RegistroBatallasFragment"
         android:label="fragment_registro_batallas"
-        tools:layout="@layout/fragment_registro_batallas" />
+        tools:layout="@layout/fragment_registro_batallas" >
+        <action
+            android:id="@+id/action_registroBatallasFragment_to_buscarBatallaFragment"
+            app:destination="@id/buscarBatallaFragment" />
+    </fragment>
     <fragment
         android:id="@+id/tiendaFragment"
         android:name="com.juanfra.pocketdog.ui.fragment.TiendaFragment"
         android:label="fragment_tienda"
-        tools:layout="@layout/fragment_tienda" />
+        tools:layout="@layout/fragment_tienda" >
+        <action
+            android:id="@+id/action_tiendaFragment_to_buscarBatallaFragment"
+            app:destination="@id/buscarBatallaFragment" />
+    </fragment>
     <fragment
         android:id="@+id/misPerrosFragment"
         android:name="com.juanfra.pocketdog.ui.fragment.MisPerrosFragment"
         android:label="fragment_mis_perros"
-        tools:layout="@layout/fragment_mis_perros" />
+        tools:layout="@layout/fragment_mis_perros" >
+        <action
+            android:id="@+id/action_misPerrosFragment_to_buscarBatallaFragment"
+            app:destination="@id/buscarBatallaFragment" />
+    </fragment>
 </navigation>
