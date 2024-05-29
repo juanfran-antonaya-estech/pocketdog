@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Adapter
 import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.juanfra.pocketdog.R
 import com.juanfra.pocketdog.data.doggos.DogTrio
 import com.juanfra.pocketdog.databinding.HolderMisPerrosBinding
@@ -35,27 +36,32 @@ class InventarioAdapter(var listado: ArrayList<DogTrio>, val listener: AdapterVi
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
 
-        val dogtrio = listado[position]
+            val dogtrio = listado[position]
 
-        with(holder) {
-            binding.nombreUno.text = dogtrio.packName
-            binding.rarezaUno.text= dogtrio.packLevel
-        }
+            holder.binding.nombreUno.text = dogtrio.packName
 
+            Glide.with(holder.itemView).load(dogtrio.perros).into(holder.binding.perroUno)
 
-        val packLevelColors = mapOf(
-            "Muy Fácil" to R.color.veryeasy,
-            "Fácil" to R.color.easy,
-            "Normal" to R.color.medium,
-            "Difícil" to R.color.hard,
-            "Muy Difícil" to R.color.veryhard
-        )
-
-        when (dogtrio.packLevel) {
-            in packLevelColors -> {
-                val color = Integer.toHexString(holder.itemView.context.getColor(packLevelColors[dogtrio.packLevel]!!))
+            with(holder) {
+                binding.nombreUno.text = dogtrio.packName
+                binding.rarezaUno.text= dogtrio.packLevel
             }
-        }
+
+
+            val packLevelColors = mapOf(
+                "Muy Fácil" to R.color.veryeasy,
+                "Fácil" to R.color.easy,
+                "Normal" to R.color.medium,
+                "Difícil" to R.color.hard,
+                "Muy Difícil" to R.color.veryhard
+            )
+
+            when (dogtrio.packLevel) {
+                in packLevelColors -> {
+                    val color = Integer.toHexString(holder.itemView.context.getColor(packLevelColors[dogtrio.packLevel]!!))
+                }
+            }
+
     }
 
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.juanfra.pocketdog.R
+import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -48,13 +49,13 @@ class MisPerrosFragment(val root: View) : Fragment() {
          * @return A new instance of fragment MisPerrosFragment.
          */
         // TODO: Rename and change types and number of parameters
-        @JvmStatic
+        /*@JvmStatic
         fun newInstance(param1: String, param2: String) =
             MisPerrosFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
-            }
+            }*/
     }
 }
