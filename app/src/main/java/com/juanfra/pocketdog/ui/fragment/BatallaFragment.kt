@@ -76,10 +76,12 @@ class BatallaFragment : Fragment() {
                 "ganaste" -> {
                     Toast.makeText(requireContext(), "Ganaste", Toast.LENGTH_SHORT).show()
                     findNavController().navigateUp()
+                    resultado()
                 }
                 "perdiste" -> {
                     Toast.makeText(requireContext(), "Perdiste", Toast.LENGTH_SHORT).show()
                     findNavController().navigateUp()
+                    resultado()
                 }
             }
         }

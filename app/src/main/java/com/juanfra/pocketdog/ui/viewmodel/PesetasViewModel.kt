@@ -49,7 +49,7 @@ class PesetasViewModel(val context: Context) : ViewModel() {
      */
     fun logBatalla(resultado: Resultado){
         viewModelScope.launch {
-            repo.poketDao.insertResultado(resultado)
+            repo.insertarLog(resultado)
         }
 
     }
@@ -75,7 +75,7 @@ class PesetasViewModel(val context: Context) : ViewModel() {
     fun editPesetas(pesetas: Pesetas){
 
         viewModelScope.launch {
-            repo.poketDao.editPesetas(pesetas)
+            repo.edtitPesetas(pesetas)
         }
     }
 
