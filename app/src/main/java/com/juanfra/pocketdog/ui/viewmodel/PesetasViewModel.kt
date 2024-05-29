@@ -31,7 +31,6 @@ import kotlinx.coroutines.launch
 class PesetasViewModel(val context: Context) : ViewModel() {
     var repo = Repository(context)
 
-    var pesetas = MutableLiveData<Pesetas>(Pesetas(1500))
     val yourtrio = MutableLiveData<DogTrio>(DogTrio(ArrayList()))
     val enemytrio = MutableLiveData<DogTrio>(DogTrio(ArrayList()))
     val win = MutableLiveData<String>("en combate")
@@ -80,14 +79,17 @@ class PesetasViewModel(val context: Context) : ViewModel() {
         }
     }
 
-    fun showcaseenemies() : MutableLiveData<DogTrio>{
-        val auxtrio = MutableLiveData<DogTrio>()
-        viewModelScope.launch {
-            val trio = getDogTrios(arrayListOf("normal"))
-            auxtrio.postValue(trio[0])
+    //esta funcion sirve para añadir pesetas
+    fun whenWin(trio: DogTrio){
+        val pesetas = misPesetas.value?.get(0)
 
+        val precios = mapOf("Muy Fácil" to 300, "Fácil" to 500, "Normal" to 700, "Difícil" to 800, "Muy Difícil" to 1000)
+
+        if (pesetas != null) {
+            pesetas.pesetas += precios[trio.packLevel]!!
+            editPesetas(pesetas)
         }
-        return auxtrio
+
     }
 
     // esta funcion se tiene que invocar cada vez que vas al fragmento de batalla para que no te eche despues de hacer más de una
@@ -266,21 +268,25 @@ class PesetasViewModel(val context: Context) : ViewModel() {
 
     //compra un perro, añade un perro a tu trio de perros usando la id de su imagen y la cantidad de pesetas especificada
     fun buyDoggo(id: String, ptas: Int) {
+        val pesetas = misPesetas.value?.get(0)
         viewModelScope.launch {
-            if (ptas <= pesetas.value?.pesetas!! && yourtrio.value?.perros?.size!! < 3) {
-                repo.votaRaza(VoteSend(imageId = id, value = 1))
-                pesetas.postValue(Pesetas(pesetas.value?.pesetas!! - ptas))
-                Thread.sleep(1000)
-                loadDoggos()
-                Toast.makeText(
-                    context,
-                    "Gracias por tu compra, sus perros han reiniciado sus estadísticas",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (yourtrio.value?.perros?.size!! == 3) {
-                Toast.makeText(context, "Tu inventario ya está lleno (3/3)", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(context, "No tienes suficientes pesetas", Toast.LENGTH_SHORT).show()
+            if (pesetas != null) {
+                if (ptas <= pesetas.pesetas!! && yourtrio.value?.perros?.size!! < 3) {
+                    repo.votaRaza(VoteSend(imageId = id, value = 1))
+                    pesetas.pesetas -= ptas
+                    editPesetas(pesetas)
+                    Thread.sleep(1000)
+                    loadDoggos()
+                    Toast.makeText(
+                        context,
+                        "Gracias por tu compra, sus perros han reiniciado sus estadísticas",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else if (yourtrio.value?.perros?.size!! == 3) {
+                    Toast.makeText(context, "Tu inventario ya está lleno (3/3)", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "No tienes suficientes pesetas", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

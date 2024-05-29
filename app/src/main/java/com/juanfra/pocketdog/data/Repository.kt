@@ -20,7 +20,7 @@ class Repository(val context: Context) {
     suspend fun dameFotoRaza(raza : String) = retroperros.imagenPorRaza(raza)
     suspend fun dameDetalles(imageId : String) = retroperros.detallesImage(imageId)
 
-    suspend fun edtitPesetas(pesetas: Pesetas) = poketDao.editPesetas(pesetas)
+    suspend fun editPesetas(pesetas: Pesetas) = poketDao.editPesetas(pesetas)
     suspend fun insertarPesetas(pesetas: Pesetas) = poketDao.insertPesetas(pesetas)
     suspend fun insertarLog(resultado: Resultado) = poketDao.insertResultado(resultado)
     fun getPesetas() = poketDao.getPesetas()
