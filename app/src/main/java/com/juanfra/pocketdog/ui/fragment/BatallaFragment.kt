@@ -262,7 +262,6 @@ class BatallaFragment : Fragment() {
     }
 
     fun addLog(text: String) {
-
         val texto = binding.tvLog.text.toString()
         var lineas = ArrayList<String>()
         if (texto.isNotEmpty()) {
