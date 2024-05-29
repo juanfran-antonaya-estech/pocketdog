@@ -71,6 +71,7 @@ class BatallaFragment : Fragment() {
             when (it) {
                 "ganaste" -> {
                     Toast.makeText(requireContext(), "Ganaste", Toast.LENGTH_SHORT).show()
+                    viewModel.enemytrio.value?.let { it1 -> viewModel.whenWin(it1) }
                     findNavController().navigateUp()
                 }
                 "perdiste" -> {
