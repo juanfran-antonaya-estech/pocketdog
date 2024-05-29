@@ -1,11 +1,8 @@
 package com.juanfra.pocketdog.ui
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -13,16 +10,12 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.juanfra.pocketdog.R
 import com.juanfra.pocketdog.databinding.ActivityMainBinding
-import com.juanfra.pocketdog.databinding.FragmentInicioBinding
 import com.juanfra.pocketdog.ui.fragment.BuscarBatallaFragment
 import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityMainBinding
-    val viewModel by viewModels<PesetasViewModel > {
+    private lateinit var binding: ActivityMainBinding
+    private val viewModel by viewModels<PesetasViewModel> {
         PesetasViewModel.PesetasViewModelFactory(this)
     }
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -36,8 +29,8 @@ class MainActivity : AppCompatActivity() {
         viewModel.resetBattle()
 
         setSupportActionBar(binding.toolbar)
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.fcv) as NavHostFragment
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcv) as NavHostFragment
         navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -65,14 +58,30 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.fabToBattle.setOnClickListener {
-            if(navController.currentDestination?.id == R.id.inicioFragment){
-                BuscarBatallaFragment.viewModel = viewModel
-                binding.fcv.findNavController().navigate(R.id.action_inicioFragment_to_buscarBatallaFragment)
-            }
-            if(navController.currentDestination?.id == R.id.batallaFragment){
-                binding.fcv.findNavController().navigateUp()
+            when (navController.currentDestination?.id) {
+                R.id.inicioFragment -> {
+                    BuscarBatallaFragment.viewModel = viewModel
+                    navController.navigate(R.id.action_inicioFragment_to_buscarBatallaFragment)
+                }
+
+                R.id.tiendaFragment -> {
+                    BuscarBatallaFragment.viewModel = viewModel
+                    navController.navigate(R.id.action_tiendaFragment_to_buscarBatallaFragment)
+                }
+
+                R.id.batallaFragment -> {
+                    binding.fcv.findNavController().navigateUp()
+                }
+
+                R.id.buscarBatallaFragment -> {
+                    binding.fcv.findNavController().navigateUp()
+                }
             }
         }
+
+
+
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -34,6 +34,7 @@ class PesetasViewModel(val context: Context) : ViewModel() {
     val yourtrio = MutableLiveData<DogTrio>(DogTrio(ArrayList()))
     val enemytrio = MutableLiveData<DogTrio>(DogTrio(ArrayList()))
     val win = MutableLiveData<String>("en combate")
+    var doggos : MutableLiveData<List<Doggo>> = MutableLiveData()
 
     val actualdoggo = MutableLiveData<Doggo>()
     val actualenemy = MutableLiveData<Doggo>()
