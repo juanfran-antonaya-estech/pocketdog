@@ -44,7 +44,7 @@
         android:id="@+id/registroBatallasFragment"
         android:name="com.juanfra.pocketdog.ui.fragment.RegistroBatallasFragment"
         android:label="fragment_registro_batallas"
-        tools:layout="@layout/fragment_registro_batallas">
+        tools:layout="@layout/fragment_registro_batallas" >
         <action
             android:id="@+id/action_registroBatallasFragment_to_buscarBatallaFragment"
             app:destination="@id/buscarBatallaFragment" />

@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.resetBattle()
 
         setSupportActionBar(binding.toolbar)
+        binding.bottomNavigationView.itemActiveIndicatorColor = null
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcv) as NavHostFragment
         navController = navHostFragment.navController
