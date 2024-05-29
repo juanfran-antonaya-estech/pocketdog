@@ -19,35 +19,26 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/versus"
-                android:layout_width="45dp"
-                android:layout_height="42dp"
-                android:layout_marginStart="44dp"
-                app:layout_constraintBottom_toBottomOf="@+id/doggoaliado"
-                app:layout_constraintStart_toEndOf="@+id/doggoaliado"
-                app:layout_constraintTop_toTopOf="@+id/doggoaliado"
-                tools:srcCompat="@tools:sample/avatars" />
-
-            <ImageView
                 android:id="@+id/doggoaliado"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/doggoenemigo"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_marginStart="44dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                app:layout_constraintBottom_toBottomOf="@+id/versus"
-                app:layout_constraintStart_toEndOf="@+id/versus"
-                app:layout_constraintTop_toTopOf="@+id/versus"
+                android:layout_marginStart="128dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/doggoaliado"
+                app:layout_constraintTop_toTopOf="@+id/doggoaliado"
+                app:layout_constraintVertical_bias="0.0"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
@@ -55,10 +46,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+                app:layout_constraintBottom_toBottomOf="@+id/doggoenemigo"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView3"
-                app:layout_constraintTop_toTopOf="@+id/imageView3" />
+                app:layout_constraintStart_toEndOf="@+id/doggoenemigo"
+                app:layout_constraintTop_toTopOf="@+id/doggoenemigo" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="50dp"
+                android:layout_height="31dp"
+                android:text="VS"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/doggoenemigo"
+                app:layout_constraintStart_toEndOf="@+id/doggoaliado"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
