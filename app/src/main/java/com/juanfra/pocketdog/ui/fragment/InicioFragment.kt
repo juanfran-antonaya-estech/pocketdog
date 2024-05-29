@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.juanfra.pocketdog.R
+import com.juanfra.pocketdog.data.doggos.DogTrio
+import com.juanfra.pocketdog.databinding.FragmentInicioBinding
 import com.juanfra.pocketdog.ui.MainActivity
 import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
 import com.squareup.picasso.Picasso
