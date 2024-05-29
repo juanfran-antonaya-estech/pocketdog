@@ -22,6 +22,7 @@ import com.juanfra.pocketdog.data.doggos.specialdoggos.SharPei
 import com.juanfra.pocketdog.data.doggos.specialdoggos.Shiba
 import com.juanfra.pocketdog.data.doggos.specialdoggos.StBernard
 import com.juanfra.pocketdog.data.models.catphoto.ImagenPerroDetalle
+import com.juanfra.pocketdog.data.models.combate.Resultado
 import com.juanfra.pocketdog.data.pesetas.Pesetas
 import es.estech.myapplication.data.models.votes.VoteSend
 import kotlinx.coroutines.async
@@ -34,7 +35,6 @@ class PesetasViewModel(val context: Context) : ViewModel() {
     val yourtrio = MutableLiveData<DogTrio>(DogTrio(ArrayList()))
     val enemytrio = MutableLiveData<DogTrio>(DogTrio(ArrayList()))
     val win = MutableLiveData<String>("en combate")
-    var doggos : MutableLiveData<List<Doggo>> = MutableLiveData()
 
     val actualdoggo = MutableLiveData<Doggo>()
     val actualenemy = MutableLiveData<Doggo>()
@@ -48,6 +48,9 @@ class PesetasViewModel(val context: Context) : ViewModel() {
 
         }
         return auxtrio
+    }
+    fun logBatalla(resultado: Resultado){
+        repo.poketDao.insertResultado(resultado)
     }
 
     // esta funcion se tiene que invocar cada vez que vas al fragmento de batalla para que no te eche despues de hacer más de una

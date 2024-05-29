@@ -1,5 +1,6 @@
 package com.juanfra.pocketdog.ui.fragment
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,7 +14,6 @@ import com.juanfra.pocketdog.databinding.FragmentInicioBinding
 import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.gpu.PixelationFilterTransformation
-import jp.wasabeef.picasso.transformations.gpu.ToonFilterTransformation
 
 
 class InicioFragment : Fragment() {
@@ -35,6 +35,8 @@ class InicioFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val mediaPlayer = MediaPlayer.create(context, R.raw.pdtienda3)
+        mediaPlayer.start()
 
 
         viewModels.showcaseenemies().observe(viewLifecycleOwner) {
@@ -42,6 +44,7 @@ class InicioFragment : Fragment() {
                 fillBattleinclude(it)
             }
         }
+
     }
 
     fun fillBattleinclude(dogtrio: DogTrio) {
@@ -72,5 +75,7 @@ class InicioFragment : Fragment() {
         }
 
     }
+
+
 
 }

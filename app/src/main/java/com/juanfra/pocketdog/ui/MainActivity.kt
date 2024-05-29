@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.juanfra.pocketdog.R
 import com.juanfra.pocketdog.databinding.ActivityMainBinding
@@ -48,6 +49,16 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.action_tiendaFragment_to_buscarBatallaFragment)
                 }
 
+                R.id.misPerrosFragment -> {
+                    BuscarBatallaFragment.viewModel = viewModel
+                    navController.navigate(R.id.action_misPerrosFragment_to_buscarBatallaFragment)
+                }
+
+                R.id.registroBatallasFragment -> {
+                    BuscarBatallaFragment.viewModel = viewModel
+                    navController.navigate(R.id.action_registroBatallasFragment_to_buscarBatallaFragment)
+                }
+
                 R.id.batallaFragment -> {
                     binding.fcv.findNavController().navigateUp()
                 }
@@ -63,6 +74,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun menuNavegacion() {
+        val bottomNavigationView = binding.bottomNavigationView
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcv) as NavHostFragment
+        NavigationUI.setupWithNavController(
+            bottomNavigationView,
+            navHostFragment.navController
+        )
+    }
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp()
     }

@@ -9,11 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import com.juanfra.pocketdog.data.doggos.Doggo
 import com.juanfra.pocketdog.data.doggos.doggointerface.BuffMove
 import com.juanfra.pocketdog.data.doggos.doggointerface.SpecialAttack
 import com.juanfra.pocketdog.data.doggos.doggointerface.TurnEndListener
+import com.juanfra.pocketdog.data.models.combate.Resultado
 import com.juanfra.pocketdog.databinding.FragmentBatallaBinding
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.GrayscaleTransformation
@@ -28,6 +30,7 @@ class BatallaFragment : Fragment() {
     val viewModel = BuscarBatallaFragment.viewModel
 
     private lateinit var actualenemy: Doggo
+    private lateinit var actualdoggo: Doggo
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -268,6 +271,10 @@ class BatallaFragment : Fragment() {
             lineas.removeAt(0)
         }
         binding.tvLog.text = lineas.joinToString("\n") + "\n$text"
+    }
+    fun resultado(){
+        val resultadobatalla = Resultado(actualenemy.refdog.url.toString(),actualdoggo.refdog.url.toString(),true)
+        viewModel.logBatalla(resultadobatalla)
     }
 
 }
