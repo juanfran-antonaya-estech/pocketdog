@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.juanfra.pocketdog.R
 import com.juanfra.pocketdog.data.doggos.DogTrio
 import com.juanfra.pocketdog.databinding.FragmentBuscarBatallaBinding
+import com.juanfra.pocketdog.ui.MainActivity
 import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,7 +40,7 @@ class BuscarBatallaFragment : Fragment() {
         //llamar a una corrutina para actualizar la lista
         var grupos : MutableLiveData<List<DogTrio>> = MutableLiveData()
         CoroutineScope(Dispatchers.IO).launch {
-            grupos.postValue(viewModel.getDogTrios(arrayListOf("muy facil", "dificil", "muy dificil")))
+            grupos.postValue(viewModel.getDogTrios(arrayListOf("muy facil","facil","normal", "dificil", "muy dificil")))
         }
         grupos.observe(viewLifecycleOwner) {
             adapter.actualizarLista(ArrayList(it))
@@ -56,6 +57,12 @@ class BuscarBatallaFragment : Fragment() {
         val layoutManager = LinearLayoutManager(requireContext())
         binding.rvBB.adapter = adapter
         binding.rvBB.layoutManager = layoutManager
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Cambiar el título de la Toolbar
+        (activity as? MainActivity)?.setToolbarTitle("Elegir Batalla")
     }
 
     companion object {

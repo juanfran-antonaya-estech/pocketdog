@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.juanfra.pocketdog.R
+import com.juanfra.pocketdog.ui.MainActivity
 
 
 class MisPerrosFragment : Fragment() {
@@ -23,6 +24,12 @@ class MisPerrosFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val mediaPlayer = MediaPlayer.create(context, R.raw.pdtienda3)
         mediaPlayer.start()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Cambiar el título de la Toolbar
+        (activity as? MainActivity)?.setToolbarTitle("Inventario")
     }
 
 }

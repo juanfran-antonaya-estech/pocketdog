@@ -8,8 +8,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.juanfra.pocketdog.R
-import com.juanfra.pocketdog.data.pesetas.Pesetas
 import com.juanfra.pocketdog.databinding.ActivityMainBinding
 import com.juanfra.pocketdog.ui.fragment.BuscarBatallaFragment
 import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
@@ -27,12 +27,19 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel.loadDoggos()
-        menuNavegacion()
+        viewModel.resetBattle()
+
         setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setBackgroundDrawable(resources.getDrawable(R.drawable.design_toolbar))
         binding.bottomNavigationView.itemActiveIndicatorColor = null
+
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcv) as NavHostFragment
         navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration(navController.graph)
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        menuNavegacion()
+
         binding.fabToBattle.setOnClickListener {
             when (navController.currentDestination?.id) {
                 R.id.inicioFragment -> {
@@ -42,25 +49,28 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.tiendaFragment -> {
                     BuscarBatallaFragment.viewModel = viewModel
-                    navController.navigate(R.id.action_tiendaFragment_to_buscarBatallaFragment)
+                    gotoInicio()
+                    navController.navigate(R.id.action_inicioFragment_to_buscarBatallaFragment)
                 }
 
                 R.id.misPerrosFragment -> {
                     BuscarBatallaFragment.viewModel = viewModel
-                    navController.navigate(R.id.action_misPerrosFragment_to_buscarBatallaFragment)
+                    gotoInicio()
+                    navController.navigate(R.id.action_inicioFragment_to_buscarBatallaFragment)
                 }
 
                 R.id.registroBatallasFragment -> {
                     BuscarBatallaFragment.viewModel = viewModel
-                    navController.navigate(R.id.action_registroBatallasFragment_to_buscarBatallaFragment)
+                    gotoInicio()
+                    navController.navigate(R.id.action_inicioFragment_to_buscarBatallaFragment)
                 }
 
                 R.id.batallaFragment -> {
-                    binding.fcv.findNavController().navigateUp()
+                    navController.navigateUp()
                 }
 
                 R.id.buscarBatallaFragment -> {
-                    binding.fcv.findNavController().navigateUp()
+
                 }
             }
         }
@@ -68,6 +78,18 @@ class MainActivity : AppCompatActivity() {
 
 
 
+    }
+
+    private fun gotoInicio() {
+        while (navController.currentDestination?.id != R.id.inicioFragment) {
+            navController.popBackStack()
+        }
+    }
+
+    // Funcion para cambiar el titulo en cada fragment
+
+    fun setToolbarTitle(title: String) {
+        binding.toolbarTitle.text = title
     }
 
     private fun menuNavegacion() {
@@ -78,7 +100,6 @@ class MainActivity : AppCompatActivity() {
             navHostFragment.navController
         )
     }
-
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp()
     }
