@@ -31,10 +31,10 @@ import kotlinx.coroutines.launch
 class PesetasViewModel(val context: Context) : ViewModel() {
     var repo = Repository(context)
 
+    var pesetas = MutableLiveData<Pesetas>(Pesetas(1500))
     val yourtrio = MutableLiveData<DogTrio>(DogTrio(ArrayList()))
     val enemytrio = MutableLiveData<DogTrio>(DogTrio(ArrayList()))
     val win = MutableLiveData<String>("en combate")
-
     val actualdoggo = MutableLiveData<Doggo>()
     val actualenemy = MutableLiveData<Doggo>()
 
@@ -59,11 +59,19 @@ class PesetasViewModel(val context: Context) : ViewModel() {
             repo.insertarPesetas(pesetas)
         }
     }
-    fun obtenerPesetas() : {
-        viewModelScope.launch {
-            repo.getPesetas()
-        }
-    }
+
+    val misPesetas = repo.getPesetas()
+//    fun obtenerPesetas() : MutableLiveData<List<Pesetas>>{
+//        val livepeseta = MutableLiveData<List<Pesetas>>()
+//            val pesetas = repo.getPesetas()
+//            val ptas = pesetas?.value
+//            if (ptas?.size == 0){
+//                insertarPesetas(Pesetas(1500))
+//            }
+//            livepeseta.postValue(pesetas.value)
+//
+//        return livepeseta
+//    }
 
     fun editPesetas(pesetas: Pesetas){
 
@@ -72,8 +80,18 @@ class PesetasViewModel(val context: Context) : ViewModel() {
         }
     }
 
+    fun showcaseenemies() : MutableLiveData<DogTrio>{
+        val auxtrio = MutableLiveData<DogTrio>()
+        viewModelScope.launch {
+            val trio = getDogTrios(arrayListOf("normal"))
+            auxtrio.postValue(trio[0])
+
+        }
+        return auxtrio
+    }
+
     // esta funcion se tiene que invocar cada vez que vas al fragmento de batalla para que no te eche despues de hacer más de una
-    fun resetBattle() {
+    fun resetBattle(){
         win.value = "en combate"
     }
 

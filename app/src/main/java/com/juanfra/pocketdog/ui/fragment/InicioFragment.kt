@@ -12,6 +12,8 @@ import com.juanfra.pocketdog.R
 import com.juanfra.pocketdog.data.doggos.DogTrio
 import com.juanfra.pocketdog.databinding.FragmentInicioBinding
 import com.juanfra.pocketdog.ui.MainActivity
+import com.juanfra.pocketdog.data.pesetas.Pesetas
+import com.juanfra.pocketdog.databinding.FragmentTiendaBinding
 import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.gpu.PixelationFilterTransformation
@@ -38,16 +40,13 @@ class InicioFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val mediaPlayer = MediaPlayer.create(context, R.raw.pdtienda3)
         mediaPlayer.start()
-
-
+       peseteo()
         viewModels.showcaseenemies().observe(viewLifecycleOwner) {
             if (it != null) {
                 fillBattleinclude(it)
             }
         }
-
     }
-
     fun fillBattleinclude(dogtrio: DogTrio) {
         val bbinding = binding.inBatalla
         bbinding.btAccionPlantilla.text = "Batallar"
@@ -83,5 +82,15 @@ class InicioFragment : Fragment() {
         (activity as? MainActivity)?.setToolbarTitle("Inicio")
     }
 
+        private fun peseteo(){
+            viewModels.misPesetas.observe(viewLifecycleOwner){
+                if (it.size == 0) {
+                    viewModels.insertarPesetas(Pesetas(1500))
+                } else {
+                    val pesetas = it[0]
+                    binding.marcadorPuntos.text = "Pesetas: ${pesetas.pesetas}"
+                }
+            }
 
+    }
 }

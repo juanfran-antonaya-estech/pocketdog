@@ -1,5 +1,6 @@
 package com.juanfra.pocketdog.data.retrofit
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -15,10 +16,10 @@ interface Dao {
     @Update
     suspend fun editPesetas(pesetas: Pesetas)
     @Query("SELECT * FROM pesetas")
-    suspend fun getPesetas(): Pesetas
+    fun getPesetas(): LiveData<List<Pesetas>>
     @Insert
     suspend fun insertResultado(vararg resultado: Resultado)
     @Query("SELECT * FROM resultado")
-    suspend fun getresultado(): Resultado
+    fun getresultado(): LiveData<List<Resultado>>
 
 }
