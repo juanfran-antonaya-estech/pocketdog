@@ -221,22 +221,6 @@ class PesetasViewModel(val context: Context) : ViewModel() {
                         trio
                     )
                 }
-
-                "pesadilla" -> {
-                    val trio = DogTrio(
-                        arrayListOf(
-                            getRandomDoggo("legendario"),
-                            getRandomDoggo("epico"),
-                            getRandomDoggo("epico")
-                        )
-                    )
-
-                    trio.packLevel = "Pesadilla"
-                    trio.packName = "Perretes pesadilla"
-                    trios.add(
-                        trio
-                    )
-                }
             }
         }
         return trios
@@ -318,11 +302,6 @@ class PesetasViewModel(val context: Context) : ViewModel() {
         val doggo = getDoggo(detalle!!)
 
         return doggo
-        //return if (doggo.rarity.lowercase() == rareza) {
-        //    doggo
-        //} else {
-        //    getRandomDoggo(rareza)
-        //}
     }
 
     //convierte el detalle de una foto en un objeto Doggo (usar para conversiones)

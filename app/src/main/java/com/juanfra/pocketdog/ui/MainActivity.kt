@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
-
+        menuNavegacion()
 
         binding.fabToBattle.setOnClickListener {
             when (navController.currentDestination?.id) {
@@ -47,25 +47,28 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.tiendaFragment -> {
                     BuscarBatallaFragment.viewModel = viewModel
-                    navController.navigate(R.id.action_tiendaFragment_to_buscarBatallaFragment)
+                    gotoInicio()
+                    navController.navigate(R.id.action_inicioFragment_to_buscarBatallaFragment)
                 }
 
                 R.id.misPerrosFragment -> {
                     BuscarBatallaFragment.viewModel = viewModel
-                    navController.navigate(R.id.action_misPerrosFragment_to_buscarBatallaFragment)
+                    gotoInicio()
+                    navController.navigate(R.id.action_inicioFragment_to_buscarBatallaFragment)
                 }
 
                 R.id.registroBatallasFragment -> {
                     BuscarBatallaFragment.viewModel = viewModel
-                    navController.navigate(R.id.action_registroBatallasFragment_to_buscarBatallaFragment)
+                    gotoInicio()
+                    navController.navigate(R.id.action_inicioFragment_to_buscarBatallaFragment)
                 }
 
                 R.id.batallaFragment -> {
-                    binding.fcv.findNavController().navigateUp()
+                    navController.navigateUp()
                 }
 
                 R.id.buscarBatallaFragment -> {
-                    binding.fcv.findNavController().navigateUp()
+
                 }
             }
         }
@@ -73,6 +76,12 @@ class MainActivity : AppCompatActivity() {
 
 
 
+    }
+
+    private fun gotoInicio() {
+        while (navController.currentDestination?.id != R.id.inicioFragment) {
+            navController.popBackStack()
+        }
     }
 
     private fun menuNavegacion() {
