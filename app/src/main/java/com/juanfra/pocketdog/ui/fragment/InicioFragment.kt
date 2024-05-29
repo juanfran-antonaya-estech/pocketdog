@@ -71,9 +71,15 @@ class InicioFragment : Fragment() {
     }
 
         private fun peseteo(){
+            viewModels.misPesetas.observe(viewLifecycleOwner){
+                if (it.size == 0) {
+                    viewModels.insertarPesetas(Pesetas(1500))
+                } else {
+                    val pesetas = it[0]
+                    binding.marcadorPuntos.text = "Pesetas: ${pesetas.pesetas}"
+                }
+            }
 
-    val pesetasActuales = viewModels.obtenerPesetas()
-    binding.marcadorPuntos.text = "Tienes ${pesetasActuales} pesetas."
     }
 }
 

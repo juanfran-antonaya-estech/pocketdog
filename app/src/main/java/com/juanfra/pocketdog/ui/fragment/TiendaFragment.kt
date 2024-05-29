@@ -76,7 +76,9 @@ class TiendaFragment : Fragment() {
                     )
                 } // Por rareza, le añado el precio al doggo
             }
+
         })
+        viewModel
         binding.rvTienda.adapter = adapter
         binding.rvTienda.layoutManager = LinearLayoutManager(requireContext())
     }

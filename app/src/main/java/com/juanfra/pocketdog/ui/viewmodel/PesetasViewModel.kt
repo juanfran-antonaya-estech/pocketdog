@@ -35,7 +35,6 @@ class PesetasViewModel(val context: Context) : ViewModel() {
     val yourtrio = MutableLiveData<DogTrio>(DogTrio(ArrayList()))
     val enemytrio = MutableLiveData<DogTrio>(DogTrio(ArrayList()))
     val win = MutableLiveData<String>("en combate")
-
     val actualdoggo = MutableLiveData<Doggo>()
     val actualenemy = MutableLiveData<Doggo>()
 
@@ -59,11 +58,19 @@ class PesetasViewModel(val context: Context) : ViewModel() {
             repo.insertarPesetas(pesetas)
         }
     }
-    fun obtenerPesetas(){
-        viewModelScope.launch {
-            repo.getPesetas()
-        }
-    }
+
+    val misPesetas = repo.getPesetas()
+//    fun obtenerPesetas() : MutableLiveData<List<Pesetas>>{
+//        val livepeseta = MutableLiveData<List<Pesetas>>()
+//            val pesetas = repo.getPesetas()
+//            val ptas = pesetas?.value
+//            if (ptas?.size == 0){
+//                insertarPesetas(Pesetas(1500))
+//            }
+//            livepeseta.postValue(pesetas.value)
+//
+//        return livepeseta
+//    }
 
     fun editPesetas(pesetas: Pesetas){
 

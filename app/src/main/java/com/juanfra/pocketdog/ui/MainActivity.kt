@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcv) as NavHostFragment
         navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration(navController.graph)
-        viewModel.insertarPesetas(Pesetas(1500))
         binding.fabToBattle.setOnClickListener {
             when (navController.currentDestination?.id) {
                 R.id.inicioFragment -> {
