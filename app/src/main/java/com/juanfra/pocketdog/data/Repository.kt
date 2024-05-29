@@ -2,6 +2,7 @@ package com.juanfra.pocketdog.data
 
 import android.content.Context
 import com.juanfra.pocketdog.data.models.combate.Resultado
+import com.juanfra.pocketdog.data.pesetas.Pesetas
 import com.juanfra.pocketdog.data.retrofit.AppDataBase
 import es.estech.myapplication.data.models.votes.VoteSend
 import es.estech.myapplication.data.retrofit.RetrofitHelper
@@ -19,6 +20,9 @@ class Repository(val context: Context) {
     suspend fun dameFotoRaza(raza : String) = retroperros.imagenPorRaza(raza)
     suspend fun dameDetalles(imageId : String) = retroperros.detallesImage(imageId)
 
-    fun insertarLog(resultado: Resultado) = poketDao.insertResultado(resultado)
+    suspend fun edtitPesetas(pesetas: Pesetas) = poketDao.editPesetas(pesetas)
+    suspend fun insertarPesetas(pesetas: Pesetas) = poketDao.insertPesetas(pesetas)
+    suspend fun insertarLog(resultado: Resultado) = poketDao.insertResultado(resultado)
+    suspend fun getPesetas() = poketDao.getPesetas()
 
 }

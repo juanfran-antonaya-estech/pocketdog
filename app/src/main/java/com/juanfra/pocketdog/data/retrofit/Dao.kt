@@ -11,14 +11,14 @@ import es.estech.myapplication.data.models.catphoto.ImagenPerro
 @Dao
 interface Dao {
     @Insert
-    suspend fun insertPesetas(vararg pesetas: Pesetas)
+    suspend fun insertPesetas(pesetas: Pesetas)
     @Update
     suspend fun editPesetas(pesetas: Pesetas)
-    @Query("SELECT pesetas FROM pesetas")
-    fun getPesetas(): Int
+    @Query("SELECT * FROM pesetas")
+    suspend fun getPesetas(): Pesetas
     @Insert
-    fun insertResultado(vararg resultado: Resultado)
+    suspend fun insertResultado(vararg resultado: Resultado)
     @Query("SELECT * FROM resultado")
-    fun getresultado(): Resultado
+    suspend fun getresultado(): Resultado
 
 }

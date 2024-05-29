@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.juanfra.pocketdog.R
+import com.juanfra.pocketdog.data.pesetas.Pesetas
 import com.juanfra.pocketdog.databinding.ActivityMainBinding
 import com.juanfra.pocketdog.ui.fragment.BuscarBatallaFragment
 import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
@@ -29,11 +30,10 @@ class MainActivity : AppCompatActivity() {
         menuNavegacion()
         setSupportActionBar(binding.toolbar)
         binding.bottomNavigationView.itemActiveIndicatorColor = null
-
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcv) as NavHostFragment
         navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration(navController.graph)
-
+        viewModel.insertarPesetas(Pesetas(1500))
         binding.fabToBattle.setOnClickListener {
             when (navController.currentDestination?.id) {
                 R.id.inicioFragment -> {

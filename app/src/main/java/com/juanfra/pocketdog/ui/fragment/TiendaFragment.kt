@@ -1,3 +1,4 @@
+package com.juanfra.pocketdog.ui.fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.juanfra.pocketdog.data.Repository
 import com.juanfra.pocketdog.data.doggos.Doggo
 import com.juanfra.pocketdog.databinding.FragmentTiendaBinding
 import com.juanfra.pocketdog.ui.adapter.TiendaAdapter
@@ -17,12 +19,9 @@ import kotlinx.coroutines.launch
 class TiendaFragment : Fragment() {
     private lateinit var binding: FragmentTiendaBinding
     private lateinit var adapter: TiendaAdapter
+    lateinit var repository : Repository
     private val viewModel by activityViewModels<PesetasViewModel>()
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,6 +58,10 @@ class TiendaFragment : Fragment() {
         viewModel.pesetas.observe(viewLifecycleOwner) {
             binding.ptasActuales.text = it.pesetas.toString() + " ptas."
         }
+
+        // Indicarle la cantidad del inventario
+        //binding.inventarioCantidad.text = repository.dameVotos().toString().
+
 
 
     }

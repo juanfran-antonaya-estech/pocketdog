@@ -49,7 +49,27 @@ class PesetasViewModel(val context: Context) : ViewModel() {
      * @see Doggo
      */
     fun logBatalla(resultado: Resultado){
-        repo.poketDao.insertResultado(resultado)
+        viewModelScope.launch {
+            repo.poketDao.insertResultado(resultado)
+        }
+
+    }
+    fun insertarPesetas(pesetas: Pesetas){
+        viewModelScope.launch {
+            repo.insertarPesetas(pesetas)
+        }
+    }
+    fun obtenerPesetas(){
+        viewModelScope.launch {
+            repo.getPesetas()
+        }
+    }
+
+    fun editPesetas(pesetas: Pesetas){
+
+        viewModelScope.launch {
+            repo.poketDao.editPesetas(pesetas)
+        }
     }
 
     fun showcaseenemies() : MutableLiveData<DogTrio>{
@@ -243,6 +263,8 @@ class PesetasViewModel(val context: Context) : ViewModel() {
                     "Gracias por tu compra, sus perros han reiniciado sus estadísticas",
                     Toast.LENGTH_SHORT
                 ).show()
+            } else if (yourtrio.value?.perros?.size!! == 3) {
+                Toast.makeText(context, "Tu inventario ya está lleno (3/3)", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(context, "No tienes suficientes pesetas", Toast.LENGTH_SHORT).show()
             }
