@@ -1,17 +1,12 @@
-package com.juanfra.pocketdog.ui.fragment
-
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.juanfra.pocketdog.data.doggos.Doggo
-import com.juanfra.pocketdog.data.pesetas.Pesetas
 import com.juanfra.pocketdog.databinding.FragmentTiendaBinding
 import com.juanfra.pocketdog.ui.adapter.TiendaAdapter
 import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
@@ -42,11 +37,19 @@ class TiendaFragment : Fragment() {
 
         setupAdapter() // Llamo a la función para configurar el adaptador
 
-        var doggos : MutableLiveData<List<Doggo>> = MutableLiveData() // Creo una variable mutable para almacenar los doggos
+        var doggos: MutableLiveData<List<Doggo>> =
+            MutableLiveData() // Creo una variable mutable para almacenar los doggos
 
         // Creo un corrutina para obtener los doggos de la API y actualizo la lista en el adaptador mediante su raza
         CoroutineScope(Dispatchers.IO).launch {
-            doggos.postValue(arrayListOf(viewModel.getRandomDoggo("comun"), (viewModel.getRandomDoggo("raro")), (viewModel.getRandomDoggo("epico")), (viewModel.getRandomDoggo("legendario"))))
+            doggos.postValue(
+                arrayListOf(
+                    viewModel.getRandomDoggo("comun"),
+                    (viewModel.getRandomDoggo("raro")),
+                    (viewModel.getRandomDoggo("epico")),
+                    (viewModel.getRandomDoggo("legendario"))
+                )
+            )
         }
         // Observo los doggos y actualizo la lista en el adaptador
         doggos.observe(viewLifecycleOwner) {
@@ -58,17 +61,20 @@ class TiendaFragment : Fragment() {
         }
 
 
-
     }
 
     fun setupAdapter() {
         adapter = TiendaAdapter(ArrayList(), object : TiendaAdapter.MyClickListener {
             override fun onClick(doggo: Doggo) {
-                adapter.price[doggo.rarity]?.let { viewModel.buyDoggo(doggo.refdog.id, it) } // Por rareza, le añado el precio al doggo
+                adapter.price[doggo.rarity]?.let {
+                    viewModel.buyDoggo(
+                        doggo.refdog.id,
+                        it
+                    )
+                } // Por rareza, le añado el precio al doggo
             }
         })
         binding.rvTienda.adapter = adapter
         binding.rvTienda.layoutManager = LinearLayoutManager(requireContext())
     }
-
 }
