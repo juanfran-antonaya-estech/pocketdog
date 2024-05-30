@@ -245,7 +245,7 @@ class BatallaFragment : Fragment() {
         binding.tvLog.text = lineas.joinToString("\n") + "\n$text"
     }
      fun resultado(resultado: Boolean){
-        val resultadobatalla = Resultado(actualenemy.refdog.url.toString(),actualdoggo.refdog.url.toString(),true)
+        val resultadobatalla = Resultado(actualdoggo.refdog.url.toString(),actualenemy.refdog.url.toString(),true)
         viewModel.logBatalla(resultadobatalla)
     }
 
