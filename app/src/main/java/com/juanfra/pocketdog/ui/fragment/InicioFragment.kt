@@ -67,7 +67,9 @@ class InicioFragment : Fragment() {
         ibinding.tvPacknamePlantilla.text = "Tus perros (${dogtrio.perros.size}/3)"
         ibinding.tvPackLevelPlantilla.visibility = TextView.GONE
 
+
         if (dogtrio.perros.size > 0) {
+            binding.inBatalla.btAccionPlantilla.visibility = Button.VISIBLE
             when (dogtrio.perros.size) {
                 1 -> {
                     Picasso.get()
@@ -94,6 +96,8 @@ class InicioFragment : Fragment() {
                         .into(ibinding.ivPerro3Plantilla)
                 }
             }
+        } else {
+            binding.inBatalla.btAccionPlantilla.visibility = Button.GONE
         }
     }
 

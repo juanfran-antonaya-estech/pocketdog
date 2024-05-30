@@ -22,7 +22,7 @@ class Repository(val context: Context) {
 
     suspend fun editPesetas(pesetas: Pesetas) = poketDao.editPesetas(pesetas)
     suspend fun insertarPesetas(pesetas: Pesetas) = poketDao.insertPesetas(pesetas)
-    suspend fun insertarLog(resultado: Resultado) = poketDao.insertResultado(resultado)
+    suspend fun insertarResultado(resultado: Resultado) = poketDao.insertResultado(resultado)
     fun getPesetas() = poketDao.getPesetas()
 
 }
