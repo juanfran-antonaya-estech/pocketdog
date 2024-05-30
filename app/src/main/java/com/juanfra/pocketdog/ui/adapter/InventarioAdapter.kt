@@ -71,6 +71,10 @@ class InventarioAdapter(var listado: ArrayList<Doggo>, val listener: MyClick) :
         Picasso.get()
             .load(dogtrio.refdog.url)
             .into(holder.binding.perroUno)
+
+        holder.itemView.setOnClickListener {
+            listener.onClick(dogtrio)
+        }
     }
 
     override fun getItemCount(): Int {
