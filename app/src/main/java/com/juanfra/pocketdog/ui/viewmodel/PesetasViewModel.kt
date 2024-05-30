@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.juanfra.pocketdog.data.Repository
 import com.juanfra.pocketdog.data.doggos.DogTrio
 import com.juanfra.pocketdog.data.doggos.Doggo
+import com.juanfra.pocketdog.data.doggos.sdvol2.AHD
 import com.juanfra.pocketdog.data.doggos.specialdoggos.BorderCollie
 import com.juanfra.pocketdog.data.doggos.specialdoggos.Borzoi
 import com.juanfra.pocketdog.data.doggos.specialdoggos.Chihuahua
@@ -38,6 +39,7 @@ class PesetasViewModel(val context: Context) : ViewModel() {
     val actualenemy = MutableLiveData<Doggo>()
 
     // esta funcion es para mostrar un trio de perros de ejemplo desde el inicio
+
     fun showcaseenemies(): MutableLiveData<DogTrio> {
         val auxtrio = MutableLiveData<DogTrio>()
         viewModelScope.launch {
@@ -46,6 +48,11 @@ class PesetasViewModel(val context: Context) : ViewModel() {
 
         }
         return auxtrio
+    }
+    fun getLog(resultado: Resultado){
+        viewModelScope.launch {
+            repo.getLog()
+        }
     }
     fun logBatalla(resultado: Resultado){
         viewModelScope.launch {
@@ -366,6 +373,8 @@ class PesetasViewModel(val context: Context) : ViewModel() {
                 contains("shar") -> SharPei(detalle)
                 contains("shiba") -> Shiba(detalle)
                 contains("bernard") -> StBernard(detalle)
+
+                contains("african hunting") -> AHD(detalle)
                 else -> Doggo(detalle)
             }
         }
