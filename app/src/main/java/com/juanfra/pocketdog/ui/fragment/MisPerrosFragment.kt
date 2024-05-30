@@ -29,11 +29,24 @@ import java.util.ArrayList
 
 
 class MisPerrosFragment : Fragment() {
-
+    private var mediaPlayer : MediaPlayer? = null
     private lateinit var binding : FragmentMisPerrosBinding
     private lateinit var adapter: InventarioAdapter
     private val viewModel by activityViewModels<PesetasViewModel>()
 
+    override fun onStart() {
+        super.onStart()
+        mediaPlayer = MediaPlayer.create(context, R.raw.pdtienda2)
+        mediaPlayer?.isLooping = true
+        mediaPlayer?.start()
+    }
+    override fun onStop() {
+        super.onStop()
+        if (mediaPlayer != null) {
+            mediaPlayer!!.release()
+            mediaPlayer = null
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,8 +65,7 @@ class MisPerrosFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mediaPlayer = MediaPlayer.create(context, R.raw.pdtienda3)
-        mediaPlayer.start()
+
         setupAdapter()
 
         val miTrio: MutableLiveData<List<DogTrio>> = MutableLiveData()

@@ -1,5 +1,6 @@
 package com.juanfra.pocketdog.ui.fragment
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.juanfra.pocketdog.R
 import com.juanfra.pocketdog.data.doggos.DogTrio
 import com.juanfra.pocketdog.data.doggos.Doggo
 import com.juanfra.pocketdog.data.pesetas.Pesetas
@@ -26,12 +28,21 @@ class TiendaFragment : Fragment() {
     private lateinit var binding: FragmentTiendaBinding
     private lateinit var adapter: TiendaAdapter
     private val viewModel by activityViewModels<PesetasViewModel>()
+    private var mediaPlayer : MediaPlayer? = null
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onStart() {
+        super.onStart()
+        mediaPlayer = MediaPlayer.create(context, R.raw.pdtienda3)
+        mediaPlayer?.isLooping = true
+        mediaPlayer?.start()
     }
-
+    override fun onStop() {
+        super.onStop()
+        if (mediaPlayer != null) {
+            mediaPlayer!!.release()
+            mediaPlayer = null
+        }
+    }
     override fun onResume() {
         super.onResume()
         // Cambiar el título de la Toolbar
@@ -43,12 +54,12 @@ class TiendaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentTiendaBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupAdapter() // Llamo a la función para configurar el adaptador
 
         var doggos: MutableLiveData<List<Doggo>> = MutableLiveData() // Creo una variable mutable para almacenar los doggos

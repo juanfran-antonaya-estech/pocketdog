@@ -1,6 +1,7 @@
 package com.juanfra.pocketdog.ui.fragment
 
 import BuscarBatallaAdapter
+import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -24,7 +25,21 @@ class BuscarBatallaFragment : Fragment() {
     private lateinit var binding: FragmentBuscarBatallaBinding
     private lateinit var adapter: BuscarBatallaAdapter
     val viewModel = Companion.viewModel
+    private var mediaPlayer : MediaPlayer? = null
 
+    override fun onStart() {
+        super.onStart()
+        mediaPlayer = MediaPlayer.create(context, R.raw.pdbatalla2)
+        mediaPlayer?.isLooping = true
+        mediaPlayer?.start()
+    }
+    override fun onStop() {
+        super.onStop()
+        if (mediaPlayer != null) {
+            mediaPlayer!!.release()
+            mediaPlayer = null
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

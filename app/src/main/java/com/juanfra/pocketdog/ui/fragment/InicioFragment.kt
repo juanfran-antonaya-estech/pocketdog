@@ -2,33 +2,43 @@ package com.juanfra.pocketdog.ui.fragment
 
 import android.media.MediaPlayer
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.juanfra.pocketdog.R
 import com.juanfra.pocketdog.data.doggos.DogTrio
+import com.juanfra.pocketdog.data.pesetas.Pesetas
 import com.juanfra.pocketdog.databinding.FragmentInicioBinding
 import com.juanfra.pocketdog.ui.MainActivity
-import com.juanfra.pocketdog.data.pesetas.Pesetas
-import com.juanfra.pocketdog.databinding.FragmentTiendaBinding
 import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
 import com.squareup.picasso.Picasso
-import jp.wasabeef.picasso.transformations.gpu.PixelationFilterTransformation
 
 
 class InicioFragment : Fragment() {
     private var _binding: FragmentInicioBinding? = null
     private val binding get() = _binding!!
-
+    private var mediaPlayer : MediaPlayer? = null
     val viewModels by activityViewModels<PesetasViewModel> {
         PesetasViewModel.PesetasViewModelFactory(requireContext())
     }
-
+    override fun onStart() {
+        super.onStart()
+        mediaPlayer = MediaPlayer.create(context, R.raw.pdtienda2)
+        mediaPlayer?.isLooping = true
+        mediaPlayer?.start()
+    }
+    override fun onStop() {
+        super.onStop()
+        if (mediaPlayer != null) {
+            mediaPlayer!!.release()
+            mediaPlayer = null
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,10 +50,9 @@ class InicioFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mediaPlayer = MediaPlayer.create(context, R.raw.pdtienda3)
-        mediaPlayer.start()
+
         viewModels.loadDoggos()
-       peseteo()
+        peseteo()
         viewModels.showcaseenemies().observe(viewLifecycleOwner) {
             if (it != null) {
                 fillBattleinclude(it)
@@ -59,6 +68,7 @@ class InicioFragment : Fragment() {
                 fillInvInclude(it)
             }
         }
+
     }
 
     fun fillInvInclude(dogtrio: DogTrio){

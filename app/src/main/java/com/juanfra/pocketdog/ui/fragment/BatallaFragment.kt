@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
+import com.juanfra.pocketdog.R
 import com.juanfra.pocketdog.data.doggos.Doggo
 import com.juanfra.pocketdog.data.doggos.doggointerface.BuffMove
 import com.juanfra.pocketdog.data.doggos.doggointerface.SpecialAttack
@@ -26,12 +27,25 @@ import kotlinx.coroutines.launch
 
 
 class BatallaFragment : Fragment() {
-    private lateinit var mediaPlayer: MediaPlayer
+    private var mediaPlayer : MediaPlayer? = null
     private lateinit var binding: FragmentBatallaBinding
     val viewModel = BuscarBatallaFragment.viewModel
-
     private lateinit var actualenemy: Doggo
     private lateinit var actualdoggo: Doggo
+
+    override fun onStart() {
+        super.onStart()
+        mediaPlayer = MediaPlayer.create(context, R.raw.pdbatalla)
+        mediaPlayer?.isLooping = true
+        mediaPlayer?.start()
+    }
+    override fun onStop() {
+        super.onStop()
+        if (mediaPlayer != null) {
+            mediaPlayer!!.release()
+            mediaPlayer = null
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -245,7 +259,7 @@ class BatallaFragment : Fragment() {
         binding.tvLog.text = lineas.joinToString("\n") + "\n$text"
     }
      fun resultado(resultado: Boolean){
-        val resultadobatalla = Resultado(actualdoggo.refdog.url.toString(),actualenemy.refdog.url.toString(),true)
+        val resultadobatalla = Resultado(actualdoggo.refdog.url.toString(),actualenemy.refdog.url.toString(),resultado)
         viewModel.logBatalla(resultadobatalla)
     }
 
