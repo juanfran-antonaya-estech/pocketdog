@@ -74,13 +74,11 @@ class BatallaFragment : Fragment() {
                     viewModel.whenWin()
                     resultado(true)
                     findNavController().navigateUp()
-                    resultado()
                 }
                 "perdiste" -> {
                     Toast.makeText(requireContext(), "Perdiste", Toast.LENGTH_SHORT).show()
                     resultado(false)
                     findNavController().navigateUp()
-                    resultado()
                 }
             }
         }
