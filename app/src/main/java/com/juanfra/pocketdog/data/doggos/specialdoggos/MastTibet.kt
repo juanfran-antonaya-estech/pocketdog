@@ -17,7 +17,7 @@ class MastTibet(reference: ImagenPerroDetalle) : Doggo(reference),SpecialAttack 
     }
 
     override var rarity: String
-        get() = "Legendary"
+        get() = "Legendario"
         set(value) {}
 
     override fun getDamage(damage: Int): Int {

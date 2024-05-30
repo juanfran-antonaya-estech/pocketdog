@@ -8,7 +8,7 @@ import kotlin.random.Random
 class SharPei(val reference: ImagenPerroDetalle) : Doggo(reference), SpecialAttack {
 
     override var rarity: String
-        get() = "Raro"
+        get() = "Legendario"
         set(value) {}
 
     var evasion = 10.0
@@ -16,12 +16,14 @@ class SharPei(val reference: ImagenPerroDetalle) : Doggo(reference), SpecialAtta
         get() = "Pellejoso"
         set(value) {}
     override var specialAttDesc: String
-        get() = "Ataca y aumenta tu evasión, hasta subir completamente"
+        get() = "Ataca y aumenta tu evasión, hasta subir a un 80%"
         set(value) {}
 
     override fun doSpecialAtt(otherdoggo: Doggo) {
         otherdoggo.getDamage(attack)
-        evasion *= 1.5
+        if (evasion * 1.5 < 80){
+            evasion *= 1.5
+        }
     }
 
     override fun getDamage(damage: Int): Int {

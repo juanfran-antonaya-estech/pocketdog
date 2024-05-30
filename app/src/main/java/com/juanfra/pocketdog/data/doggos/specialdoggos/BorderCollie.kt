@@ -14,7 +14,7 @@ class BorderCollie (reference: ImagenPerroDetalle) : Doggo(reference), TurnEndLi
     val sheepdef = 45
 
     override var rarity: String
-        get() = "Raro"
+        get() = "Épico"
         set(value) {}
 
     override var specialAttName: String

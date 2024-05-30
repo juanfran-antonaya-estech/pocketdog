@@ -10,6 +10,7 @@ import com.juanfra.pocketdog.data.Repository
 import com.juanfra.pocketdog.data.doggos.DogTrio
 import com.juanfra.pocketdog.data.doggos.Doggo
 import com.juanfra.pocketdog.data.doggos.sdvol2.AHD
+import com.juanfra.pocketdog.data.doggos.sdvol2.BullTerrier
 import com.juanfra.pocketdog.data.doggos.specialdoggos.BorderCollie
 import com.juanfra.pocketdog.data.doggos.specialdoggos.Borzoi
 import com.juanfra.pocketdog.data.doggos.specialdoggos.Chihuahua
@@ -375,6 +376,7 @@ class PesetasViewModel(val context: Context) : ViewModel() {
                 contains("bernard") -> StBernard(detalle)
 
                 contains("african hunting") -> AHD(detalle)
+                contains("bull terrier") -> BullTerrier(detalle)
                 else -> Doggo(detalle)
             }
         }
