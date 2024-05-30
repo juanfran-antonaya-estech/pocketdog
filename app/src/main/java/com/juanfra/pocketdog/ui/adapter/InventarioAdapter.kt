@@ -11,19 +11,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.juanfra.pocketdog.R
 import com.juanfra.pocketdog.data.doggos.DogTrio
+import com.juanfra.pocketdog.data.doggos.Doggo
 import com.juanfra.pocketdog.databinding.HolderMisPerrosBinding
 import com.juanfra.pocketdog.databinding.HolderTresperrosBinding
 import com.juanfra.pocketdog.ui.fragment.MisPerrosFragment
 import com.squareup.picasso.Picasso
 
-class InventarioAdapter(var listado: ArrayList<DogTrio>, val listener: MyClick) :
+class InventarioAdapter(var listado: ArrayList<Doggo>, val listener: MyClick) :
     RecyclerView.Adapter<InventarioAdapter.MyHolder>() {
 
     inner class MyHolder(val binding: HolderMisPerrosBinding) : RecyclerView.ViewHolder(binding.root)
 
 
     interface MyClick {
-        fun onClick(dogTrio: DogTrio)
+        fun onClick(doggo: Doggo)
 
     }
 
@@ -36,7 +37,8 @@ class InventarioAdapter(var listado: ArrayList<DogTrio>, val listener: MyClick) 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
         val dogtrio = listado[position]
 
-        holder.binding.nombreUno.text = dogtrio.perros[position].refdog.breeds[0].name
+        holder.binding.nombreUno.text = dogtrio.refdog.breeds[0].name
+        holder.binding.rarezaUno.text = dogtrio.rarity
 
 
 
@@ -48,12 +50,12 @@ class InventarioAdapter(var listado: ArrayList<DogTrio>, val listener: MyClick) 
             "Muy Difícil" to R.color.veryhard
         )
 
-        packLevelColors[dogtrio.packLevel]?.let { colorResId ->
+        packLevelColors[dogtrio.rarity]?.let { colorResId ->
             val color = holder.itemView.context.getColor(colorResId)
             holder.binding.rarezaUno.setTextColor(color)
         }
         Picasso.get()
-            .load(dogtrio.perros[position].refdog.url)
+            .load(dogtrio.refdog.url)
             .into(holder.binding.perroUno)
     }
 
@@ -61,7 +63,7 @@ class InventarioAdapter(var listado: ArrayList<DogTrio>, val listener: MyClick) 
         return listado.size
     }
 
-    fun actualizarLista(list: ArrayList<DogTrio>) {
+    fun actualizarLista(list: ArrayList<Doggo>) {
         listado = list
         notifyDataSetChanged()
     }

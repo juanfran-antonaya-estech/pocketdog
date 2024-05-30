@@ -10,14 +10,19 @@ import android.widget.AdapterView
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.juanfra.pocketdog.R
 import com.juanfra.pocketdog.data.doggos.DogTrio
+import com.juanfra.pocketdog.data.doggos.Doggo
 import com.juanfra.pocketdog.databinding.FragmentMisPerrosBinding
 import com.juanfra.pocketdog.databinding.FragmentTiendaBinding
 import com.juanfra.pocketdog.ui.adapter.InventarioAdapter
 import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.ArrayList
 
 
@@ -45,21 +50,23 @@ class MisPerrosFragment : Fragment() {
         mediaPlayer.start()
         setupAdapter()
 
+        val miTrio: MutableLiveData<List<DogTrio>> = MutableLiveData()
+
 
         viewModel.yourtrio.observe(viewLifecycleOwner, Observer { dogTrio ->
             dogTrio?.let {
-                val list = arrayListOf(dogTrio)
-                adapter.actualizarLista(list)
+
+                adapter.actualizarLista(ArrayList(it.perros))
             }
         })
-        viewModel.loadDoggos()
     }
 
 
     fun setupAdapter(){
         adapter = InventarioAdapter(ArrayList(), object : InventarioAdapter.MyClick {
-            override fun onClick(dogTrio: DogTrio) {
-                Toast.makeText(requireContext(), "ohhh", Toast.LENGTH_SHORT).show()
+
+            override fun onClick(doggo: Doggo) {
+                Toast.makeText(requireContext(), "s", Toast.LENGTH_SHORT).show()
             }
 
         })
