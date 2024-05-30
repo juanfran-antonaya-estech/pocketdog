@@ -55,7 +55,7 @@ class PesetasViewModel(val context: Context) : ViewModel() {
     }
     fun logBatalla(resultado: Resultado){
         viewModelScope.launch {
-            repo.poketDao.insertResultado(resultado)
+            repo.insertarResultado(resultado)
         }
 
     }
@@ -81,19 +81,18 @@ class PesetasViewModel(val context: Context) : ViewModel() {
     fun editPesetas(pesetas: Pesetas){
 
         viewModelScope.launch {
-            repo.poketDao.editPesetas(pesetas)
+            repo.editPesetas(pesetas)
         }
     }
 
     //esta funcion sirve para añadir pesetas
-    fun whenWin(trio: DogTrio){
+    fun whenWin(){
         val pesetas = misPesetas.value?.get(0)
 
-        val precios = mapOf("Muy Fácil" to 300, "Fácil" to 500, "Normal" to 700, "Difícil" to 800, "Muy Difícil" to 1000)
-
         if (pesetas != null) {
-            pesetas.pesetas += precios[trio.packLevel]!!
-            editPesetas(pesetas)
+            val pesetoides = Pesetas(pesetas.pesetas + 1000)
+            pesetoides.id = 1
+            editPesetas(pesetoides)
         }
 
     }
@@ -350,7 +349,9 @@ class PesetasViewModel(val context: Context) : ViewModel() {
         }
         detalleAsync.join()
         val detalle = detalleAsync.getCompleted()
-        val doggo = getDoggo(detalle!!)
+        var doggo: Doggo = detalle?.let { Doggo(it) }!!
+        doggo = getDoggo(detalle)
+
 
         return doggo
     }

@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.juanfra.pocketdog.R
@@ -40,29 +42,99 @@ class InicioFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val mediaPlayer = MediaPlayer.create(context, R.raw.pdtienda3)
         mediaPlayer.start()
+        viewModels.loadDoggos()
        peseteo()
         viewModels.showcaseenemies().observe(viewLifecycleOwner) {
             if (it != null) {
                 fillBattleinclude(it)
             }
         }
+        viewModels.showcaseenemies().observe(viewLifecycleOwner) {
+            if (it != null) {
+                fillStoreinclude(it)
+            }
+        }
+        viewModels.yourtrio.observe(viewLifecycleOwner){
+            if (it != null) {
+                fillInvInclude(it)
+            }
+        }
+    }
+
+    fun fillInvInclude(dogtrio: DogTrio){
+        val ibinding = binding.inInventario
+        ibinding.btAccionPlantilla.visibility = Button.GONE
+        ibinding.tvPacknamePlantilla.text = "Tus perros (${dogtrio.perros.size}/3)"
+        ibinding.tvPackLevelPlantilla.visibility = TextView.GONE
+
+
+        if (dogtrio.perros.size > 0) {
+            binding.inBatalla.btAccionPlantilla.visibility = Button.VISIBLE
+            when (dogtrio.perros.size) {
+                1 -> {
+                    Picasso.get()
+                        .load(dogtrio.perros[0].refdog.url)
+                        .into(ibinding.ivPerro1Plantilla)
+                }
+                2 -> {
+                    Picasso.get()
+                        .load(dogtrio.perros[0].refdog.url)
+                        .into(ibinding.ivPerro1Plantilla)
+                    Picasso.get()
+                        .load(dogtrio.perros[1].refdog.url)
+                        .into(ibinding.ivPerro2Plantilla)
+                }
+                3 -> {
+                    Picasso.get()
+                        .load(dogtrio.perros[0].refdog.url)
+                        .into(ibinding.ivPerro1Plantilla)
+                    Picasso.get()
+                        .load(dogtrio.perros[1].refdog.url)
+                        .into(ibinding.ivPerro2Plantilla)
+                    Picasso.get()
+                        .load(dogtrio.perros[2].refdog.url)
+                        .into(ibinding.ivPerro3Plantilla)
+                }
+            }
+        } else {
+            binding.inBatalla.btAccionPlantilla.visibility = Button.GONE
+        }
+    }
+
+    fun fillStoreinclude(dogtrio: DogTrio){
+        val sbinding = binding.inTienda
+        sbinding.btAccionPlantilla.visibility = Button.GONE
+        sbinding.tvPacknamePlantilla.text = "Tienda"
+        sbinding.tvPackLevelPlantilla.visibility = TextView.GONE
+        binding.barraTienda.animate().setDuration(1000).translationX(0F).start()
+        dogtrio.perros[0]?.let {
+            Picasso.get()
+                .load(it.refdog.url)
+                .into(sbinding.ivPerro1Plantilla)
+        }
+        dogtrio.perros[1]?.let {
+            Picasso.get()
+                .load(it.refdog.url)
+                .into(sbinding.ivPerro2Plantilla)
+        }
+        dogtrio.perros[2]?.let {
+            Picasso.get()
+                .load(it.refdog.url)
+                .into(sbinding.ivPerro3Plantilla)
+        }
     }
     fun fillBattleinclude(dogtrio: DogTrio) {
         val bbinding = binding.inBatalla
         bbinding.btAccionPlantilla.text = "Batallar"
-        val threshold = 20F
         binding.barraBatalla.animate().setDuration(1000).translationX(0F).start()
         Picasso.get()
             .load(dogtrio.perros[0].refdog.url)
-            .transform(PixelationFilterTransformation(requireContext(), threshold))
             .into(bbinding.ivPerro1Plantilla)
         Picasso.get()
             .load(dogtrio.perros[1].refdog.url)
-            .transform(PixelationFilterTransformation(requireContext(), threshold))
             .into(bbinding.ivPerro2Plantilla)
         Picasso.get()
             .load(dogtrio.perros[2].refdog.url)
-            .transform(PixelationFilterTransformation(requireContext(), threshold))
             .into(bbinding.ivPerro3Plantilla)
         bbinding.tvPackLevelPlantilla.text = dogtrio.packLevel
         bbinding.tvPacknamePlantilla.text = dogtrio.packName

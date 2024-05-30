@@ -71,10 +71,13 @@ class BatallaFragment : Fragment() {
             when (it) {
                 "ganaste" -> {
                     Toast.makeText(requireContext(), "Ganaste", Toast.LENGTH_SHORT).show()
+                    viewModel.whenWin()
+                    resultado(true)
                     findNavController().navigateUp()
                 }
                 "perdiste" -> {
                     Toast.makeText(requireContext(), "Perdiste", Toast.LENGTH_SHORT).show()
+                    resultado(false)
                     findNavController().navigateUp()
                 }
             }
@@ -91,6 +94,8 @@ class BatallaFragment : Fragment() {
 
     fun prepareAllyDog(ally: Doggo) {
         viewModel.actualenemy.observe(viewLifecycleOwner) { enemy ->
+            actualenemy = enemy
+            actualdoggo = ally
             val log = object : Doggo.Log{
                 override fun action(text: String) {
                     addLog(text)
@@ -239,7 +244,7 @@ class BatallaFragment : Fragment() {
         }
         binding.tvLog.text = lineas.joinToString("\n") + "\n$text"
     }
-     fun resultado(){
+     fun resultado(resultado: Boolean){
         val resultadobatalla = Resultado(actualenemy.refdog.url.toString(),actualdoggo.refdog.url.toString(),true)
         viewModel.logBatalla(resultadobatalla)
     }
