@@ -2,6 +2,7 @@ package com.juanfra.pocketdog.ui.viewmodel
 
 import android.content.Context
 import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -50,11 +51,7 @@ class PesetasViewModel(val context: Context) : ViewModel() {
         }
         return auxtrio
     }
-    fun getLog(resultado: Resultado){
-        viewModelScope.launch {
-            repo.getLog()
-        }
-    }
+    fun getLog() = repo.getLog()
     fun logBatalla(resultado: Resultado){
         viewModelScope.launch {
             repo.insertarResultado(resultado)
