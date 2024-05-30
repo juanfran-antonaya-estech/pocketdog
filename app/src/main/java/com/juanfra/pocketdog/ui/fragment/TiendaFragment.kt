@@ -51,7 +51,7 @@ class TiendaFragment : Fragment() {
         setupAdapter() // Llamo a la función para configurar el adaptador
 
         var doggos: MutableLiveData<List<Doggo>> = MutableLiveData() // Creo una variable mutable para almacenar los doggos
-
+        binding.swipe.isRefreshing = true
         // Creo un corrutina para obtener los doggos de la API y actualizo la lista en el adaptador mediante su raza
         CoroutineScope(Dispatchers.IO).launch {
             doggos.postValue(
@@ -66,6 +66,7 @@ class TiendaFragment : Fragment() {
         // Observo los doggos y actualizo la lista en el adaptador
         doggos.observe(viewLifecycleOwner) {
             adapter.updateList(ArrayList(it))
+            binding.swipe.isRefreshing = false
         }
         // Observo las pesetas que tenemos y las actualizo en la vista
         viewModel.misPesetas.observe(viewLifecycleOwner) {
