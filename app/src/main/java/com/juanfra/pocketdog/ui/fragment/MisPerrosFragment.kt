@@ -19,6 +19,7 @@ import com.juanfra.pocketdog.data.doggos.DogTrio
 import com.juanfra.pocketdog.data.doggos.Doggo
 import com.juanfra.pocketdog.databinding.FragmentMisPerrosBinding
 import com.juanfra.pocketdog.databinding.FragmentTiendaBinding
+import com.juanfra.pocketdog.ui.MainActivity
 import com.juanfra.pocketdog.ui.adapter.InventarioAdapter
 import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -42,7 +43,11 @@ class MisPerrosFragment : Fragment() {
     }
 
 
-
+    override fun onResume() {
+        super.onResume()
+        // Cambiar el título de la Toolbar
+        (activity as? MainActivity)?.setToolbarTitle("Mis Perros")
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
