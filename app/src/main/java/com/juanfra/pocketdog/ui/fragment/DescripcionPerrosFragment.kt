@@ -50,7 +50,7 @@ class DescripcionPerrosFragment : Fragment() {
                 binding.turnendlistener.text = it.turnEndDesc
             }
 
-            binding.descripcion.text = it.refdog.breeds[0].description + "\n" + it.baseAttackDesc
+            binding.descripcion.text = it.baseAttackName + ": " + it.baseAttackDesc
             binding.estadisticas.text = " Vida: " + it.actualhealth.toString() + "/" + it.maxhealth + "\n Ataque: " + it.baseattack + "\n Defensa: " + it.basedefense
 
             Picasso.get()
