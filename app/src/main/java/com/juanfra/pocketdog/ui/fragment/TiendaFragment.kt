@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.juanfra.pocketdog.data.doggos.DogTrio
 import com.juanfra.pocketdog.data.doggos.Doggo
 import com.juanfra.pocketdog.data.pesetas.Pesetas
 import com.juanfra.pocketdog.databinding.FragmentTiendaBinding
@@ -52,6 +53,8 @@ class TiendaFragment : Fragment() {
 
         var doggos: MutableLiveData<List<Doggo>> = MutableLiveData() // Creo una variable mutable para almacenar los doggos
 
+        val misDoggos: MutableLiveData<List<DogTrio>> = MutableLiveData() // Creo una variable mutable para almacenar los doggos
+
         // Creo un corrutina para obtener los doggos de la API y actualizo la lista en el adaptador mediante su raza
         CoroutineScope(Dispatchers.IO).launch {
             doggos.postValue(
@@ -71,6 +74,12 @@ class TiendaFragment : Fragment() {
         viewModel.misPesetas.observe(viewLifecycleOwner) {
             binding.ptasActuales.text = it[0].pesetas.toString() + " ptas."
         }
+
+        viewModel.yourtrio.observe(viewLifecycleOwner) {
+            binding.inventarioCantidad.text = it.perros.size.toString() + "/3"
+        }
+
+
 
 
     }
