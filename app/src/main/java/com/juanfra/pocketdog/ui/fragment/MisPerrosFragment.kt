@@ -12,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.juanfra.pocketdog.R
 import com.juanfra.pocketdog.data.doggos.DogTrio
@@ -59,14 +60,17 @@ class MisPerrosFragment : Fragment() {
                 adapter.actualizarLista(ArrayList(it.perros))
             }
         })
+
     }
+
 
 
     fun setupAdapter(){
         adapter = InventarioAdapter(ArrayList(), object : InventarioAdapter.MyClick {
 
             override fun onClick(doggo: Doggo) {
-                Toast.makeText(requireContext(), "s", Toast.LENGTH_SHORT).show()
+                viewModel.actualdoggo.value = doggo
+                findNavController().navigate(R.id.action_misPerrosFragment_to_descripcionPerrosFragment)
             }
 
         })

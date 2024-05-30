@@ -50,7 +50,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tituloDescripcion" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/tituloEstadisticas"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Estadísticas:"
@@ -59,13 +59,13 @@
             app:layout_constraintTop_toBottomOf="@+id/descripcion" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/estadisticas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            app:layout_constraintTop_toBottomOf="@+id/tituloEstadisticas" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
