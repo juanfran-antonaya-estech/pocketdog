@@ -6,7 +6,7 @@ import com.juanfra.pocketdog.data.models.catphoto.ImagenPerroDetalle
 
 class StBernard(reference : ImagenPerroDetalle) : Doggo(reference), TurnEndListener {
     override var rarity: String
-        get() = "Raro"
+        get() = "Épico"
         set(value) {}
     override var turnEndDesc: String
         get() = "se cura un 5% de vida máxima"

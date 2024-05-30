@@ -5,6 +5,9 @@ import com.juanfra.pocketdog.data.models.catphoto.ImagenPerroDetalle
 
 class Chihuahua (val reference : ImagenPerroDetalle) : Doggo(reference) {
 
+    override var rarity: String
+        get() = "Épico"
+        set(value) {}
     override var baseAttackName: String
         get() = "Triple bocao"
         set(value) {}

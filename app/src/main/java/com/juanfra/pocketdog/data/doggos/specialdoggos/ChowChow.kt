@@ -8,6 +8,10 @@ class ChowChow(val reference: ImagenPerroDetalle) : Doggo(reference), BuffMove {
 
     var chews = 1
 
+    override var rarity: String
+        get() = "Legendario"
+        set(value) {}
+
     override var baseAttackName: String
         get() = "Chew Chew (${chews})"
         set(value) {}

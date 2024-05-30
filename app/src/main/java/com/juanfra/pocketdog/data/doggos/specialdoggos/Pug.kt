@@ -8,7 +8,7 @@ import com.juanfra.pocketdog.data.models.catphoto.ImagenPerroDetalle
 class Pug(val reference : ImagenPerroDetalle) : Doggo(reference),TurnEndListener,SpecialAttack {
 
     override var rarity: String
-        get() = "Común"
+        get() = "Épico"
         set(value) {}
 
     override var turnEndDesc: String

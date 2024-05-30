@@ -8,6 +8,9 @@ import kotlin.random.Random
 
 class Borzoi (val reference: ImagenPerroDetalle) : Doggo(reference), SpecialAttack, TurnEndListener {
     var noselength = 1
+    override var rarity: String
+        get() = "Épico"
+        set(value) {}
     override var specialAttName: String
         get() = "Golpe nariz (${noselength * 10}%)"
         set(value) {}
