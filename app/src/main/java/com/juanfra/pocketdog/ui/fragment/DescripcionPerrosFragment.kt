@@ -36,15 +36,18 @@ class DescripcionPerrosFragment : Fragment() {
             binding.nombre.text = it.refdog.breeds[0].name
 
             if (it is BuffMove){
-                binding.descripcion.text = it.buffMovDesc
+                binding.buffMove.visibility = View.VISIBLE
+                binding.buffMove.text = it.buffMovName + ": " + it.buffMovDesc
             }
 
             if (it is SpecialAttack){
-                binding.descripcion.text = it.specialAttDesc
+                binding.specialMove.visibility = View.VISIBLE
+                binding.specialMove.text = it.specialAttName + ": " + it.specialAttDesc
             }
 
             if (it is TurnEndListener){
-                binding.descripcion.text = it.turnEndDesc
+                binding.turnendlistener.visibility = View.VISIBLE
+                binding.turnendlistener.text = it.turnEndDesc
             }
 
             binding.descripcion.text = it.refdog.breeds[0].description + "\n" + it.baseAttackDesc
