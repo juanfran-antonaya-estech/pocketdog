@@ -38,6 +38,7 @@ class PesetasViewModel(val context: Context) : ViewModel() {
     val actualenemy = MutableLiveData<Doggo>()
 
     // esta funcion es para mostrar un trio de perros de ejemplo desde el inicio
+
     fun showcaseenemies(): MutableLiveData<DogTrio> {
         val auxtrio = MutableLiveData<DogTrio>()
         viewModelScope.launch {
@@ -46,6 +47,11 @@ class PesetasViewModel(val context: Context) : ViewModel() {
 
         }
         return auxtrio
+    }
+    fun getLog(resultado: Resultado){
+        viewModelScope.launch {
+            repo.getLog()
+        }
     }
     fun logBatalla(resultado: Resultado){
         viewModelScope.launch {

@@ -5,30 +5,34 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.juanfra.pocketdog.data.models.combate.Resultado
-import com.juanfra.pocketdog.databinding.FragmentInicioBinding
 import com.juanfra.pocketdog.databinding.HolderRegistroBinding
-import com.juanfra.pocketdog.databinding.HolderTiendaBinding
 
-class CombateAdapter(var listado: ArrayList<Resultado>): RecyclerView.Adapter<CombateAdapter.MiHolder>(){
-    private lateinit var binding: HolderRegistroBinding
-    inner class MiHolder(var binding: HolderRegistroBinding):
-        RecyclerView.ViewHolder(binding.root)
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CombateAdapter.MiHolder {
+
+class CombateAdapter(private var listado: ArrayList<Resultado>): RecyclerView.Adapter<CombateAdapter.MiHolder>() {
+
+    inner class MiHolder(var binding: HolderRegistroBinding): RecyclerView.ViewHolder(binding.root)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MiHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = HolderRegistroBinding.inflate(layoutInflater, parent, false)
+
         return MiHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: CombateAdapter.MiHolder, position: Int) {
+    override fun onBindViewHolder(holder: MiHolder, position: Int) {
         val enfrentamiento = listado[position]
-        binding.doggoaliado
-        binding.doggoenemigo
-        binding.resultado
+        holder.binding.apply {
+            doggoaliado// Asegúrate de tener estos campos en tu HolderRegistroBinding
+            doggoenemigo
+            resultado.text = enfrentamiento.resultado.toString()
+        }
     }
 
     override fun getItemCount(): Int {
         return listado.size
     }
-
-
+    fun updateList(newList: ArrayList<Resultado>){
+        listado = newList
+        notifyDataSetChanged()
+    }
 }
