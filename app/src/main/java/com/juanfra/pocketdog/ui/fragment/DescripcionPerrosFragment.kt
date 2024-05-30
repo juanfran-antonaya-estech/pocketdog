@@ -48,7 +48,7 @@ class DescripcionPerrosFragment : Fragment() {
             }
 
             binding.descripcion.text = it.refdog.breeds[0].description + "\n" + it.baseAttackDesc
-            binding.estadisticas.text = "Vida: " + it.actualhealth.toString() + "/" + it.maxhealth + "\n Ataque: " + it.baseattack + "\n Defensa: " + it.basedefense
+            binding.estadisticas.text = " Vida: " + it.actualhealth.toString() + "/" + it.maxhealth + "\n Ataque: " + it.baseattack + "\n Defensa: " + it.basedefense
 
             Picasso.get()
                 .load(it.refdog.url)
