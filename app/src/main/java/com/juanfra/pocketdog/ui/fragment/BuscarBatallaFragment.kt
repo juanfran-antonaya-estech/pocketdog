@@ -31,6 +31,7 @@ class BuscarBatallaFragment : Fragment() {
     ): View? {
 
         binding = FragmentBuscarBatallaBinding.inflate(inflater, container, false)
+        binding.swipe.isRefreshing = true
         return binding.root
     }
 
@@ -44,6 +45,7 @@ class BuscarBatallaFragment : Fragment() {
         }
         grupos.observe(viewLifecycleOwner) {
             adapter.actualizarLista(ArrayList(it))
+            binding.swipe.isRefreshing = false
         }
     }
 
