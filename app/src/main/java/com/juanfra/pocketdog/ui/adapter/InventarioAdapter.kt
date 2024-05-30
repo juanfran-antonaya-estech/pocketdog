@@ -40,7 +40,21 @@ class InventarioAdapter(var listado: ArrayList<Doggo>, val listener: MyClick) :
         holder.binding.nombreUno.text = dogtrio.refdog.breeds[0].name
         holder.binding.rarezaUno.text = dogtrio.rarity
 
-
+        val colorCard = mapOf(
+            "Comun" to R.drawable.shape_tienda_normalito,
+            "Raro" to R.drawable.shape_tienda_raro,
+            "Épico" to R.drawable.shape_tienda_epico,
+            "Legendario" to R.drawable.shape_tienda_legendario
+        )
+        // Se cambia el color del texto por la rareza
+        val colorText = mapOf(
+            "Comun" to Color.GREEN,
+            "Raro" to Color.BLUE,
+            "Épico" to Color.MAGENTA,
+            "Legendario" to Color.YELLOW
+        )
+        holder.binding.primerPerro.setBackgroundResource(colorCard[dogtrio.rarity]!!)
+        holder.binding.rarezaUno.setTextColor(colorText[dogtrio.rarity]!!)
 
         val packLevelColors = mapOf(
             "Muy Fácil" to R.color.veryeasy,
