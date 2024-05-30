@@ -10,8 +10,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.juanfra.pocketdog.R
 import com.juanfra.pocketdog.data.doggos.DogTrio
-import com.juanfra.pocketdog.data.pesetas.Pesetas
 import com.juanfra.pocketdog.databinding.FragmentInicioBinding
+import com.juanfra.pocketdog.ui.MainActivity
+import com.juanfra.pocketdog.data.pesetas.Pesetas
 import com.juanfra.pocketdog.databinding.FragmentTiendaBinding
 import com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel
 import com.squareup.picasso.Picasso
@@ -19,7 +20,9 @@ import jp.wasabeef.picasso.transformations.gpu.PixelationFilterTransformation
 
 
 class InicioFragment : Fragment() {
-    private lateinit var binding: FragmentInicioBinding
+    private var _binding: FragmentInicioBinding? = null
+    private val binding get() = _binding!!
+
     val viewModels by activityViewModels<PesetasViewModel> {
         PesetasViewModel.PesetasViewModelFactory(requireContext())
     }
@@ -28,7 +31,8 @@ class InicioFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentInicioBinding.inflate(inflater, container, false)
+        // Inflate the layout for this fragment
+        _binding = FragmentInicioBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -65,9 +69,17 @@ class InicioFragment : Fragment() {
 
         bbinding.btAccionPlantilla.setOnClickListener {
             viewModels.battleTrio(dogtrio)
+            viewModels.resetBattle()
             BuscarBatallaFragment.viewModel = viewModels
             findNavController().navigate(R.id.action_inicioFragment_to_batallaFragment)
         }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Cambiar el título de la Toolbar
+        (activity as? MainActivity)?.setToolbarTitle("Inicio")
     }
 
         private fun peseteo(){
@@ -82,5 +94,3 @@ class InicioFragment : Fragment() {
 
     }
 }
-
-

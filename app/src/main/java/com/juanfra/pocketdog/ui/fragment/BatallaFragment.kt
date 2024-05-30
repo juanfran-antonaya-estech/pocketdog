@@ -53,15 +53,11 @@ class BatallaFragment : Fragment() {
         viewModel.actualenemy.observe(viewLifecycleOwner) { enemy ->
             if (enemy.refdog.id != lastenemyId) {
                 lastenemyId = enemy.refdog.id
-                hideEnemyDog()
                 prepareEnemyDog(enemy)
-                showEnemyDog()
             }
 
         }
         viewModel.nextAlly()
-        Log.d("el perrito", viewModel.actualdoggo.value.toString())
-        Log.d("tu trio", viewModel.yourtrio.value.toString())
         viewModel.actualdoggo.observe(viewLifecycleOwner) { ally ->
             if (ally.refdog.id != lastdogId) {
                 lastdogId = ally.refdog.id
@@ -76,12 +72,10 @@ class BatallaFragment : Fragment() {
                 "ganaste" -> {
                     Toast.makeText(requireContext(), "Ganaste", Toast.LENGTH_SHORT).show()
                     findNavController().navigateUp()
-                    resultado()
                 }
                 "perdiste" -> {
                     Toast.makeText(requireContext(), "Perdiste", Toast.LENGTH_SHORT).show()
                     findNavController().navigateUp()
-                    resultado()
                 }
             }
         }
@@ -93,42 +87,6 @@ class BatallaFragment : Fragment() {
         super.onResume()
         // Cambiar el título de la Toolbar
         (activity as? MainActivity)?.setToolbarTitle("Combate")
-    }
-
-    fun hideAllyDog() {
-        binding.tvAllyName.animate().alpha(0f).translationX(dp(300f)).setDuration(300).start()
-        binding.pbAllyLife.animate().alpha(0f).translationX(dp(300f)).setDuration(300).start()
-        binding.ivAllyDog.animate().alpha(0f).translationX(dp(-300f)).setDuration(300).start()
-        Thread.sleep(300L)
-        binding.btNormalAtt.animate().alpha(0f).translationY(dp(35f)).setDuration(300).start()
-        Thread.sleep(150L)
-        binding.btSpecialAtt.animate().alpha(0f).translationY(dp(35f)).setDuration(300).start()
-        Thread.sleep(150L)
-        binding.btBuffAtt.animate().alpha(0f).translationY(dp(35f)).setDuration(300).start()
-    }
-
-    fun showAllyDog() {
-        binding.tvAllyName.animate().alpha(1f).translationX(0f).setDuration(300).start()
-        binding.pbAllyLife.animate().alpha(1f).translationX(0f).setDuration(300).start()
-        binding.ivAllyDog.animate().alpha(1f).translationX(0f).setDuration(300).start()
-        Thread.sleep(300L)
-        binding.btNormalAtt.animate().alpha(1f).translationY(0f).setDuration(300).start()
-        Thread.sleep(150L)
-        binding.btSpecialAtt.animate().alpha(1f).translationY(0f).setDuration(300).start()
-        Thread.sleep(150L)
-        binding.btBuffAtt.animate().alpha(1f).translationY(0f).setDuration(300).start()
-    }
-
-    fun hideEnemyDog() {
-        binding.tvEnemyName.animate().alpha(0f).translationY(dp(-200f)).setDuration(300).start()
-        binding.pbEnemyLife.animate().alpha(0f).translationY(dp(-200f)).setDuration(300).start()
-        binding.ivEnemyDog.animate().alpha(0f).translationY(dp(-200f)).setDuration(300).start()
-    }
-
-    fun showEnemyDog() {
-        binding.tvEnemyName.animate().alpha(1f).translationY(0f).setDuration(300).start()
-        binding.pbEnemyLife.animate().alpha(1f).translationY(0f).setDuration(300).start()
-        binding.ivEnemyDog.animate().alpha(1f).translationY(0f).setDuration(300).start()
     }
 
     fun prepareAllyDog(ally: Doggo) {

@@ -2,6 +2,7 @@ package com.juanfra.pocketdog.ui.viewmodel
 
 import android.content.Context
 import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -30,26 +31,28 @@ import kotlinx.coroutines.launch
 
 class PesetasViewModel(val context: Context) : ViewModel() {
     var repo = Repository(context)
-
-    var pesetas = MutableLiveData<Pesetas>(Pesetas(1500))
+    val registro = MutableLiveData<List<Resultado>>()
     val yourtrio = MutableLiveData<DogTrio>(DogTrio(ArrayList()))
     val enemytrio = MutableLiveData<DogTrio>(DogTrio(ArrayList()))
     val win = MutableLiveData<String>("en combate")
     val actualdoggo = MutableLiveData<Doggo>()
     val actualenemy = MutableLiveData<Doggo>()
 
-    /**
-     * Obtiene los perros de tus votos.
-     *
-     * Esta función realiza una llamada a la API para obtener la lista de perros,
-     * luego recorre la lista y obtiene los detalles de cada perro de forma asíncrona.
-     * Finalmente, crea una lista de objetos `Doggo` con los detalles de cada perro y la ordena por su salud actual.
-     *
-     * @see Doggo
-     */
+    // esta funcion es para mostrar un trio de perros de ejemplo desde el inicio
+
+    fun showcaseenemies(): MutableLiveData<DogTrio> {
+        val auxtrio = MutableLiveData<DogTrio>()
+        viewModelScope.launch {
+            val trio = getDogTrios(arrayListOf("normal"))
+            auxtrio.postValue(trio[0])
+
+        }
+        return auxtrio
+    }
+    fun getLog() = repo.getLog()
     fun logBatalla(resultado: Resultado){
         viewModelScope.launch {
-            repo.insertarLog(resultado)
+            repo.poketDao.insertResultado(resultado)
         }
 
     }
@@ -75,28 +78,38 @@ class PesetasViewModel(val context: Context) : ViewModel() {
     fun editPesetas(pesetas: Pesetas){
 
         viewModelScope.launch {
-            repo.edtitPesetas(pesetas)
+            repo.poketDao.editPesetas(pesetas)
         }
     }
 
-    fun showcaseenemies() : MutableLiveData<DogTrio>{
-        val auxtrio = MutableLiveData<DogTrio>()
-        viewModelScope.launch {
-            val trio = getDogTrios(arrayListOf("normal"))
-            auxtrio.postValue(trio[0])
+    //esta funcion sirve para añadir pesetas
+    fun whenWin(trio: DogTrio){
+        val pesetas = misPesetas.value?.get(0)
 
+        val precios = mapOf("Muy Fácil" to 300, "Fácil" to 500, "Normal" to 700, "Difícil" to 800, "Muy Difícil" to 1000)
+
+        if (pesetas != null) {
+            pesetas.pesetas += precios[trio.packLevel]!!
+            editPesetas(pesetas)
         }
-        return auxtrio
+
     }
 
+    // esta funcion se tiene que invocar cada vez que vas al fragmento de batalla para que no te eche despues de hacer más de una
     fun resetBattle(){
         win.value = "en combate"
     }
 
+    /**
+     * esta funcion asigna un dogtrio para combatir
+     * @param enemies el nuevo trio de perros para combatir
+     * @see DogTrio
+     */
     fun battleTrio(enemies: DogTrio) {
         enemytrio.value = enemies
     }
 
+    // esta funcion muestra el siguiente perro que combate
     fun nextAlly() {
         if (yourtrio.value?.perros?.isEmpty()!!) {
             win.postValue("perdiste")
@@ -108,6 +121,7 @@ class PesetasViewModel(val context: Context) : ViewModel() {
         }
     }
 
+    // esta funcion muestra al siguiente enemigo que combate
     fun nextEnemy() {
         if (enemytrio.value?.perros?.isEmpty()!!) {
             win.postValue("ganaste")
@@ -119,6 +133,10 @@ class PesetasViewModel(val context: Context) : ViewModel() {
         }
     }
 
+    /**
+     * esta funcion elimina al perro enemigo del trio de perros para que nextEnemy saque a otro
+     * @param enemy el perro enemigo a eliminar
+     */
     fun enemyDeath(enemy: Doggo) {
         val auxlist = enemytrio.value?.perros?.let { ArrayList(it) }
         if (auxlist != null) {
@@ -127,6 +145,15 @@ class PesetasViewModel(val context: Context) : ViewModel() {
         enemytrio.value = auxlist?.let { DogTrio(it) }
     }
 
+    /**
+     * Obtiene los perros de tus votos.
+     *
+     * Esta función realiza una llamada a la API para obtener la lista de perros,
+     * luego recorre la lista y obtiene los detalles de cada perro de forma asíncrona.
+     * Finalmente, crea una lista de objetos `Doggo` con los detalles de cada perro y la ordena por su salud actual.
+     *
+     * @see Doggo
+     */
     fun loadDoggos() {
         viewModelScope.launch {
             val response = repo.dameVotos()
@@ -236,44 +263,33 @@ class PesetasViewModel(val context: Context) : ViewModel() {
                         trio
                     )
                 }
-
-                "pesadilla" -> {
-                    val trio = DogTrio(
-                        arrayListOf(
-                            getRandomDoggo("legendario"),
-                            getRandomDoggo("epico"),
-                            getRandomDoggo("epico")
-                        )
-                    )
-
-                    trio.packLevel = "Pesadilla"
-                    trio.packName = "Perretes pesadilla"
-                    trios.add(
-                        trio
-                    )
-                }
             }
         }
         return trios
     }
 
 
+    //compra un perro, añade un perro a tu trio de perros usando la id de su imagen y la cantidad de pesetas especificada
     fun buyDoggo(id: String, ptas: Int) {
+        val pesetas = misPesetas.value?.get(0)
         viewModelScope.launch {
-            if (ptas <= pesetas.value?.pesetas!! && yourtrio.value?.perros?.size!! < 3) {
-                repo.votaRaza(VoteSend(imageId = id, value = 1))
-                pesetas.postValue(Pesetas(pesetas.value?.pesetas!! - ptas))
-                Thread.sleep(1000)
-                loadDoggos()
-                Toast.makeText(
-                    context,
-                    "Gracias por tu compra, sus perros han reiniciado sus estadísticas",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (yourtrio.value?.perros?.size!! == 3) {
-                Toast.makeText(context, "Tu inventario ya está lleno (3/3)", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(context, "No tienes suficientes pesetas", Toast.LENGTH_SHORT).show()
+            if (pesetas != null) {
+                if (ptas <= pesetas.pesetas!! && yourtrio.value?.perros?.size!! < 3) {
+                    repo.votaRaza(VoteSend(imageId = id, value = 1))
+                    pesetas.pesetas -= ptas
+                    editPesetas(pesetas)
+                    Thread.sleep(1000)
+                    loadDoggos()
+                    Toast.makeText(
+                        context,
+                        "Gracias por tu compra, sus perros han reiniciado sus estadísticas",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else if (yourtrio.value?.perros?.size!! == 3) {
+                    Toast.makeText(context, "Tu inventario ya está lleno (3/3)", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "No tienes suficientes pesetas", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -334,11 +350,6 @@ class PesetasViewModel(val context: Context) : ViewModel() {
         val doggo = getDoggo(detalle!!)
 
         return doggo
-        //return if (doggo.rarity.lowercase() == rareza) {
-        //    doggo
-        //} else {
-        //    getRandomDoggo(rareza)
-        //}
     }
 
     //convierte el detalle de una foto en un objeto Doggo (usar para conversiones)

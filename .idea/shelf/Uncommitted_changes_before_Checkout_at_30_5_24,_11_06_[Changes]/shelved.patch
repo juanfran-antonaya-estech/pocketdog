@@ -1,0 +1,194 @@
+Index: app/src/main/java/com/juanfra/pocketdog/ui/fragment/InicioFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.juanfra.pocketdog.ui.fragment\n\nimport android.media.MediaPlayer\nimport android.os.Bundle\nimport androidx.fragment.app.Fragment\nimport android.view.LayoutInflater\nimport android.view.View\nimport android.view.ViewGroup\nimport androidx.fragment.app.activityViewModels\nimport androidx.navigation.fragment.findNavController\nimport com.juanfra.pocketdog.R\nimport com.juanfra.pocketdog.data.doggos.DogTrio\nimport com.juanfra.pocketdog.databinding.FragmentInicioBinding\nimport com.juanfra.pocketdog.ui.MainActivity\nimport com.juanfra.pocketdog.data.pesetas.Pesetas\nimport com.juanfra.pocketdog.databinding.FragmentTiendaBinding\nimport com.juanfra.pocketdog.ui.viewmodel.PesetasViewModel\nimport com.squareup.picasso.Picasso\nimport jp.wasabeef.picasso.transformations.gpu.PixelationFilterTransformation\n\n\nclass InicioFragment : Fragment() {\n    private var _binding: FragmentInicioBinding? = null\n    private val binding get() = _binding!!\n\n    val viewModels by activityViewModels<PesetasViewModel> {\n        PesetasViewModel.PesetasViewModelFactory(requireContext())\n    }\n\n    override fun onCreateView(\n        inflater: LayoutInflater, container: ViewGroup?,\n        savedInstanceState: Bundle?\n    ): View? {\n        // Inflate the layout for this fragment\n        _binding = FragmentInicioBinding.inflate(inflater, container, false)\n        return binding.root\n    }\n\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\n        super.onViewCreated(view, savedInstanceState)\n        val mediaPlayer = MediaPlayer.create(context, R.raw.pdtienda3)\n        mediaPlayer.start()\n       peseteo()\n        viewModels.showcaseenemies().observe(viewLifecycleOwner) {\n            if (it != null) {\n                fillBattleinclude(it)\n            }\n        }\n    }\n    fun fillBattleinclude(dogtrio: DogTrio) {\n        val bbinding = binding.inBatalla\n        bbinding.btAccionPlantilla.text = \"Batallar\"\n        val threshold = 20F\n        binding.barraBatalla.animate().setDuration(1000).translationX(0F).start()\n        Picasso.get()\n            .load(dogtrio.perros[0].refdog.url)\n            .transform(PixelationFilterTransformation(requireContext(), threshold))\n            .into(bbinding.ivPerro1Plantilla)\n        Picasso.get()\n            .load(dogtrio.perros[1].refdog.url)\n            .transform(PixelationFilterTransformation(requireContext(), threshold))\n            .into(bbinding.ivPerro2Plantilla)\n        Picasso.get()\n            .load(dogtrio.perros[2].refdog.url)\n            .transform(PixelationFilterTransformation(requireContext(), threshold))\n            .into(bbinding.ivPerro3Plantilla)\n        bbinding.tvPackLevelPlantilla.text = dogtrio.packLevel\n        bbinding.tvPacknamePlantilla.text = dogtrio.packName\n\n        bbinding.btAccionPlantilla.setOnClickListener {\n            viewModels.battleTrio(dogtrio)\n            viewModels.resetBattle()\n            BuscarBatallaFragment.viewModel = viewModels\n            findNavController().navigate(R.id.action_inicioFragment_to_batallaFragment)\n        }\n\n    }\n\n    override fun onResume() {\n        super.onResume()\n        // Cambiar el título de la Toolbar\n        (activity as? MainActivity)?.setToolbarTitle(\"Inicio\")\n    }\n\n        private fun peseteo(){\n            viewModels.misPesetas.observe(viewLifecycleOwner){\n                if (it.size == 0) {\n                    viewModels.insertarPesetas(Pesetas(1500))\n                } else {\n                    val pesetas = it[0]\n                    binding.marcadorPuntos.text = \"Pesetas: ${pesetas.pesetas}\"\n                }\n            }\n\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/juanfra/pocketdog/ui/fragment/InicioFragment.kt b/app/src/main/java/com/juanfra/pocketdog/ui/fragment/InicioFragment.kt
+--- a/app/src/main/java/com/juanfra/pocketdog/ui/fragment/InicioFragment.kt	
++++ b/app/src/main/java/com/juanfra/pocketdog/ui/fragment/InicioFragment.kt	
+@@ -40,7 +40,7 @@
+         super.onViewCreated(view, savedInstanceState)
+         val mediaPlayer = MediaPlayer.create(context, R.raw.pdtienda3)
+         mediaPlayer.start()
+-       peseteo()
++        peseteo()
+         viewModels.showcaseenemies().observe(viewLifecycleOwner) {
+             if (it != null) {
+                 fillBattleinclude(it)
+@@ -73,7 +73,6 @@
+             BuscarBatallaFragment.viewModel = viewModels
+             findNavController().navigate(R.id.action_inicioFragment_to_batallaFragment)
+         }
+-
+     }
+ 
+     override fun onResume() {
+Index: app/src/main/java/com/juanfra/pocketdog/ui/fragment/RegistroBatallasFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.juanfra.pocketdog.ui.fragment\n\nimport android.os.Bundle\nimport androidx.fragment.app.Fragment\nimport android.view.LayoutInflater\nimport android.view.View\nimport android.view.ViewGroup\nimport androidx.recyclerview.widget.LinearLayoutManager\nimport androidx.recyclerview.widget.RecyclerView\nimport com.juanfra.pocketdog.R\nimport com.juanfra.pocketdog.data.models.combate.Resultado\nimport com.juanfra.pocketdog.ui.MainActivity\nimport com.juanfra.pocketdog.ui.adapter.CombateAdapter\n\nclass RegistroBatallasFragment : Fragment() {\n\n    private lateinit var combateAdapter: CombateAdapter\n    private lateinit var recyclerView: RecyclerView\n    private var resultados: ArrayList<Resultado> = arrayListOf() // Inicializa tu lista de resultados\n\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n        // Inicializa la lista de resultados aquí si es necesario\n    }\n\n    override fun onCreateView(\n        inflater: LayoutInflater, container: ViewGroup?,\n        savedInstanceState: Bundle?\n    ): View? {\n        // Inflate the layout for this fragment\n        val view = inflater.inflate(R.layout.fragment_registro_batallas, container, false)\n\n        // Configura el RecyclerView\n        recyclerView = view.findViewById(R.id.recyclerView)\n        recyclerView.layoutManager = LinearLayoutManager(requireContext())\n\n        // Inicializa el adaptador\n        combateAdapter = CombateAdapter(resultados)\n        recyclerView.adapter = combateAdapter\n\n        return view\n    }\n\n    override fun onResume() {\n        super.onResume()\n        // Cambiar el título de la Toolbar\n        (activity as? MainActivity)?.setToolbarTitle(\"Log\")\n    }\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/juanfra/pocketdog/ui/fragment/RegistroBatallasFragment.kt b/app/src/main/java/com/juanfra/pocketdog/ui/fragment/RegistroBatallasFragment.kt
+--- a/app/src/main/java/com/juanfra/pocketdog/ui/fragment/RegistroBatallasFragment.kt	
++++ b/app/src/main/java/com/juanfra/pocketdog/ui/fragment/RegistroBatallasFragment.kt	
+@@ -5,23 +5,26 @@
+ import android.view.LayoutInflater
+ import android.view.View
+ import android.view.ViewGroup
++import androidx.navigation.fragment.findNavController
+ import androidx.recyclerview.widget.LinearLayoutManager
+ import androidx.recyclerview.widget.RecyclerView
+ import com.juanfra.pocketdog.R
++import com.juanfra.pocketdog.data.doggos.Doggo
+ import com.juanfra.pocketdog.data.models.combate.Resultado
++import com.juanfra.pocketdog.databinding.FragmentBatallaBinding
++import com.juanfra.pocketdog.databinding.FragmentRegistroBatallasBinding
+ import com.juanfra.pocketdog.ui.MainActivity
+ import com.juanfra.pocketdog.ui.adapter.CombateAdapter
++import com.juanfra.pocketdog.ui.adapter.TiendaAdapter
++import com.juanfra.pocketdog.ui.fragment.BuscarBatallaFragment.Companion.viewModel
+ 
+ class RegistroBatallasFragment : Fragment() {
+ 
+     private lateinit var combateAdapter: CombateAdapter
+     private lateinit var recyclerView: RecyclerView
+     private var resultados: ArrayList<Resultado> = arrayListOf() // Inicializa tu lista de resultados
++    private lateinit var binding: FragmentRegistroBatallasBinding
+ 
+-    override fun onCreate(savedInstanceState: Bundle?) {
+-        super.onCreate(savedInstanceState)
+-        // Inicializa la lista de resultados aquí si es necesario
+-    }
+ 
+     override fun onCreateView(
+         inflater: LayoutInflater, container: ViewGroup?,
+@@ -33,9 +36,9 @@
+         // Configura el RecyclerView
+         recyclerView = view.findViewById(R.id.recyclerView)
+         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+-
++        configRecycler()
+         // Inicializa el adaptador
+-        combateAdapter = CombateAdapter(resultados)
++        //combateAdapter = CombateAdapter(onMovieClick)
+         recyclerView.adapter = combateAdapter
+ 
+         return view
+@@ -47,4 +50,17 @@
+         (activity as? MainActivity)?.setToolbarTitle("Log")
+     }
+ 
++    private fun configRecycler() {
++        val layoutManager = LinearLayoutManager(requireContext())
++        val combateAdapter = CombateAdapter(arrayListOf()) { resultado ->
++            viewModel.getLog(resultado)
++
++        }
++        binding.recyclerView.layoutManager = layoutManager
++        binding.recyclerView.adapter = combateAdapter
++
++        // Aquí puedes cargar la lista inicial, si ya tienes los datos disponibles
++        // combateAdapter.updateList(initialData)
++    }
++
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/juanfra/pocketdog/ui/adapter/CombateAdapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.juanfra.pocketdog.ui.adapter\n\n\nimport android.view.LayoutInflater\nimport android.view.ViewGroup\nimport androidx.recyclerview.widget.RecyclerView\nimport com.juanfra.pocketdog.data.models.combate.Resultado\nimport com.juanfra.pocketdog.databinding.HolderRegistroBinding\n\n\nclass CombateAdapter(private var listado: ArrayList<Resultado>): RecyclerView.Adapter<CombateAdapter.MiHolder>() {\n\n    inner class MiHolder(var binding: HolderRegistroBinding): RecyclerView.ViewHolder(binding.root)\n\n    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MiHolder {\n        val layoutInflater = LayoutInflater.from(parent.context)\n        val binding = HolderRegistroBinding.inflate(layoutInflater, parent, false)\n\n        return MiHolder(binding)\n    }\n\n    override fun onBindViewHolder(holder: MiHolder, position: Int) {\n        val enfrentamiento = listado[position]\n        holder.binding.apply {\n            doggoaliado// Asegúrate de tener estos campos en tu HolderRegistroBinding\n            doggoenemigo\n            resultado.text = enfrentamiento.resultado.toString()\n        }\n    }\n\n    override fun getItemCount(): Int {\n        return listado.size\n    }\n    fun updateList(newList: ArrayList<Resultado>){\n        listado = newList\n        notifyDataSetChanged()\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/juanfra/pocketdog/ui/adapter/CombateAdapter.kt b/app/src/main/java/com/juanfra/pocketdog/ui/adapter/CombateAdapter.kt
+--- a/app/src/main/java/com/juanfra/pocketdog/ui/adapter/CombateAdapter.kt	
++++ b/app/src/main/java/com/juanfra/pocketdog/ui/adapter/CombateAdapter.kt	
+@@ -8,31 +8,42 @@
+ import com.juanfra.pocketdog.databinding.HolderRegistroBinding
+ 
+ 
+-class CombateAdapter(private var listado: ArrayList<Resultado>): RecyclerView.Adapter<CombateAdapter.MiHolder>() {
++class CombateAdapter(
++    private var listado: ArrayList<Resultado>,
++    private val onMovieClick: (Resultado) -> Unit
++) : RecyclerView.Adapter<CombateAdapter.MiHolder>() {
+ 
+-    inner class MiHolder(var binding: HolderRegistroBinding): RecyclerView.ViewHolder(binding.root)
++    inner class MiHolder(var binding: HolderRegistroBinding) : RecyclerView.ViewHolder(binding.root) {
++        fun bind(enfrentamiento: Resultado) {
++            binding.apply {
++                // Asegúrate de que los campos doggoaliado y doggoenemigo están en tu HolderRegistroBinding
++                //doggoaliado.text = enfrentamiento.doggoaliado  Cambia esto según tu lógica
++                //doggoenemigo.text = enfrentamiento.doggoenemigo  Cambia esto según tu lógica
++                resultado.text = enfrentamiento.resultado.toString()
++
++                root.setOnClickListener {
++                    onMovieClick(enfrentamiento)
++                }
++            }
++        }
++    }
+ 
+     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MiHolder {
+         val layoutInflater = LayoutInflater.from(parent.context)
+         val binding = HolderRegistroBinding.inflate(layoutInflater, parent, false)
+-
+         return MiHolder(binding)
+     }
+ 
+     override fun onBindViewHolder(holder: MiHolder, position: Int) {
+-        val enfrentamiento = listado[position]
+-        holder.binding.apply {
+-            doggoaliado// Asegúrate de tener estos campos en tu HolderRegistroBinding
+-            doggoenemigo
+-            resultado.text = enfrentamiento.resultado.toString()
+-        }
++        holder.bind(listado[position])
+     }
+ 
+     override fun getItemCount(): Int {
+         return listado.size
+     }
+-    fun updateList(newList: ArrayList<Resultado>){
++
++    fun updateList(newList: ArrayList<Resultado>) {
+         listado = newList
+         notifyDataSetChanged()
+     }
+-}
+\ No newline at end of file
++}
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_17_5_24__11_25__Changes_.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_17_5_24__11_25__Changes_.xml b/.idea/shelf/Uncommitted_changes_before_Update_at_17_5_24__11_25__Changes_.xml
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Update_at_17_5_24__11_25__Changes_.xml	
++++ /dev/null	
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Update_at_17_5_24,_11_25_[Changes]" date="1715937947527" recycled="false" toDelete="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_5_24,_11_25_[Changes]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Update at 17/5/24, 11:25 [Changes]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/shelf/Changes.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/shelf/Changes.xml b/.idea/shelf/Changes.xml
+deleted file mode 100644
+--- a/.idea/shelf/Changes.xml	
++++ /dev/null	
+@@ -1,4 +0,0 @@
+-<changelist name="Changes" date="1716889977678" recycled="false">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Changes/shelved.patch" />
+-  <option name="DESCRIPTION" value="Changes" />
+-</changelist>
+\ No newline at end of file
